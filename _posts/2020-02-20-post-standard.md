@@ -141,7 +141,7 @@ cd mybookblog
 
 위의 내용은 example 폴더에 있는 것을 복사해 왔다 하지마 이부분에서 주목해야 하는 것은
 
-<img src="https://user-images.githubusercontent.com/25717861/74933755-08209700-5428-11ea-8b41-80d40c031d44.png" alt="image-20200220205018411" style="zoom:50%;" />
+<img src="https://user-images.githubusercontent.com/25717861/74933755-08209700-5428-11ea-8b41-80d40c031d44.png" alt="image-20200220205018411" style="zoom:30%;" />
 
 비교 했을때 첨가된 폴더와 파일이다.
 
