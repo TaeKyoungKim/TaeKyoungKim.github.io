@@ -64,13 +64,13 @@ bundle exec jekyll serve
 
 http://localhost:4000/example/ 사이트를 확인 할 수 있다.
 
-![image-20200220203007799](/Users/andrewkim/Library/Application Support/typora-user-images/image-20200220203007799.png)
+<img width="1434" alt="스크린샷 2020-02-20 오후 8 29 54" src="https://user-images.githubusercontent.com/25717861/74933215-e2df5900-5426-11ea-9f04-c7ca2b95d834.png" style="zoom:50%;">
 
 
 
 posts 메뉴를 클릭 했을때의 모습
 
-<img src="/Users/andrewkim/Library/Application Support/typora-user-images/image-20200220203108650.png" alt="image-20200220203108650" style="zoom:50%;" />
+<img src=https://user-images.githubusercontent.com/25717861/74933472-5bdeb080-5427-11ea-816b-f8caae0e0c77.png" alt="image-20200220203108650" style="zoom:50%;" />
 
 이 부분에서 posts폴더 부분의 파일 명을 보면서 변화를 관찰해 보면 
 
@@ -113,7 +113,8 @@ date: 2021-12-31 에 의해서 그 시점에 포스트가 올라가게 되어 �
 
 
 
-![image-20200220203856865](/Users/andrewkim/Library/Application Support/typora-user-images/image-20200220203856865.png)
+<img width="768" alt="스크린샷 2020-02-20 오후 9 25 54" src="https://user-images.githubusercontent.com/25717861/74933572-a2340f80-5427-11ea-8e54-148d84f61fb1.png">
+
 
 이미 만들어져 있어 경고 창이 나오지만 만들어져 있지 않으면 경고창이 안뜬다.
 
@@ -136,11 +137,11 @@ cd mybookblog
 
 형식으로 만든후 so-simple-theme의 example의 내용을 복사해서 붙히기 한다.
 
-![image-20200220204901063](/Users/andrewkim/Library/Application Support/typora-user-images/image-20200220204901063.png )
+<img width="305" alt="스크린샷 2020-02-20 오후 9 27 30" src="https://user-images.githubusercontent.com/25717861/74933710-ee7f4f80-5427-11ea-9dad-4fde27d55ee0.png" style="zoom:50%">
 
 위의 내용은 example 폴더에 있는 것을 복사해 왔다 하지마 이부분에서 주목해야 하는 것은
 
-<img src="/Users/andrewkim/Library/Application Support/typora-user-images/image-20200220205018411.png" alt="image-20200220205018411" style="zoom:50%;" />
+<img src="https://user-images.githubusercontent.com/25717861/74933755-08209700-5428-11ea-8b41-80d40c031d44.png" alt="image-20200220205018411" style="zoom:50%;" />
 
 비교 했을때 첨가된 폴더와 파일이다.
 
