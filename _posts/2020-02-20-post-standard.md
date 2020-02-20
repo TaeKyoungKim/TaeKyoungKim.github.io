@@ -70,7 +70,7 @@ http://localhost:4000/example/ 사이트를 확인 할 수 있다.
 
 posts 메뉴를 클릭 했을때의 모습
 
-<img width="1434" alt="스크린샷 2020-02-20 오후 8 29 54" src=https://user-images.githubusercontent.com/25717861/74933472-5bdeb080-5427-11ea-816b-f8caae0e0c77.png" style="zoom:50%;">
+<img width="1206" alt="스크린샷 2020-02-20 오후 9 23 10" src="https://user-images.githubusercontent.com/25717861/74934159-e542b280-5428-11ea-8943-fcd13732129b.png">
 
 이 부분에서 posts폴더 부분의 파일 명을 보면서 변화를 관찰해 보면 
 
