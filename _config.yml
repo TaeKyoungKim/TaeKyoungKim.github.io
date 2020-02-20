@@ -17,7 +17,7 @@ theme: jekyll-theme-so-simple
 # remote_theme: mmistakes/so-simple-theme
 skin: "/assets/css/skins/default.css"
 locale: en-US
-title: "So Simple Development Site"
+title: "So nice Block-Chain project Site!!"
 description: "A simple Jekyll theme for words and pictures."
 baseurl: #"/example" # the subpath of your site, e.g. "/blog"
 url: "https://TaeKyoungKim.github.io"
