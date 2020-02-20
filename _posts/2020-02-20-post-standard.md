@@ -70,7 +70,7 @@ http://localhost:4000/example/ 사이트를 확인 할 수 있다.
 
 posts 메뉴를 클릭 했을때의 모습
 
-<img src=https://user-images.githubusercontent.com/25717861/74933472-5bdeb080-5427-11ea-816b-f8caae0e0c77.png" alt="image-20200220203108650" style="zoom:50%;" />
+<img width="1434" alt="스크린샷 2020-02-20 오후 8 29 54" src=https://user-images.githubusercontent.com/25717861/74933472-5bdeb080-5427-11ea-816b-f8caae0e0c77.png" style="zoom:50%;" />
 
 이 부분에서 posts폴더 부분의 파일 명을 보면서 변화를 관찰해 보면 
 
@@ -137,7 +137,7 @@ cd mybookblog
 
 형식으로 만든후 so-simple-theme의 example의 내용을 복사해서 붙히기 한다.
 
-<img width="305" alt="스크린샷 2020-02-20 오후 9 27 30" src="https://user-images.githubusercontent.com/25717861/74933710-ee7f4f80-5427-11ea-9dad-4fde27d55ee0.png" style="zoom:50%">
+<img width="305" alt="스크린샷 2020-02-20 오후 9 27 30" src="https://user-images.githubusercontent.com/25717861/74933710-ee7f4f80-5427-11ea-9dad-4fde27d55ee0.png" style="zoom:80%">
 
 위의 내용은 example 폴더에 있는 것을 복사해 왔다 하지마 이부분에서 주목해야 하는 것은
 
