@@ -1,14 +1,14 @@
 ## GitHub에 사이트 만들기(나만의 방법)
 
-#### 1. 시도 
+### 1. 시도 
 
 여러가지 시도를 해보았다. google에 있는 방법들을 그대로 따라 했는데 잘 안되는 부분이 있었다 .. 내 실력이 부족해서 그런지 막히는 부분들이 있어 다양한 설명들을 조합하면 어떨까 하는 생각이 들어서 조합의 형태로 시도함
 
 가장 맘에드는 테마를 찾아서 사용하는 방법을 택함
 
-#### 2. 방법 
+### 2. 방법 
 
-##### 1) 먼저 [jekyll](https://jekyllrb.com/) 사이트 방문 
+#### 1) 먼저 [jekyll](https://jekyllrb.com/) 사이트 방문 
 
 ​	
 
@@ -38,7 +38,7 @@
 
 
 
-##### 2) 나의 로컬에서 테스트
+#### 2) 나의 로컬에서 테스트
 
 ```powershell
 git clone https://github.com/mmistakes/so-simple-theme
@@ -52,7 +52,7 @@ cd so-simple-theme
 
 
 
-example 에 있는 사이트를 사용해 보기 위해 폴더로 들어간후
+##### example 에 있는 사이트를 사용해 보기 위해 폴더로 들어간후
 
 ```shell
 cd example
@@ -68,7 +68,7 @@ http://localhost:4000/example/ 사이트를 확인 할 수 있다.
 
 
 
-posts 메뉴를 클릭 했을때의 모습
+##### posts 메뉴를 클릭 했을때의 모습
 
 <img width="1206" alt="스크린샷 2020-02-20 오후 9 23 10" src="https://user-images.githubusercontent.com/25717861/74934159-e542b280-5428-11ea-8943-fcd13732129b.png">
 
@@ -165,8 +165,8 @@ path 부분을 지금 폴더를 기본 경로로 하게 위와 같이 지정해 
 
 _config.yml을 각자의 취향에 맡게 작성하여 주면 된다.
 
-잠깐!
+##### 잠깐!
 
-url: "https://TaeKyoungKim.github.io" 이부분은 꼭 수정해야 되는 부분? 이다.
+##### url: "https://TaeKyoungKim.github.io" 이부분은 꼭 수정해야 되는 부분? 이다.
 
 _config.yml 이부분의 자세한 내용은 다음 포스트에서 정리하여 본다.
