@@ -18,7 +18,7 @@ theme: jekyll-theme-so-simple
 skin: "/assets/css/skins/default.css"
 locale: en-US
 title: "So nice Block-Chain project Site!!"
-description: "A simple Jekyll theme for words and pictures."
+description: "이곳은 하이퍼레저 / 이더리움 / nodejs / React 를 이용해서 자동차 경매사이트를 구성하는 전체적인 내용을 담고 있습니다."
 baseurl: #"/example" # the subpath of your site, e.g. "/blog"
 url: "https://TaeKyoungKim.github.io"
 logo: "/images/so-simple-site-logo.png" # path of site logo, e.g. "/assets/images/logo.png"
