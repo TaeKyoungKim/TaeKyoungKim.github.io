@@ -1,6 +1,7 @@
 # 만들면서 이해하는 도커(Docker) 이미지의 구조도커 이미지 빌드 원리와 Overayfs
 
-[nacyot](https://www.44bits.io/ko/author/nacyot) 작성, 2019년 12월 24일 공개
+### 이글은 [nacyot](https://www.44bits.io/ko/author/nacyot) 작성하신것을 가져왔습니다. 
+
 
 [들어가며](https://www.44bits.io/ko/post/how-docker-image-work#들어가며)[도커 이미지는 어디에서 오나요?: 도커 허브(Docker Hub)](https://www.44bits.io/ko/post/how-docker-image-work#도커-이미지는-어디에서-오나요-도커-허브docker-hub)[풀 받은 도커 이미지는 어디에 저장되나요?](https://www.44bits.io/ko/post/how-docker-image-work#풀-받은-도커-이미지는-어디에-저장되나요)[특정 레이어에서 컨테이너를 실행할 수 없을까?](https://www.44bits.io/ko/post/how-docker-image-work#특정-레이어에서-컨테이너를-실행할-수-없을까)[컨테이너의 레이어 계층 이해하기](https://www.44bits.io/ko/post/how-docker-image-work#컨테이너의-레이어-계층-이해하기)[docker diff와 docker commit으로 이미지 만들기](https://www.44bits.io/ko/post/how-docker-image-work#docker-diff와-docker-commit으로-이미지-만들기)[도커 커밋으로 이미지 만들기, Dockerfile로 이미지 만들기](https://www.44bits.io/ko/post/how-docker-image-work#도커-커밋으로-이미지-만들기-dockerfile로-이미지-만들기)[이미지 직접 빌드하고 중간 레이어에서 컨테이너 실행하기](https://www.44bits.io/ko/post/how-docker-image-work#이미지-직접-빌드하고-중간-레이어에서-컨테이너-실행하기)[OverlayFS 직접 사용해보고, 임의의 위치에 도커 이미지 마운트하기](https://www.44bits.io/ko/post/how-docker-image-work#overlayfs-직접-사용해보고-임의의-위치에-도커-이미지-마운트하기)[마치며](https://www.44bits.io/ko/post/how-docker-image-work#마치며)
 
