@@ -1,4 +1,4 @@
---
+---
 title: "리엑트 리덕스  : Class기반 리덕스 기초"
 sub_title: "카운터 웹"
 categories:
@@ -12,7 +12,7 @@ elements:
   - html
   - markup
 last_modified_at: 2020-02-23 T20:16:49-05:00
---
+---
 
 ## react redux class 기반과 함수 기반 에서 구현
 
