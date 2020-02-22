@@ -84,7 +84,8 @@ last_modified_at: 2020-02-23 T21:16:49-05:00
    export default App;
    ```
 
-   ![](/Users/andrewkim/Desktop/스크린샷 2020-02-22 오후 6.39.11.png)
+  
+   <img width="1088" alt="스크린샷 2020-02-22 오후 6 39 11" src="https://user-images.githubusercontent.com/25717861/75091310-38467200-55af-11ea-9850-81b2e100f30e.png">
 
    위와 같은 부분이 나탄난다.
 
@@ -121,8 +122,7 @@ last_modified_at: 2020-02-23 T21:16:49-05:00
    ```
 
    
-
-   ![](/Users/andrewkim/Desktop/image.png)
+![image](https://user-images.githubusercontent.com/25717861/75091317-42687080-55af-11ea-8aed-bdd96b05aad0.png)
 
 ###  4. 리듀서 작성
 
@@ -156,7 +156,7 @@ export default function Counter(state=initialState, action) {
 
 
 
-![](/Users/andrewkim/Desktop/image (1).png)
+![image (1)](https://user-images.githubusercontent.com/25717861/75091344-7b084a00-55af-11ea-9185-3be55de1a6be.png)
 
 ##### 	2. src/reducers/index.js
 
@@ -337,4 +337,6 @@ export default connect ( // 스토어와 연결
 
 마지막으로 App.js에서 CounterContainer컴퍼넌트를 호출 한다.
 
-![](/Users/andrewkim/Desktop/스크린샷 2020-02-22 오후 7.49.00.png)
+<img width="1097" alt="스크린샷 2020-02-22 오후 7 49 00" src="https://user-images.githubusercontent.com/25717861/75091309-35e41800-55af-11ea-96ac-ae9805a7354d.png">
+
+[1강 클래스 기반 리덕스 가기](https://taekyoungkim.github.io/redux/react/react%20redux/2020/02/18/React-case-Redux-class-tags.html)
