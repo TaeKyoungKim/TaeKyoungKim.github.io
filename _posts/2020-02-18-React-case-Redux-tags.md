@@ -103,7 +103,7 @@ last_modified_at: 2020-02-23 T20:16:49-05:00
 
    
 
-   1. ##### /src/actions/counter.js 생성
+   1. ##### /src/reducers/counter.js 생성
 
    ```javascript
    // 액션 타입 정의
@@ -130,7 +130,7 @@ last_modified_at: 2020-02-23 T20:16:49-05:00
 
 ##### 	 첫번째 파라미터는 현재상태이고, 두번째 파라미터는 액션 객체입니다.
 
-###### 	1. /src/reducers/counter.js
+###### 	1. /src/reducers/counter.js 에 다음코드 추가
 
 ​		
 
