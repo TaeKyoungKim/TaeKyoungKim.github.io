@@ -333,5 +333,3 @@ export default connect ( // 스토어와 연결
 
 ![](/Users/andrewkim/Desktop/스크린샷 2020-02-22 오후 7.49.00.png)
 
-<p>Luke continued, <q>And then she called him a <q>scruffy-looking nerf-herder</q>! I think I’ve got a chance!</q> The poor naive fool&hellip;
-| Foot1   | Foot2   | Foot3   |
