@@ -1,6 +1,6 @@
 ---
-title: "리엑트 리덕스  :Class기반 리덕스 기초"
-sub_title: "The common elements"
+title: "리엑트 리덕스  : Class기반 리덕스 기초"
+sub_title: "카운터 웹"
 categories:
   - redux
   - react
@@ -16,7 +16,7 @@ last_modified_at: 2020-02-23 T20:16:49-05:00
 
 ## react redux class 기반과 함수 기반 에서 구현
 
-#### class 기반으로 기초를 구현한 후 그것을 함수기반으로 바꿔보자
+#### 1. class 기반으로 기초를 구현한 후 그것을 함수기반으로 바꿔보자
 
 0. ##### 구조
 
