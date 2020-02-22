@@ -191,10 +191,11 @@ import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux' ;
+import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+
 
 // **** 리덕스 개발자 도구 적용
 const devTools =
@@ -207,7 +208,8 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-registerServiceWorker();
+
+serviceWorker.unregister()
 ```
 
 
