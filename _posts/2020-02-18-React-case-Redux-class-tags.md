@@ -335,3 +335,4 @@ export default connect ( // 스토어와 연결
 
 <img width="1097" alt="스크린샷 2020-02-22 오후 7 49 00" src="https://user-images.githubusercontent.com/25717861/75091309-35e41800-55af-11ea-96ac-ae9805a7354d.png">
 
+[2강 함수기반 리덕스 설명으로 가기](https://taekyoungkim.github.io/redux/react/react%20redux/2020/02/18/React-case-Redux-fuction-tags.html)		
