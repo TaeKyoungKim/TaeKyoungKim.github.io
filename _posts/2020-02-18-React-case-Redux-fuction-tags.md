@@ -104,7 +104,7 @@ last_modified_at: 2020-02-23 T21:16:49-05:00
 
    
 
-   1. ##### /src/actions/counter.js 생성
+  1. ##### /src/reducers/counter.js 생성
 
    ```javascript
    // 액션 타입 정의
@@ -122,7 +122,8 @@ last_modified_at: 2020-02-23 T21:16:49-05:00
    ```
 
    
-![image](https://user-images.githubusercontent.com/25717861/75091317-42687080-55af-11ea-8aed-bdd96b05aad0.png)
+
+   ![image](https://user-images.githubusercontent.com/25717861/75091317-42687080-55af-11ea-8aed-bdd96b05aad0.png)
 
 ###  4. 리듀서 작성
 
@@ -130,7 +131,7 @@ last_modified_at: 2020-02-23 T21:16:49-05:00
 
 ##### 	 첫번째 파라미터는 현재상태이고, 두번째 파라미터는 액션 객체입니다.
 
-###### 	1. /src/reducers/counter.js
+###### 	1. /src/reducers/counter.js 에 다음코드 추가
 
 ​		
 
@@ -153,6 +154,7 @@ export default function Counter(state=initialState, action) {
     }
 }
 ```
+
 
 
 
