@@ -1,12 +1,12 @@
 # Site navigation links
 
-- title: Posts
+- title: 교재
+  url: /
+- title: 개발 블로그
   url: /posts/
 - title: Categories
   url: /categories/
 - title: Tags
   url: /tags/
-- title: Recipes
-  url: /recipes/
 - title: Search
   url: /search/

@@ -1,7 +1,451 @@
----
-layout: home
-excerpt: "A simple and clean responsive Jekyll theme for words and photos."
-show_excerpts: true
-paginate: true
-entries_layout: list
----
+<title>교재 랩</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;800;900&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#f6f4ee;
+    --surface:#ffffff;
+    --surface-raised:#ffffff;
+    --text:#15171e;
+    --text-soft:#565b6b;
+    --text-faint:#8c8f9c;
+    --border:#e6e2d5;
+    --border-strong:#d3cdb9;
+    --accent:#b9791f;
+    --accent-ink:#fffaf0;
+    --cat-ai:#4653c4;
+    --cat-bc:#0f8f74;
+    --cat-k8s:#1f7fb0;
+    --cat-fin:#b9791f;
+    --ok:#22875a;
+    --warn:#b9791f;
+    --idle:#9a9da8;
+    --grid-line: rgba(21,23,30,.05);
+    --shadow: 0 1px 2px rgba(21,23,30,.04), 0 16px 32px -20px rgba(21,23,30,.22);
+    --glow-op: .14;
+    --focus:#2f6fd6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0b0c10;
+      --surface:#14161c;
+      --surface-raised:#191c24;
+      --text:#f3f1e9;
+      --text-soft:#a8acb9;
+      --text-faint:#6c707e;
+      --border:#262a35;
+      --border-strong:#343948;
+      --accent:#f5b83d;
+      --accent-ink:#241705;
+      --cat-ai:#8fa0ff;
+      --cat-bc:#3fe0bb;
+      --cat-k8s:#6cc0f5;
+      --cat-fin:#f5b83d;
+      --ok:#5fd08a;
+      --warn:#f5b83d;
+      --idle:#7d818f;
+      --grid-line: rgba(255,255,255,.045);
+      --shadow: 0 1px 2px rgba(0,0,0,.5), 0 20px 40px -20px rgba(0,0,0,.65);
+      --glow-op:.22;
+      --focus:#8fbcff;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b0c10;
+    --surface:#14161c;
+    --surface-raised:#191c24;
+    --text:#f3f1e9;
+    --text-soft:#a8acb9;
+    --text-faint:#6c707e;
+    --border:#262a35;
+    --border-strong:#343948;
+    --accent:#f5b83d;
+    --accent-ink:#241705;
+    --cat-ai:#8fa0ff;
+    --cat-bc:#3fe0bb;
+    --cat-k8s:#6cc0f5;
+    --cat-fin:#f5b83d;
+    --ok:#5fd08a;
+    --warn:#f5b83d;
+    --idle:#7d818f;
+    --grid-line: rgba(255,255,255,.045);
+    --shadow: 0 1px 2px rgba(0,0,0,.5), 0 20px 40px -20px rgba(0,0,0,.65);
+    --glow-op:.22;
+    --focus:#8fbcff;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:"IBM Plex Sans KR","Noto Sans KR",system-ui,sans-serif;
+    font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:44px 44px;
+  }
+  h1,h2,h3{font-family:"Gothic A1",sans-serif; text-wrap:balance; margin:0}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--focus); outline-offset:3px}
+  ::selection{background:var(--accent); color:var(--accent-ink)}
+
+  header.masthead{
+    position:sticky; top:0; z-index:30;
+    background:color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  .masthead-inner{
+    max-width:1200px; margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; gap:26px; flex-wrap:wrap;
+  }
+  .brand{display:flex; align-items:center; gap:12px; margin-right:auto}
+  .brand-mark{
+    width:40px; height:40px; border-radius:11px;
+    background:linear-gradient(155deg, var(--accent), color-mix(in srgb, var(--accent) 55%, var(--cat-bc)));
+    color:var(--accent-ink); display:flex; align-items:center; justify-content:center;
+    font-family:"Gothic A1",sans-serif; font-weight:900; font-size:15px; letter-spacing:-.5px;
+    box-shadow:0 6px 18px -8px color-mix(in srgb, var(--accent) 70%, transparent);
+  }
+  .brand-name{margin:0; font-family:"Gothic A1",sans-serif; font-weight:800; font-size:16.5px; line-height:1.3}
+  .brand-sub{margin:0; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); font-family:"JetBrains Mono",monospace}
+
+  nav.catalog-nav{display:flex; gap:6px; flex-wrap:wrap}
+  nav.catalog-nav button{
+    font-family:"JetBrains Mono",monospace; font-size:12.5px; font-weight:600; letter-spacing:.02em;
+    padding:8px 14px; border-radius:999px; border:1px solid var(--border-strong);
+    background:transparent; color:var(--text-soft); cursor:pointer;
+    transition:background .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease;
+  }
+  nav.catalog-nav button:hover{border-color:var(--text-soft); color:var(--text)}
+  nav.catalog-nav button.active{
+    background:var(--text); color:var(--bg); border-color:var(--text);
+  }
+
+  .search-wrap input{
+    font-family:"IBM Plex Sans KR",sans-serif; font-size:13.5px;
+    padding:9px 16px; border-radius:999px; border:1px solid var(--border-strong);
+    background:var(--surface); color:var(--text); width:180px;
+    transition:width .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .search-wrap input:focus{width:230px; border-color:var(--accent); box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent)}
+  .search-wrap input::placeholder{color:var(--text-faint)}
+
+  .hero{
+    position:relative; max-width:1200px; margin:0 auto; padding:64px 28px 44px; overflow:visible;
+  }
+  .hero::before{
+    content:""; position:absolute; top:-60px; right:-8%; width:560px; height:420px; z-index:-1;
+    background:
+      radial-gradient(closest-side, color-mix(in srgb, var(--cat-fin) 55%, transparent), transparent 70%),
+      radial-gradient(closest-side, color-mix(in srgb, var(--cat-bc) 45%, transparent), transparent 72%) 60% 40% / 70% 70% no-repeat;
+    opacity:var(--glow-op); filter:blur(6px);
+    pointer-events:none;
+  }
+  .hero-eyebrow{
+    display:inline-flex; align-items:center; gap:8px; margin:0 0 18px;
+    font-family:"JetBrains Mono",monospace; font-size:11.5px; letter-spacing:.16em;
+    color:var(--accent); font-weight:700;
+  }
+  .hero-eyebrow::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--accent)}
+  .hero h1{
+    font-size:clamp(30px,4.4vw,52px); font-weight:900; letter-spacing:-1px; max-width:15ch;
+  }
+  .hero h1 em{
+    font-style:normal; background:linear-gradient(100deg, var(--accent), var(--cat-bc));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-desc{max-width:60ch; color:var(--text-soft); font-size:15.5px; margin:20px 0 34px}
+
+  .featured-card{
+    position:relative; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:20px;
+    background:var(--surface-raised); border:1px solid var(--border-strong); border-radius:18px;
+    padding:22px 26px; box-shadow:var(--shadow);
+  }
+  .featured-card::before{
+    content:""; position:absolute; inset:0; border-radius:18px; padding:1px;
+    background:linear-gradient(120deg, var(--cat-fin), transparent 40%, var(--cat-bc));
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+    opacity:.65; pointer-events:none;
+  }
+  .featured-card h2{font-size:20px; margin:5px 0 4px}
+  .featured-card p{margin:0; color:var(--text-soft); font-size:13.5px}
+  .featured-link{
+    font-family:"JetBrains Mono",monospace; font-size:13px; font-weight:700;
+    white-space:nowrap; padding:12px 18px; border-radius:11px;
+    background:var(--accent); color:var(--accent-ink); text-decoration:none;
+    box-shadow:0 10px 24px -12px color-mix(in srgb, var(--accent) 80%, transparent);
+    transition:transform .15s ease, filter .15s ease;
+  }
+  .featured-link:hover{filter:brightness(1.06); transform:translateY(-1px)}
+
+  main{max-width:1200px; margin:0 auto; padding:8px 28px 64px}
+  .shelf{margin-top:56px; scroll-margin-top:88px}
+  .shelf-head{display:flex; align-items:center; gap:16px; margin-bottom:24px}
+  .shelf-badge{
+    font-family:"JetBrains Mono",monospace; font-size:12.5px; font-weight:700; color:var(--shelf-c);
+    background:color-mix(in srgb, var(--shelf-c) 14%, transparent);
+    border:1px solid color-mix(in srgb, var(--shelf-c) 40%, transparent);
+    padding:5px 11px; border-radius:999px;
+  }
+  .shelf-head h2{font-size:22px; font-weight:800}
+  .shelf-head .shelf-rule{
+    flex:1; height:2px; align-self:center; border-radius:2px;
+    background:linear-gradient(90deg, var(--shelf-c), transparent);
+    opacity:.4;
+  }
+
+  .card-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(268px,1fr)); gap:16px}
+  article.card{
+    position:relative; background:var(--surface-raised); border:1px solid var(--border);
+    border-radius:14px; padding:19px 21px; display:flex; flex-direction:column; gap:11px;
+    box-shadow:var(--shadow);
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  article.card:hover{
+    transform:translateY(-3px);
+    border-color:color-mix(in srgb, var(--shelf-c) 55%, var(--border));
+    box-shadow:var(--shadow), 0 0 0 1px color-mix(in srgb, var(--shelf-c) 30%, transparent);
+  }
+  .card-top{display:flex; align-items:center; justify-content:space-between}
+  .call-no{font-family:"JetBrains Mono",monospace; font-size:11.5px; color:var(--text-faint); letter-spacing:.02em}
+
+  .status{
+    display:inline-flex; align-items:center; gap:5px;
+    font-family:"JetBrains Mono",monospace; font-size:10.5px; font-weight:700;
+    letter-spacing:.03em; padding:3px 9px 3px 8px; border-radius:999px;
+  }
+  .status::before{content:""; width:6px; height:6px; border-radius:50%}
+  .status-done{color:var(--ok); background:color-mix(in srgb, var(--ok) 15%, transparent)}
+  .status-done::before{background:var(--ok)}
+  .status-progress{color:var(--warn); background:color-mix(in srgb, var(--warn) 15%, transparent)}
+  .status-progress::before{background:var(--warn); animation:pulse 1.8s ease-in-out infinite}
+  .status-idle{color:var(--idle); background:color-mix(in srgb, var(--idle) 15%, transparent)}
+  .status-idle::before{background:var(--idle)}
+  @media (prefers-reduced-motion:reduce){.status-progress::before{animation:none}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  article.card h3{font-size:16.5px; font-weight:700; line-height:1.4}
+  article.card p.desc{margin:0; font-size:13px; color:var(--text-soft); flex:1}
+
+  .progress{height:5px; border-radius:99px; background:var(--border); overflow:hidden}
+  .progress-bar{height:100%; width:var(--pct); background:linear-gradient(90deg, var(--shelf-c), color-mix(in srgb, var(--shelf-c) 60%, white)); border-radius:99px}
+
+  .card-meta{
+    font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--text-faint);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+
+  .shelf[data-cat="ai"]{--shelf-c:var(--cat-ai)}
+  .shelf[data-cat="bc"]{--shelf-c:var(--cat-bc)}
+  .shelf[data-cat="k8s"]{--shelf-c:var(--cat-k8s)}
+  .shelf[data-cat="fin"]{--shelf-c:var(--cat-fin)}
+
+  .no-match{display:none; color:var(--text-faint); font-size:13.5px; padding:6px 2px}
+
+  footer{border-top:1px solid var(--border); padding:28px 28px 44px; max-width:1200px; margin:0 auto}
+  footer p{margin:0; font-size:12px; color:var(--text-faint); font-family:"JetBrains Mono",monospace}
+  footer a{color:var(--accent); text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  @media (max-width:640px){
+    .featured-card{grid-template-columns:1fr}
+    .search-wrap, .search-wrap input{width:100%}
+    .hero::before{display:none}
+  }
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">
+      <span class="brand-mark">KT</span>
+      <div>
+        <p class="brand-name">김태경 교재 랩</p>
+        <p class="brand-sub">Technical Curriculum Lab</p>
+      </div>
+    </div>
+    <nav class="catalog-nav" id="catalogNav" aria-label="분류">
+      <button data-cat="all" class="active">전체</button>
+      <button data-cat="ai">AI · 100</button>
+      <button data-cat="bc">블록체인 · 200</button>
+      <button data-cat="k8s">인프라 · 300</button>
+      <button data-cat="fin">금융 · 400</button>
+    </nav>
+    <div class="search-wrap">
+      <input id="searchInput" type="text" placeholder="교재 검색…" aria-label="교재 검색">
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <p class="hero-eyebrow">2026 · 연재중</p>
+  <h1>실습으로 완성하는 <em>기술 교재</em>를 장 단위로 씁니다</h1>
+  <p class="hero-desc">LLM·RAG, 블록체인, 쿠버네티스, 금융 빅데이터 — 대학과 현업을 위한 실습형 교재를 만듭니다. 매 장은 학습목표부터 전체 코드, 트러블슈팅까지 담아 완결된 단위로 공개합니다.</p>
+
+  <div class="featured-card">
+    <span class="status status-progress">연재중</span>
+    <div>
+      <span class="call-no mono">FIN · 401</span>
+      <h2>금융 빅데이터와 머신러닝</h2>
+      <p>1장 공개 — 이번 주부터 연재를 시작했습니다.</p>
+    </div>
+    <a class="featured-link" href="chapters/chapter01.html">1장 읽기 →</a>
+  </div>
+</section>
+
+<main>
+  <section class="shelf" data-cat="ai" id="shelf-ai">
+    <div class="shelf-head">
+      <span class="shelf-badge">AI · 100</span>
+      <h2>AI · LLM 교육</h2>
+      <span class="shelf-rule"></span>
+    </div>
+    <div class="card-grid">
+      <article class="card" data-title="머신러닝 개론 교재" data-desc="16주차 강의노트 200페이지 확장">
+        <div class="card-top"><span class="call-no mono">AI · 101</span><span class="status status-progress">집필중</span></div>
+        <h3>머신러닝 개론 교재</h3>
+        <p class="desc">16주차 강의노트를 200페이지 이상 분량의 단행본으로 확장 집필</p>
+        <div class="card-meta"><span>목표 200p+</span><span>대학 강의용</span></div>
+      </article>
+
+      <article class="card" data-title="설명가능 AI XAI 교재" data-desc="codedeck.kr 브랜드 슬라이드 실습코드">
+        <div class="card-top"><span class="call-no mono">AI · 102</span><span class="status status-progress">집필중</span></div>
+        <h3>설명가능 AI(XAI) 교재</h3>
+        <p class="desc">Integrated Gradients, Attention Visualization, Concept-based Explanations를 수식·코드로 확장</p>
+        <div class="card-meta"><span>슬라이드 16 진행중</span><span>codedeck.kr</span></div>
+      </article>
+
+      <article class="card" data-title="Hermes Wiki 가이드북" data-desc="쿠버네티스 기반 LLM Wiki 교육 AI 아키텍처">
+        <div class="card-top"><span class="call-no mono">AI · 103</span><span class="status status-done">완결</span></div>
+        <h3>Hermes Agent · LLM-Wiki 가이드북</h3>
+        <p class="desc">쿠버네티스로 구축하는 자율 학습형 교육 AI 아키텍처 실전 가이드</p>
+        <div class="progress"><div class="progress-bar" style="--pct:100%"></div></div>
+        <div class="card-meta"><span>전 7장 완결</span><span>약 6,400줄</span></div>
+      </article>
+
+      <article class="card" data-title="벡터DB 강의 영상" data-desc="ChromaDB RAG AI Day2 유튜브 스크립트">
+        <div class="card-top"><span class="call-no mono">AI · 104</span><span class="status status-idle">기획중</span></div>
+        <h3>벡터DB 10분 강의</h3>
+        <p class="desc">ChromaDB로 다루는 벡터DB 개념 — RAG AI 3일 과정 Day2용 영상 교재</p>
+        <div class="card-meta"><span>영상 · 유튜브</span><span>Day2 / 3</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="shelf" data-cat="bc" id="shelf-bc">
+    <div class="shelf-head">
+      <span class="shelf-badge">BC · 200</span>
+      <h2>블록체인 개발</h2>
+      <span class="shelf-rule"></span>
+    </div>
+    <div class="card-grid">
+      <article class="card" data-title="이더리움 로컬 블록체인 교재" data-desc="Hardhat 결제 시스템 NFT 멤버십">
+        <div class="card-top"><span class="call-no mono">BC · 201</span><span class="status status-done">완결</span></div>
+        <h3>이더리움 로컬 블록체인 교재</h3>
+        <p class="desc">Hardhat 기반 소상공인 결제 시스템 + NFT 멤버십 구현 6장 구성</p>
+        <div class="progress"><div class="progress-bar" style="--pct:100%"></div></div>
+        <div class="card-meta"><span>전 6장 완결</span><span>63p 합본</span></div>
+      </article>
+
+      <article class="card" data-title="ChainTrace 공급망 블록체인 교재" data-desc="Adaptive RAG 에이전트 공급망 이력 추적">
+        <div class="card-top"><span class="call-no mono">BC · 202</span><span class="status status-progress">집필중</span></div>
+        <h3>ChainTrace — 공급망 × Adaptive RAG</h3>
+        <p class="desc">제조·물류 공급망 이력 추적을 블록체인과 Adaptive RAG 에이전트로 함께 구현</p>
+        <div class="card-meta"><span>2개 컨트랙트 확정</span><span>구현 중심</span></div>
+      </article>
+
+      <article class="card" data-title="온체인 상점 에이전트" data-desc="이더리움 상점 시스템 Node.js 파이썬 AI 에이전트">
+        <div class="card-top"><span class="call-no mono">BC · 203</span><span class="status status-idle">기획중</span></div>
+        <h3>온체인 상점 · AI 에이전트</h3>
+        <p class="desc">상품등록·거래·재고관리와 자체 코인을 다루는 상점 시스템 + 파이썬 관리 에이전트</p>
+        <div class="card-meta"><span>구조 설계 단계</span><span>Node.js + Python</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="shelf" data-cat="k8s" id="shelf-k8s">
+    <div class="shelf-head">
+      <span class="shelf-badge">K8S · 300</span>
+      <h2>쿠버네티스 · 인프라</h2>
+      <span class="shelf-rule"></span>
+    </div>
+    <div class="card-grid">
+      <article class="card" data-title="쿠버네티스 종합 교재 도서관 시스템" data-desc="FastAPI Supabase K8s 도서 대출 시스템">
+        <div class="card-top"><span class="call-no mono">K8S · 301</span><span class="status status-progress">집필중</span></div>
+        <h3>K8s 종합 교재 · 도서관 시스템</h3>
+        <p class="desc">파이썬 REST API + 클라이언트 서버 + Supabase를 쿠버네티스로 운영하는 12장 구성 교재</p>
+        <div class="progress"><div class="progress-bar" style="--pct:42%"></div></div>
+        <div class="card-meta"><span>5/12장 완료</span><span>1부 완결</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="shelf" data-cat="fin" id="shelf-fin">
+    <div class="shelf-head">
+      <span class="shelf-badge">FIN · 400</span>
+      <h2>금융 빅데이터</h2>
+      <span class="shelf-rule"></span>
+    </div>
+    <div class="card-grid">
+      <article class="card" data-title="금융 빅데이터와 머신러닝 교재" data-desc="금융 데이터 머신러닝 연재 1장">
+        <div class="card-top"><span class="call-no mono">FIN · 401</span><span class="status status-progress">연재중</span></div>
+        <h3>금융 빅데이터와 머신러닝</h3>
+        <p class="desc">금융 시계열·정형 데이터에 머신러닝을 적용하는 실습형 연재 교재</p>
+        <div class="card-meta"><span>1장 공개</span><span>연재 진행중</span></div>
+      </article>
+    </div>
+  </section>
+
+  <p class="no-match" id="noMatch">검색 결과가 없습니다.</p>
+</main>
+
+<footer>
+  <p>정적 교재 인덱스 · 마지막 업데이트 2026-09-04 · <a href="https://github.com/taekyoungkim" target="_blank" rel="noopener">GitHub</a></p>
+</footer>
+
+<script>
+(function(){
+  var buttons = document.querySelectorAll('#catalogNav button');
+  var shelves = document.querySelectorAll('.shelf');
+  var search = document.getElementById('searchInput');
+  var noMatch = document.getElementById('noMatch');
+  var activeCat = 'all';
+
+  function applyFilters(){
+    var q = search.value.trim().toLowerCase();
+    var anyVisible = false;
+    shelves.forEach(function(shelf){
+      var cat = shelf.getAttribute('data-cat');
+      var shelfMatches = (activeCat === 'all' || activeCat === cat);
+      var cards = shelf.querySelectorAll('.card');
+      var shelfHasVisible = false;
+      cards.forEach(function(card){
+        var text = (card.getAttribute('data-title') + ' ' + card.getAttribute('data-desc')).toLowerCase();
+        var textMatch = q === '' || text.indexOf(q) !== -1;
+        var show = shelfMatches && textMatch;
+        card.style.display = show ? '' : 'none';
+        if (show){ shelfHasVisible = true; anyVisible = true; }
+      });
+      shelf.style.display = shelfHasVisible ? '' : 'none';
+    });
+    noMatch.style.display = anyVisible ? 'none' : 'block';
+  }
+
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      buttons.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeCat = btn.getAttribute('data-cat');
+      applyFilters();
+      if (activeCat !== 'all'){
+        var target = document.getElementById('shelf-' + activeCat);
+        if (target) target.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'});
+      }
+    });
+  });
+
+  search.addEventListener('input', applyFilters);
+})();
+</script>
