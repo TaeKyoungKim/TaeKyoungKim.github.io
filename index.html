@@ -238,6 +238,16 @@
     display:flex; justify-content:space-between; align-items:center;
   }
 
+  .chapter-links{display:flex; flex-wrap:wrap; gap:6px; margin-top:2px}
+  .chapter-links a{
+    font-family:"JetBrains Mono",monospace; font-size:11.5px; font-weight:600;
+    padding:4px 10px; border-radius:999px; text-decoration:none;
+    background:color-mix(in srgb, var(--cat-fin) 14%, transparent);
+    color:var(--cat-fin); border:1px solid color-mix(in srgb, var(--cat-fin) 35%, transparent);
+    transition:background .15s ease;
+  }
+  .chapter-links a:hover{background:color-mix(in srgb, var(--cat-fin) 24%, transparent)}
+
   .shelf[data-cat="ai"]{--shelf-c:var(--cat-ai)}
   .shelf[data-cat="bc"]{--shelf-c:var(--cat-bc)}
   .shelf[data-cat="k8s"]{--shelf-c:var(--cat-k8s)}
@@ -289,9 +299,15 @@
     <div>
       <span class="call-no mono">FIN · 401</span>
       <h2>금융 빅데이터와 머신러닝</h2>
-      <p>1장 공개 — 이번 주부터 연재를 시작했습니다.</p>
+      <p>5개 장 공개 — 1장부터 5장까지 연재 중입니다.</p>
+      <div class="chapter-links">
+        <a href="chapters/chapter01.html">1장</a>
+        <a href="chapters/chapter02_03.html">2·3장</a>
+        <a href="chapters/chapter04.html">4장</a>
+        <a href="chapters/chapter05.html">5장</a>
+      </div>
     </div>
-    <a class="featured-link" href="chapters/chapter01.html">1장 읽기 →</a>
+    <a class="featured-link" href="chapters/chapter01.html">1장부터 읽기 →</a>
   </div>
 </section>
 
@@ -389,11 +405,17 @@
       <span class="shelf-rule"></span>
     </div>
     <div class="card-grid">
-      <article class="card" data-title="금융 빅데이터와 머신러닝 교재" data-desc="금융 데이터 머신러닝 연재 1장">
+      <article class="card" data-title="금융 빅데이터와 머신러닝 교재" data-desc="금융 데이터 머신러닝 연재 1장부터 5장까지">
         <div class="card-top"><span class="call-no mono">FIN · 401</span><span class="status status-progress">연재중</span></div>
         <h3>금융 빅데이터와 머신러닝</h3>
         <p class="desc">금융 시계열·정형 데이터에 머신러닝을 적용하는 실습형 연재 교재</p>
-        <div class="card-meta"><span>1장 공개</span><span>연재 진행중</span></div>
+        <div class="chapter-links">
+          <a href="chapters/chapter01.html">1장</a>
+          <a href="chapters/chapter02_03.html">2·3장</a>
+          <a href="chapters/chapter04.html">4장</a>
+          <a href="chapters/chapter05.html">5장</a>
+        </div>
+        <div class="card-meta"><span>5개 장 공개</span><span>연재 진행중</span></div>
       </article>
     </div>
   </section>
