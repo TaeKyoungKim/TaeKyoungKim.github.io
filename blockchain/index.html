@@ -36,29 +36,56 @@
     body {
       margin: 0; background: var(--bg); color: var(--text);
       font-family: "IBM Plex Sans KR", "Noto Sans KR", system-ui, sans-serif;
-      font-size: 15.5px; line-height: 1.7;
+      font-size: 15.5px; line-height: 1.75;
     }
     .mono { font-family: "JetBrains Mono", monospace; }
     header.top-nav {
-      position: sticky; top: 0; z-index: 40;
+      position: sticky; top: 0; z-index: 50;
       background: color-mix(in srgb, var(--bg) 85%, transparent);
       backdrop-filter: blur(14px); border-bottom: 1px solid var(--border);
-      padding: 14px 28px; display: flex; align-items: center; justify-content: space-between;
-      max-width: 1200px; margin: 0 auto;
+      padding: 12px 24px; display: flex; align-items: center; justify-content: space-between;
     }
     .back-link {
       font-family: "JetBrains Mono", monospace; font-size: 13px; font-weight: 700;
       text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px;
     }
-    .nav-links { display: flex; gap: 12px; }
-    .nav-links a {
-      font-family: "JetBrains Mono", monospace; font-size: 12.5px; font-weight: 600;
-      color: var(--text-soft); text-decoration: none; padding: 4px 10px; border-radius: 6px;
+    .nav-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .nav-tabs a {
+      font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 600;
+      color: var(--text-soft); text-decoration: none; padding: 5px 11px; border-radius: 6px;
+      transition: all .15s ease;
     }
-    .nav-links a:hover { color: var(--text); background: color-mix(in srgb, var(--cat-bc) 12%, transparent); }
+    .nav-tabs a:hover { color: var(--text); background: color-mix(in srgb, var(--cat-bc) 14%, transparent); }
+
+    .layout {
+      display: grid; grid-template-columns: 280px 1fr; max-width: 1400px;
+      margin: 0 auto; min-height: calc(100vh - 55px);
+    }
+    aside.sidebar {
+      position: sticky; top: 55px; height: calc(100vh - 55px); overflow-y: auto;
+      border-right: 1px solid var(--border); padding: 20px 16px; font-size: 13px;
+    }
+    .sidebar-group { margin-bottom: 24px; }
+    .sidebar-group h4 {
+      font-family: "Gothic A1", sans-serif; font-size: 12px; font-weight: 800;
+      text-transform: uppercase; color: var(--text-faint); margin: 0 0 10px 6px; letter-spacing: .08em;
+    }
+    .sidebar-link {
+      display: block; padding: 6px 10px; border-radius: 6px; text-decoration: none;
+      color: var(--text-soft); line-height: 1.4; transition: all .15s ease;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .sidebar-link:hover, .sidebar-link.active {
+      color: var(--text); background: color-mix(in srgb, var(--cat-bc) 12%, transparent);
+      font-weight: 600;
+    }
+
+    main.content {
+      padding: 36px 48px 80px; max-width: 960px; overflow-wrap: break-word;
+    }
 
     .hero {
-      max-width: 1200px; margin: 0 auto; padding: 48px 28px 36px;
+      margin-bottom: 48px; border-bottom: 1px solid var(--border); padding-bottom: 32px;
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 6px;
@@ -67,444 +94,4223 @@
       border: 1px solid color-mix(in srgb, var(--cat-bc) 35%, transparent);
       padding: 4px 12px; border-radius: 999px; margin-bottom: 16px;
     }
-    h1 { font-family: "Gothic A1", sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 900; margin: 0 0 14px; }
-    p.lead { font-size: 16px; color: var(--text-soft); max-width: 76ch; margin: 0 0 32px; }
+    h1 { font-family: "Gothic A1", sans-serif; font-size: clamp(26px, 3.5vw, 40px); font-weight: 900; margin: 0 0 14px; }
+    p.lead { font-size: 15.5px; color: var(--text-soft); margin: 0 0 24px; }
 
-    .feature-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-bottom: 48px;
+    /* Session Article Styling */
+    article.session-article {
+      background: var(--surface-raised); border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px 32px; margin-bottom: 40px; box-shadow: var(--shadow);
     }
-    .feature-card {
-      background: var(--surface-raised); border: 1px solid var(--border-strong);
-      border-radius: 14px; padding: 22px 24px; box-shadow: var(--shadow);
-      display: flex; flex-direction: column; justify-content: space-between; gap: 14px;
+    article.session-article h2 {
+      font-family: "Gothic A1", sans-serif; font-size: 22px; font-weight: 800;
+      margin: 0 0 16px; color: var(--text); border-bottom: 2px solid color-mix(in srgb, var(--cat-bc) 30%, transparent);
+      padding-bottom: 8px;
     }
-    .feature-card h3 { margin: 0; font-size: 18px; font-weight: 800; }
-    .feature-card p { margin: 0; font-size: 13.5px; color: var(--text-soft); }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      padding: 9px 16px; border-radius: 9px; font-family: "JetBrains Mono", monospace;
-      font-size: 12.5px; font-weight: 700; text-decoration: none;
-      background: var(--cat-bc); color: var(--accent-ink); transition: opacity .15s ease, transform .15s ease;
+    article.session-article h3 {
+      font-size: 17px; font-weight: 800; margin: 24px 0 10px; color: var(--text);
     }
-    .btn:hover { opacity: .92; transform: translateY(-1px); }
-    .btn-secondary {
-      background: color-mix(in srgb, var(--cat-bc) 14%, transparent);
-      color: var(--cat-bc); border: 1px solid color-mix(in srgb, var(--cat-bc) 35%, transparent);
+    article.session-article h4 {
+      font-size: 15px; font-weight: 700; margin: 18px 0 8px; color: var(--cat-bc);
     }
 
-    main { max-width: 1200px; margin: 0 auto; padding: 0 28px 80px; }
-    .section-title {
-      font-size: 24px; font-weight: 800; margin: 56px 0 20px;
-      border-bottom: 2px solid var(--border); padding-bottom: 12px;
-      display: flex; align-items: center; justify-content: space-between;
+    .callout {
+      padding: 14px 18px; border-radius: 8px; margin: 16px 0; font-size: 14px;
+      background: color-mix(in srgb, var(--text-faint) 10%, var(--surface));
+      border-left: 4px solid var(--text-soft);
     }
-    .part-block { margin-bottom: 32px; }
-    .part-head {
-      font-family: "JetBrains Mono", monospace; font-size: 13px; font-weight: 700;
-      color: var(--cat-bc); margin-bottom: 12px; text-transform: uppercase; letter-spacing: .06em;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .part-head::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--cat-bc); }
+    .callout-abstract, .callout-info { border-left-color: var(--cat-bc); background: color-mix(in srgb, var(--cat-bc) 10%, var(--surface)); }
+    .callout-warning { border-left-color: var(--warn); background: color-mix(in srgb, var(--warn) 10%, var(--surface)); }
+    .callout-tip, .callout-success { border-left-color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--surface)); }
+    .callout p { margin: 6px 0 0; }
 
-    .session-table {
-      width: 100%; border-collapse: collapse; background: var(--surface);
-      border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-size: 14px;
+    .table-responsive { overflow-x: auto; margin: 16px 0; }
+    .data-table {
+      width: 100%; border-collapse: collapse; font-size: 13.5px;
+      border: 1px solid var(--border); background: var(--surface);
     }
-    .session-table th, .session-table td {
-      padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border);
+    .data-table th, .data-table td {
+      padding: 10px 14px; border: 1px solid var(--border); text-align: left;
     }
-    .session-table th {
-      background: color-mix(in srgb, var(--cat-bc) 8%, var(--surface));
-      font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 700; color: var(--text);
-    }
-    .session-table tr:last-child td { border-bottom: none; }
-    .session-badge {
-      display: inline-block; font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 700;
-      padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--cat-bc) 14%, transparent);
-      color: var(--cat-bc);
+    .data-table th {
+      background: color-mix(in srgb, var(--cat-bc) 12%, var(--surface)); font-weight: 700;
     }
 
-    .code-box {
-      background: #14161c; color: #f3f1e9; padding: 20px 24px; border-radius: 12px;
-      overflow-x: auto; font-family: "JetBrains Mono", monospace; font-size: 12.5px; line-height: 1.6;
-      border: 1px solid var(--border-strong); margin: 16px 0;
+    pre {
+      background: #14161c; color: #f3f1e9; padding: 18px 20px; border-radius: 10px;
+      overflow-x: auto; font-family: "JetBrains Mono", monospace; font-size: 12.5px;
+      line-height: 1.6; border: 1px solid var(--border-strong); margin: 16px 0;
     }
-    .highlight-card {
-      background: var(--surface-raised); border: 1px solid var(--border-strong);
-      border-left: 4px solid var(--cat-bc); border-radius: 10px; padding: 20px 24px; margin: 20px 0;
-    }
-    .highlight-card h4 { margin: 0 0 8px; font-size: 16px; font-weight: 800; }
-    .highlight-card p { margin: 0; font-size: 13.5px; color: var(--text-soft); }
+    code { font-family: "JetBrains Mono", monospace; font-size: 13px; color: var(--cat-bc); }
+    pre code { color: inherit; font-size: inherit; }
 
-    @media (max-width: 640px) {
-      .session-table th:nth-child(3), .session-table td:nth-child(3) { display: none; }
+    ul, ol { padding-left: 22px; margin: 12px 0; }
+    li { margin-bottom: 6px; font-size: 14.5px; }
+
+    .btn-top {
+      display: inline-flex; align-items: center; gap: 4px; font-family: "JetBrains Mono", monospace;
+      font-size: 11.5px; font-weight: 600; color: var(--text-faint); text-decoration: none;
+      margin-top: 18px;
+    }
+    .btn-top:hover { color: var(--cat-bc); }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar { display: none; }
+      main.content { padding: 24px 20px; }
     }
   </style>
 </head>
 <body>
   <header class="top-nav">
     <a href="../index.html" class="back-link">← 김태경 교재 랩 홈으로</a>
-    <div class="nav-links">
-      <a href="#curriculum">20회차 커리큘럼</a>
-      <a href="#hardhat-dapp">Hardhat dApp 실습</a>
-      <a href="#agent-mcp">AI Agent & MCP</a>
+    <div class="nav-tabs">
+      <a href="#part1">Part 1 (1~6회차)</a>
+      <a href="#part2">Part 2 (7~10회차)</a>
+      <a href="#part3">Part 3 (11~15회차)</a>
+      <a href="#part4">Part 4 (16~20회차)</a>
+      <a href="#hardhat-lab">Hardhat dApp 실습</a>
+      <a href="#appendix-labs">CoursePoll & Guard</a>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="hero-badge">BC · 200 · AI Agent × Web3 블록체인 융합 20회차 완결 (80시간)</div>
-    <h1>AI Agent × Web3 블록체인 융합 교재 & 실습 랩</h1>
-    <p class="lead">
-      <code class="mono">LLMWiki_Obsidian_Hermes_Starter</code> 기반 공식 교재입니다.
-      블록체인 분산원장 핵심 원리부터 이더리움·Solana, Solidity 스마트컨트랙트, Hardhat 로컬 dApp 풀스택,
-      그리고 LLM Agent(Tool Calling, MCP Server)와 온체인 지갑 보안 가드레일까지 20회차 80시간 완결 커리큘럼과 실습 코드를 제공합니다.
-    </p>
-
-    <div class="feature-grid">
-      <div class="feature-card" style="border-color: var(--cat-bc);">
-        <div>
-          <span class="mono" style="font-size:11px; color:var(--cat-bc); font-weight:700;">BC · 201 | COMPREHENSIVE TEXTBOOK</span>
-          <h3>20회차 80시간 정규 교재</h3>
-          <p>분산원장, 스마트컨트랙트, DeFi/RWA, 스테이블코인, 크로스체인, DID, AI 융합까지 전 20회차 이론·강사스크립트·평가 완결</p>
-        </div>
-        <a href="#curriculum" class="btn">20회차 로드맵 확인 →</a>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-group">
+        <h4>Part 1. 기초 원리 (1~6회차)</h4>
+        <a class="sidebar-link" href="#session-1">01. 블록체인 기본 구조</a>
+        <a class="sidebar-link" href="#session-2">02. 블록체인과 코인의 관계</a>
+        <a class="sidebar-link" href="#session-3">03. 블록체인 핵심 기술</a>
+        <a class="sidebar-link" href="#session-4">04. 지갑과 사용자 인증</a>
+        <a class="sidebar-link" href="#session-5">05. 퍼블릭·프라이빗 체인</a>
+        <a class="sidebar-link" href="#session-6">06. 비트코인 개념과 UTXO</a>
       </div>
 
-      <div class="feature-card">
-        <div>
-          <span class="mono" style="font-size:11px; color:var(--cat-bc); font-weight:700;">BC · 202 | FULLSTACK DAPP LAB</span>
-          <h3>Hardhat 로컬 출석·급여 dApp</h3>
-          <p>Hardhat 3 기반 <code>AttendancePayroll.sol</code> 컨트랙트, 단위 테스트(Viem), React/MetaMask 프론트엔드 연동 실습</p>
-        </div>
-        <a href="#hardhat-dapp" class="btn btn-secondary">dApp 실습 가이드 보기 →</a>
+      <div class="sidebar-group">
+        <h4>Part 2. 이더리움 & Web3 (7~10회차)</h4>
+        <a class="sidebar-link" href="#session-7">07. 이더리움과 Web3 구조</a>
+        <a class="sidebar-link" href="#session-8">08. Solidity 스마트컨트랙트</a>
+        <a class="sidebar-link" href="#session-9">09. Web3 서비스 아키텍처</a>
+        <a class="sidebar-link" href="#session-10">10. 토큰 및 디지털 자산</a>
       </div>
 
-      <div class="feature-card">
-        <div>
-          <span class="mono" style="font-size:11px; color:var(--cat-bc); font-weight:700;">BC · 203 | AI AGENT & SECURITY</span>
-          <h3>AI Agent · RAG · MCP 온체인 지갑</h3>
-          <p>Model Context Protocol(MCP) 기반 온체인 질의·트랜잭션 시뮬레이션 및 최소권한·일일한도 지갑 안전 정책</p>
-        </div>
-        <a href="#agent-mcp" class="btn btn-secondary">Agent 연동 아키텍처 보기 →</a>
+      <div class="sidebar-group">
+        <h4>Part 3. 멀티체인 & DeFi (11~15회차)</h4>
+        <a class="sidebar-link" href="#session-11">11. Solana 구조와 Ethereum</a>
+        <a class="sidebar-link" href="#session-12">12. 온체인 금융과 토큰화</a>
+        <a class="sidebar-link" href="#session-13">13. 스테이블코인·CBDC·RWA</a>
+        <a class="sidebar-link" href="#session-14">14. 스테이블코인 설계</a>
+        <a class="sidebar-link" href="#session-15">15. 크로스체인과 확장성</a>
       </div>
-    </div>
-  </section>
 
-  <main>
-    <!-- Section 1: 20회차 커리큘럼 -->
-    <section id="curriculum">
-      <div class="section-title">
-        <span>20회차 전체 커리큘럼 로드맵 (80시간)</span>
-        <span class="mono" style="font-size: 13px; font-weight: 500; color: var(--text-soft);">이론 30% · 시연 20% · 실습 40% · 피드백 10%</span>
+      <div class="sidebar-group">
+        <h4>Part 4. AI 융합 & 보안 (16~20회차)</h4>
+        <a class="sidebar-link" href="#session-16">16. 거래소 운영과 AI 자동화</a>
+        <a class="sidebar-link" href="#session-17">17. DID와 프라이버시 보호</a>
+        <a class="sidebar-link" href="#session-18">18. AI Agent·RAG·MCP 도구</a>
+        <a class="sidebar-link" href="#session-19">19. 온체인 자동화 & 지갑보안</a>
+        <a class="sidebar-link" href="#session-20">20. AI 결제·인증 최종 프로젝트</a>
       </div>
+
+      <div class="sidebar-group">
+        <h4>실전 풀스택 dApp 랩</h4>
+        <a class="sidebar-link" href="#hardhat-lab">Hardhat 출석·급여 dApp</a>
+        <a class="sidebar-link" href="#appendix-labs">CoursePoll 투표 dApp</a>
+        <a class="sidebar-link" href="#appendix-labs">Allowance Risk Guard</a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="hero">
+        <div class="hero-badge">AI Agent × Web3 블록체인 융합 교재 · 전 20회차 완결</div>
+        <h1>AI Agent × Web3 블록체인 융합 상세 실습 교재</h1>
+        <p class="lead">
+          <code class="mono">LLMWiki_Obsidian_Hermes_Starter</code> 기반 공식 정규 교재 전문입니다.
+          중앙집중형 vs 분산원장 핵심 원리부터 Solidity 스마트컨트랙트, Hardhat 로컬 dApp 풀스택,
+          Solana 비교, DeFi/RWA, 그리고 Model Context Protocol(MCP) 기반 온체인 AI Agent와
+          최소권한 지갑 보안 가드레일까지 20회차 80시간 전과정의 이론·강사 스크립트·코드·실습 산출물을 수록했습니다.
+        </p>
+      </section>
 
       <!-- Part 1 -->
-      <div class="part-block" id="part1">
-        <div class="part-head">Part 1. 블록체인 기본 구조 & 핵심 원리 (1~6회차)</div>
-        <table class="session-table">
-          <thead>
-            <tr><th style="width:70px;">회차</th><th>주제</th><th>핵심 개념 및 강의 내용</th><th style="width:170px;">핵심 산출물</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="session-badge">01회차</span></td>
-              <td><strong>블록체인 기본 구조 이해</strong></td>
-              <td>중앙집중형 vs 분산원장, 단일 장애점(SPOF), 노드·합의 규칙, AI 윤리 2시간</td>
-              <td>블록체인 적용 판단표</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">02회차</span></td>
-              <td><strong>블록체인과 코인의 관계</strong></td>
-              <td>인센티브 구조, Sybil 공격 방어, 채굴/검증 보상, 트랜잭션 생애주기</td>
-              <td>트랜잭션 생애주기 도식</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">03회차</span></td>
-              <td><strong>블록체인 핵심 기술</strong></td>
-              <td>단방향 암호화 해시(SHA-256), 비대칭키 암호화(ECDSA), 디지털 전자서명 및 검증</td>
-              <td>서명·검증 순서도</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">04회차</span></td>
-              <td><strong>지갑과 사용자 인증</strong></td>
-              <td>개인키·공개키·지갑주소 유도, 시드문구(BIP-39), 하드웨어 지갑, AI 지갑 보안 수칙</td>
-              <td>AI 지갑 보안정책 초안</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">05회차</span></td>
-              <td><strong>퍼블릭·프라이빗·컨소시엄</strong></td>
-              <td>체인 유형별 거버넌스, 데이터 공개 범위, 트라이레마(확장성/보안/탈중앙성)</td>
-              <td>체인 유형 의사결정 메모</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">06회차</span></td>
-              <td><strong>비트코인 개념과 UTXO</strong></td>
-              <td>UTXO(미사용 트랜잭션 출력값) 모델, 잔액 계산 원리, Bitcoin Script 기초</td>
-              <td>UTXO 계산표</td>
-            </tr>
-          </tbody>
-        </table>
+      <div id="part1">
+        <h2 style="font-size:24px; font-weight:900; margin: 40px 0 24px; border-bottom:3px solid var(--cat-bc); padding-bottom:8px;">
+          Part 1. 블록체인 기본 구조 & 암호화폐 원리 (1~6회차)
+        </h2>
+
+        <article class="session-article" id="session-1">
+          <h2>1회차 — 블록체인 기본 구조 이해</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.07.22 | 기본 시수: 4시간 
+- **핵심 메시지:** 중앙집중형 시스템과 분산원장의 차이를 이해하고, 블록체인이 신뢰를 만드는 방식을 설명한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 실제 자산·개인키를 사용하지 않고 테스트넷·샘플 데이터만 사용 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<pre><code class="language-mermaid">flowchart LR
+    A[중앙형 원장] --&gt; B[단일 관리기관]
+    B --&gt; C[단일 장애점]
+    D[분산원장] --&gt; E[여러 노드의 원장 사본]
+    E --&gt; F[합의 규칙]
+    F --&gt; G[공동 검증과 변경 이력]</code></pre>
+<div class="callout callout-note"><strong>이미지 설명</strong><p>
+핵심 흐름을 수업 설명용으로 재구성한 Mermaid 도식 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>중앙집중형 시스템과 분산원장의 차이를 이해하고, 블록체인이 신뢰를 만드는 방식을 설명한다.</li>
+<li>블록체인 기본 구조 이해의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>중앙 서버와 단일 장애점</li>
+<li>분산원장과 복제본</li>
+<li>블록·트랜잭션·노드</li>
+<li>합의와 최종성</li>
+<li>불변성의 의미와 한계</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>과정 소개, 사전진단, 블록체인 경험 공유</td><td>사전진단표</td></tr>
+<tr><td>이론</td><td>50분</td><td>중앙형과 분산형 비교, 원장·노드·합의 설명</td><td>개념 메모</td></tr>
+<tr><td>시연</td><td>20분</td><td>공유 원장 역할극</td><td>관찰 기록</td></tr>
+<tr><td>실습</td><td>40분</td><td>블록체인 적용 판단표 작성</td><td>팀 산출물</td></tr>
+<tr><td>정리</td><td>10분</td><td>핵심질문 및 퀴즈</td><td>Exit ticket</td></tr>
+<tr><td>별도</td><td>120분</td><td>AI 윤리교육 별도 운영</td><td>윤리교육 이수</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+우리가 매일 사용하는 은행 앱은 중앙 서버가 원장을 관리합니다. 블록체인은 원장을 여러 참여자가 함께 보유하고 합의 규칙에 따라 갱신한다는 점이 다릅니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+블록체인의 핵심은 데이터가 절대 바뀌지 않는다는 과장이 아니라, 변경 비용을 높이고 변경 흔적을 공동 검증할 수 있게 만드는 것입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+모든 문제를 블록체인으로 해결할 필요는 없습니다. 다수 조직이 하나의 원장을 공유해야 하고 중앙 운영자를 완전히 신뢰하기 어려울 때 가치가 커집니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+학생 출석 원장을 예로 들어 중앙형, 공유형, 블록체인형 구조를 화이트보드에 비교한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h3>6. 샘플 및 예제</h3>
+<p>사례 분석 템플릿</p>
+<p>① 상황 ② 참여자 ③ 데이터 흐름 ④ 신뢰 지점 ⑤ 공격 또는 실패 가능성 ⑥ 통제 방안 ⑦ 블록체인·AI Agent 적용 타당성</p>
+<p>(file:///apps/blockchain_and_aiaGent)</p>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>3개 기관이 공동 관리하는 자격증 원장 시나리오를 작성한다.</li>
+<li>누가 데이터를 쓰고, 누가 검증하며, 오류가 났을 때 누가 책임지는지 표로 정리한다.</li>
+<li>블록체인이 필요한 이유와 필요하지 않은 이유를 각각 2개씩 작성한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. 분산원장의 핵심 특징은 무엇인가?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+여러 참여자가 동일하거나 일관된 원장 사본을 보유하고 합의 규칙에 따라 갱신한다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 블록체인이 항상 최선의 데이터베이스인가?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+아니다. 단일 조직이 완전히 통제하고 고성능·저비용이 우선이면 일반 데이터베이스가 더 적합할 수 있다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 블록체인과 코인의 관계을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="session-article" id="session-2">
+          <h2>2회차 — 블록체인과 코인의 관계</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.07.23 | 기본 시수: 4시간 
+- **핵심 메시지:** 암호화폐가 네트워크에서 수행하는 경제적 역할과 트랜잭션 흐름을 이해한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 실제 자산·개인키를 사용하지 않고 테스트넷·샘플 데이터만 사용 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<pre><code class="language-mermaid">flowchart LR
+    A[지갑에서 거래 생성] --&gt; B[개인키 서명]
+    B --&gt; C[네트워크 전파]
+    C --&gt; D[노드·검증자 검증]
+    D --&gt; E[블록 포함]
+    E --&gt; F[확인 수 증가]
+    F --&gt; G[최종성]</code></pre>
+<div class="callout callout-note"><strong>이미지 설명</strong><p>
+핵심 흐름을 수업 설명용으로 재구성한 Mermaid 도식 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>암호화폐가 네트워크에서 수행하는 경제적 역할과 트랜잭션 흐름을 이해한다.</li>
+<li>블록체인과 코인의 관계의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>네이티브 코인과 토큰</li>
+<li>수수료와 인센티브</li>
+<li>송신자·수신자·검증자</li>
+<li>멤풀과 블록 포함</li>
+<li>확인 수와 최종성</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+코인은 단순 투자상품이 아니라 네트워크의 자원 사용료와 보안 인센티브 역할을 합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+트랜잭션은 지갑에서 생성되고 서명된 뒤 네트워크에 전파됩니다. 검증자는 규칙 위반 여부를 확인하고 블록에 포함합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+거래소 내부 전송은 온체인 트랜잭션이 아닐 수 있습니다. 사용자 화면의 잔액 변화와 실제 블록체인 기록을 구분해야 합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+블록 익스플로러에서 하나의 트랜잭션을 열어 From, To, Value, Fee, Status를 읽는다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h3>6. 샘플 및 예제</h3>
+<p>사례 분석 템플릿</p>
+<p>① 상황 ② 참여자 ③ 데이터 흐름 ④ 신뢰 지점 ⑤ 공격 또는 실패 가능성 ⑥ 통제 방안 ⑦ 블록체인·AI Agent 적용 타당성</p>
+<ul>
+<li>- 2일차 실습샘플</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>샘플 트랜잭션의 생애주기를 7단계로 도식화한다.</li>
+<li>네트워크 참여자별 이익과 책임을 작성한다.</li>
+<li>온체인 전송과 거래소 내부 장부 이동을 비교한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. 네이티브 코인과 토큰의 차이는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+네이티브 코인은 해당 체인의 기본 자산이며 수수료에 사용된다. 토큰은 스마트컨트랙트나 프로그램으로 발행된다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 수수료가 필요한 이유는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+네트워크 자원 소비의 가격을 매기고 스팸을 억제하며 검증자에게 인센티브를 제공한다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 블록체인 핵심 기술을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="session-article" id="session-3">
+          <h2>3회차 — 블록체인 핵심 기술</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.07.24 | 기본 시수: 4시간 
+- **핵심 메시지:** 해시, 전자서명, 키 구조와 합의 메커니즘을 연결해 설명한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 실제 자산·개인키를 사용하지 않고 테스트넷·샘플 데이터만 사용 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>이미지 설명</strong><p>
+원본 실습교재에서 추출한 인포그래픽. 원본 파일명은 `4일차_실습샘플.docx`이지만 이미지 본문 제목이 제3장이므로 3회차에 배치했다. 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>해시, 전자서명, 키 구조와 합의 메커니즘을 연결해 설명한다.</li>
+<li>블록체인 핵심 기술의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>해시 함수</li>
+<li>공개키·개인키</li>
+<li>전자서명과 검증</li>
+<li>머클트리</li>
+<li>PoW와 PoS</li>
+<li>온체인 신뢰의 한계</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+해시는 임의 길이 입력을 고정 길이 값으로 바꾸는 지문 함수입니다. 원문 복구용 암호화와 다릅니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+전자서명은 개인키로 승인 사실을 만들고 공개키로 검증합니다. 개인키를 공개하지 않고도 소유권을 증명할 수 있습니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+합의는 누가 다음 블록을 제안하고 어떤 블록을 정식 기록으로 인정할지 결정하는 규칙입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+문자 한 글자 변경 전후의 SHA-256 결과를 비교하고 avalanche effect를 보여준다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h3>6. 샘플 및 예제</h3>
+<p>예제 3-1. 해시 변화 확인</p>
+<ul>
+<li>3일차 실습샘플</li>
+<pre><code class="language-python">import hashlib
+def sha256(text: str) -&gt; str:
+    return hashlib.sha256(text.encode(&#x27;utf-8&#x27;)).hexdigest()
+print(sha256(&#x27;blockchain&#x27;))
+print(sha256(&#x27;Blockchain&#x27;))  # 한 글자 차이로 전혀 다른 결과</code></pre>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>트랜잭션 생성→해시→서명→전파→검증 과정을 순서도로 작성한다.</li>
+<li>PoW와 PoS를 보안 자원, 에너지, 공격 비용 관점에서 비교한다.</li>
+<li>전자서명이 무결성·인증·부인방지를 어떻게 제공하는지 설명한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. 해시와 암호화의 차이는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+해시는 일반적으로 단방향 요약이며 암호화는 키를 이용해 원문 복호화를 전제로 한다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 개인키를 잃으면 왜 복구가 어려운가?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+중앙 비밀번호 재설정 기관이 없고 개인키가 자산 통제 권한 자체이기 때문이다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 지갑과 사용자 인증을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="session-article" id="session-4">
+          <h2>4회차 — 지갑과 사용자 인증</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.07.27 | 기본 시수: 4시간 
+- **핵심 메시지:** 지갑이 자산을 보관하는 것이 아니라 키를 관리한다는 점과 Agent 지갑 보안정책을 이해한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 실제 자산·개인키를 사용하지 않고 테스트넷·샘플 데이터만 사용 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<pre><code class="language-mermaid">flowchart LR
+    A[사용자] --&gt; B[지갑 소프트웨어]
+    B --&gt; C[개인키 서명]
+    C --&gt; D[dApp 요청]
+    D --&gt; E[스마트컨트랙트]
+    F[세션키] --&gt; G[시간·기능·금액 한도]
+    G --&gt; D
+    H[사용자 승인] --&gt; D</code></pre>
+<div class="callout callout-note"><strong>이미지 설명</strong><p>
+핵심 흐름을 수업 설명용으로 재구성한 Mermaid 도식 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>지갑이 자산을 보관하는 것이 아니라 키를 관리한다는 점과 Agent 지갑 보안정책을 이해한다.</li>
+<li>지갑과 사용자 인증의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>EOA와 지갑 소프트웨어</li>
+<li>시드 문구와 키 파생</li>
+<li>서명 기반 로그인</li>
+<li>하드웨어 지갑</li>
+<li>세션키와 권한 위임</li>
+<li>AI Agent 최소권한</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+지갑 안에 코인이 들어 있다는 표현은 편의상 말입니다. 실제 자산 상태는 체인에 있고 지갑은 해당 상태를 변경할 수 있는 키를 관리합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+AI Agent에 개인키를 직접 넘기는 설계는 위험합니다. 제한된 세션키, 금액 한도, 허용 주소, 사용자 재승인 같은 통제가 필요합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+서명 로그인은 비밀번호를 서버에 저장하지 않고 주소 소유권을 증명할 수 있지만, 피싱 메시지 서명 위험을 반드시 교육해야 합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+Sign-In with Ethereum 형태의 로그인 메시지를 읽고 도메인, nonce, 만료시간을 확인한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h3>6. 샘플 및 예제</h3>
+<p>사례 분석 템플릿</p>
+<p>① 상황 ② 참여자 ③ 데이터 흐름 ④ 신뢰 지점 ⑤ 공격 또는 실패 가능성 ⑥ 통제 방안 ⑦ 블록체인·AI Agent 적용 타당성</p>
+<p>-4일차 실습샘플</p>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>개인 지갑, 커스터디 지갑, 스마트계정 지갑의 책임 모델을 비교한다.</li>
+<li>AI Agent가 사용할 수 있는 권한정책 8개를 작성한다.</li>
+<li>피싱 서명 요청을 판별하는 체크리스트를 만든다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. 지갑이 실제로 저장하는 핵심 정보는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+자산 자체가 아니라 개인키·시드 또는 이를 안전하게 사용할 수 있는 접근수단이다. 
+</p></div>
+<div class="callout callout-question"><strong>2. Agent에 무제한 키를 주면 안 되는 이유는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+오류·프롬프트 인젝션·도구 오작동이 곧 자산 손실로 이어질 수 있기 때문이다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 퍼블릭·프라이빗·컨소시엄 블록체인을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="session-article" id="session-5">
+          <h2>5회차 — 퍼블릭·프라이빗·컨소시엄 블록체인</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.07.28 | 기본 시수: 4시간 
+- **핵심 메시지:** 참여권한과 거버넌스에 따라 블록체인 유형을 선택한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 실제 자산·개인키를 사용하지 않고 테스트넷·샘플 데이터만 사용 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>이미지 설명</strong><p>
+원본 실습교재에서 추출한 인포그래픽 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>참여권한과 거버넌스에 따라 블록체인 유형을 선택한다.</li>
+<li>퍼블릭·프라이빗·컨소시엄 블록체인의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>Permissionless와 Permissioned</li>
+<li>거버넌스</li>
+<li>성능·투명성·검열저항</li>
+<li>컨소시엄 운영</li>
+<li>접근제어와 감사</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+퍼블릭 체인은 누구나 검증과 조회에 참여할 수 있는 개방성이 장점입니다. 반면 규제·개인정보·성능 요구가 강한 조직 환경에서는 권한형 원장이 적합할 수 있습니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+컨소시엄 블록체인은 여러 기관이 공동 운영하므로 단일 기관 독점은 줄지만 참여기관 간 규칙과 책임 합의가 핵심입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>보완 질문 — 거버넌스 실패</h4>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“컨소시엄 참여기관들이 데이터 수정, 신규 참여, 장애 책임에 합의하지 못하면 기술적으로 정상인 원장도 운영될 수 있을까요?” 
+</p></div>
+<div class="callout callout-tip"><strong>강사 해설 포인트</strong><p>
+기술 선택보다 참여기관의 권한·책임·분쟁 해결 절차를 먼저 설계해야 한다는 점을 강조한다. 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+공급망 추적 서비스를 세 유형으로 설계하고 장단점을 비교한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h3>6. 샘플 및 예제</h3>
+<p>사례 분석 템플릿</p>
+<p>① 상황 ② 참여자 ③ 데이터 흐름 ④ 신뢰 지점 ⑤ 공격 또는 실패 가능성 ⑥ 통제 방안 ⑦ 블록체인·AI Agent 적용 타당성</p>
+<ul>
+<li>5일차 실습샘플설명</li>
+<li>5일차 시뮬레이션웹</li>
+<li>5일차 시뮬레이션웹설명가이드</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>공공기관 증명서, 게임 아이템, 은행 간 정산 사례별 적합한 체인을 고른다.</li>
+<li>노드 참여, 데이터 조회, 트랜잭션 작성 권한을 역할별로 설계한다.</li>
+<li>선택 근거를 1쪽 의사결정 메모로 작성한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. 컨소시엄 체인의 핵심은?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+복수 조직이 사전에 합의한 권한과 거버넌스로 공동 운영하는 것이다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 퍼블릭 체인의 대표 장점은?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+개방성, 검열저항, 공개 검증 가능성이다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 비트코인 개념과 UTXO을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="session-article" id="session-6">
+          <h2>6회차 — 비트코인 개념과 UTXO</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.07.29 | 기본 시수: 4시간 
+- **핵심 메시지:** UTXO 모델과 비트코인 트랜잭션의 입력·출력 구조를 이해한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 실제 자산·개인키를 사용하지 않고 테스트넷·샘플 데이터만 사용 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>이미지 설명</strong><p>
+원본 실습교재에서 추출한 인포그래픽 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>UTXO 모델과 비트코인 트랜잭션의 입력·출력 구조를 이해한다.</li>
+<li>비트코인 개념과 UTXO의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>UTXO</li>
+<li>입력과 출력</li>
+<li>거스름돈</li>
+<li>수수료 계산</li>
+<li>확인과 재조직</li>
+<li>스크립트 조건</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+UTXO는 계좌 잔액 한 줄이 아니라 아직 사용되지 않은 출력 조각들의 집합입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+10 BTC 조각에서 3 BTC를 보내면 보통 3 BTC 수신 출력과 나머지 거스름돈 출력이 새로 만들어집니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+수수료는 입력 합계에서 출력 합계를 뺀 값이며, 단순히 전송금액의 일정 비율이 아닙니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+입력 0.8 BTC 두 개로 1.1 BTC를 보내는 경우 수신·거스름돈·수수료를 계산한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h3>6. 샘플 및 예제</h3>
+<p>예제 6-1. UTXO 수수료 계산</p>
+<p>입력 UTXO: 0.80 BTC + 0.80 BTC = 1.60 BTC</p>
+<p>수신 출력: 1.10 BTC</p>
+<p>거스름돈 출력: 0.4995 BTC</p>
+<p>수수료: 0.0005 BTC</p>
+<p>검산: 1.60 - (1.10 + 0.4995) = 0.0005 BTC</p>
+<ul>
+<li>6일차 실습설명</li>
+<li>6일차 시뮬레이션웹</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>UTXO 3개를 이용해 목표 금액을 만드는 coin selection 문제를 푼다.</li>
+<li>계정 모델과 UTXO 모델의 병렬처리·프라이버시·개발편의성을 비교한다.</li>
+<li>블록 익스플로러에서 input/output을 찾아 표로 정리한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. UTXO 잔액은 어떻게 계산하는가?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+해당 주소가 통제 가능한 미사용 출력들의 합으로 계산한다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 거스름돈 주소가 필요한 이유는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+UTXO는 일부만 잘라 쓰지 않고 전체를 소비한 뒤 남는 값을 새 출력으로 되돌리기 때문이다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 이더리움과 Web3 구조을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
       </div>
 
       <!-- Part 2 -->
-      <div class="part-block" id="part2">
-        <div class="part-head">Part 2. 이더리움, Solidity 스마트컨트랙트 & Web3 풀스택 (7~10회차)</div>
-        <table class="session-table">
-          <thead>
-            <tr><th style="width:70px;">회차</th><th>주제</th><th>핵심 개념 및 강의 내용</th><th style="width:170px;">핵심 산출물</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="session-badge">07회차</span></td>
-              <td><strong>이더리움과 Web3 구조</strong></td>
-              <td>EVM(가상머신), Gas(가스비) 메커니즘, EOA와 CA 계정 구조, Hardhat 로컬 노드 가동</td>
-              <td>dApp 아키텍처 구조도</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">08회차</span></td>
-              <td><strong>Solidity 스마트컨트랙트 실습</strong></td>
-              <td>Solidity 문법, <code>AttendancePayroll.sol</code> 작성, require 검증, 이벤트 발행, 단위 테스트</td>
-              <td>Solidity 컨트랙트 코드</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">09회차</span></td>
-              <td><strong>Web3 서비스 아키텍처</strong></td>
-              <td>JSON-RPC, Viem 라이브러리, MetaMask 지갑 연결, React 프론트엔드 출퇴근 UI</td>
-              <td>Web3 풀스택 dApp MVP</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">10회차</span></td>
-              <td><strong>토큰 및 디지털 자산</strong></td>
-              <td>ERC-20 대체가능 토큰 표준, ERC-721/ERC-1155 NFT 표준, 메타데이터 구조</td>
-              <td>토큰 표준 비교 보고서</td>
-            </tr>
-          </tbody>
-        </table>
+      <div id="part2">
+        <h2 style="font-size:24px; font-weight:900; margin: 56px 0 24px; border-bottom:3px solid var(--cat-bc); padding-bottom:8px;">
+          Part 2. 이더리움, Solidity 스마트컨트랙트 & Web3 풀스택 (7~10회차)
+        </h2>
+
+        <article class="session-article" id="session-7">
+          <h2>7회차 — 이더리움과 Web3 구조</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.07.30 | 기본 시수: 4시간 
+- **핵심 메시지:** 계정 모델, EVM, 가스, dApp 구성요소를 이해한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **실습 환경:** Chrome/Edge · 테스트 지갑 · localhost · 테스트넷 또는 샘플 데이터 
+- **안전 원칙:** 실제 자산·시드문구·개인키를 사용하지 않음 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>활용 방법</strong><p>
+위에서 아래 또는 왼쪽에서 오른쪽으로 각 상자를 설명한 뒤, 학습자가 입력·상태변경·출력·위험지점을 표시하게 합니다. 
+</p></div>
+<h4>CoursePoll 온체인 투표 dApp 전체 요청 흐름</h4>
+<div class="callout callout-example"><strong>시연 관찰 포인트</strong><p>
+지갑 승인, Provider/RPC 전달, 컨트랙트 실행, 트랜잭션 확인 또는 권한 철회가 어느 단계에서 일어나는지 추적합니다. 
+</p></div>
+<h3>Hardhat dApp 연계 배치 — 7회차 맛보기</h3>
+<div class="callout callout-tip"><strong>편성 의도</strong><p>
+이 회차에서는 Hardhat dApp 전체를 구현하지 않고, 다음 회차 본 실습을 위한 **구조 이해와 로컬 네트워크 연결**만 다룹니다. 
+</p></div>
+<ul>
+<li>연계 자료: Hardhat dApp 7~9회차 + 20회차 편성안</li>
+<li>실습 가이드: Hardhat 기반 로컬 네트워크 출석관리 dApp 실습 가이드</li>
+</ul>
+<h4>권장 활동</h4>
+<ol>
+<li>EOA와 Contract Account 차이 설명</li>
+<li>RPC와 Hardhat local network 역할 설명</li>
+<li>MetaMask에 Hardhat Local 네트워크 추가 시연</li>
+<li>Hardhat 기본 계정과 MetaMask 계정 불일치가 만드는 오류 예고</li>
+<li>8회차에서 만들 <code>AttendancePayroll</code> dApp 구조 미리보기</li>
+</ol>
+<h4>산출물</h4>
+<ul>
+<li>학습자별 Hardhat Local 네트워크 연결 체크</li>
+<li>EOA / Contract Account / RPC 관찰표</li>
+<li>다음 회차 실습 전 환경 점검 결과</li>
+</ul>
+<h3>1. 학습목표</h3>
+<ul>
+<li>계정 모델, EVM, 가스, dApp 구성요소를 이해한다.</li>
+<li>이더리움과 Web3 구조의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>EOA와 Contract Account</li>
+<li>상태 전이</li>
+<li>EVM</li>
+<li>Gas와 Gas Limit</li>
+<li>ABI</li>
+<li>dApp과 RPC</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+이더리움은 계정의 잔액과 상태를 직접 갱신하는 계정 기반 모델입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+스마트컨트랙트는 EVM에서 실행되는 결정론적 프로그램이며, 상태 변경에는 가스가 필요합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+프론트엔드는 체인에 직접 연결되는 것이 아니라 지갑과 RPC Provider를 통해 요청을 전달합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+Counter 컨트랙트 호출 시 read 호출과 write 트랜잭션의 차이를 보여준다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>공통 오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>증상</th><th>먼저 확인할 항목</th><th>강사 대응</th></tr>
+<tr><td>지갑이 연결되지 않음</td><td>브라우저 확장·잠금 상태</td><td>지갑 잠금 해제 후 새로고침</td></tr>
+<tr><td>잘못된 네트워크</td><td>체인 ID·선택 네트워크</td><td>테스트넷으로 전환</td></tr>
+<tr><td>트랜잭션 거부</td><td>사용자 거부·가스·잔액</td><td>오류 원인을 읽고 재승인하지 말고 설명</td></tr>
+<tr><td>화면 데이터 불일치</td><td>컨트랙트 주소·ABI·RPC</td><td>주소·배포 네트워크·ABI를 순서대로 확인</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>사례 분석 템플릿</p>
+<p>① 상황 ② 참여자 ③ 데이터 흐름 ④ 신뢰 지점 ⑤ 공격 또는 실패 가능성 ⑥ 통제 방안 ⑦ 블록체인·AI Agent 적용 타당성</p>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 폴더 구조를 유지하십시오. HTML dApp은 `file://` 대신 `localhost` 서버 실행을 권장합니다. 실제 자산·개인키는 사용하지 않습니다. 
+</p></div>
+<ul>
+<li>7일차 상세 실습교재 열기</li>
+<li>7일차 웹 시뮬레이터 실행</li>
+<li>Ethereum dApp 2종 상세 실습교재 열기</li>
+<li>Ethereum dApp 2종 전체 실행코드 열기</li>
+<li>CoursePoll dApp 실행 안내 열기</li>
+<li>CoursePoll 웹 프론트엔드 열기</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>EOA가 컨트랙트를 호출하는 과정을 8단계로 작성한다.</li>
+<li>ABI가 왜 필요한지 JSON 예시로 설명한다.</li>
+<li>간단한 투표 dApp의 구성요소를 그린다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. 가스의 목적은?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+연산과 저장공간에 비용을 부과해 자원 배분과 무한루프·스팸을 방지한다. 
+</p></div>
+<div class="callout callout-question"><strong>2. read 호출과 write 호출의 차이는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+read는 상태를 변경하지 않아 로컬 조회가 가능하지만 write는 서명된 트랜잭션과 가스가 필요하다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 Solidity 스마트컨트랙트 실습을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>수업 전 실행 점검</h3>
+<ul>
+<li>[ ] 상세 실습교재가 열리는가?</li>
+<li>[ ] HTML 시뮬레이터 또는 dApp이 localhost에서 실행되는가?</li>
+<li>[ ] 지갑 네트워크와 테스트 계정이 올바른가?</li>
+<li>[ ] 컨트랙트 주소·ABI·RPC가 같은 네트워크 기준인가?</li>
+<li>[ ] 오류 시연용 사례와 복구 절차가 준비됐는가?</li>
+<li>[ ] 실제 자산·개인키·시드문구가 자료에 포함되지 않았는가?</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="session-article" id="session-8">
+          <h2>8회차 — Solidity 스마트컨트랙트 실습</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.07.31 | 기본 시수: 4시간 
+- **핵심 메시지:** Remix에서 기본 컨트랙트를 작성·배포·테스트하고 LLM으로 코드 리뷰한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **실습 환경:** Chrome/Edge · 테스트 지갑 · localhost · 테스트넷 또는 샘플 데이터 
+- **안전 원칙:** 실제 자산·시드문구·개인키를 사용하지 않음 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>활용 방법</strong><p>
+위에서 아래 또는 왼쪽에서 오른쪽으로 각 상자를 설명한 뒤, 학습자가 입력·상태변경·출력·위험지점을 표시하게 합니다. 
+</p></div>
+<h4>CoursePoll read/write 흐름</h4>
+<div class="callout callout-example"><strong>시연 관찰 포인트</strong><p>
+지갑 승인, Provider/RPC 전달, 컨트랙트 실행, 트랜잭션 확인 또는 권한 철회가 어느 단계에서 일어나는지 추적합니다. 
+</p></div>
+<h4>Allowance Risk Guard 승인·사용·철회 흐름</h4>
+<div class="callout callout-example"><strong>시연 관찰 포인트</strong><p>
+지갑 승인, Provider/RPC 전달, 컨트랙트 실행, 트랜잭션 확인 또는 권한 철회가 어느 단계에서 일어나는지 추적합니다. 
+</p></div>
+<h3>Hardhat dApp 연계 배치 — 8회차 본편</h3>
+<div class="callout callout-tip"><strong>편성 의도</strong><p>
+이 회차가 Hardhat dApp 실습의 **핵심 본편**입니다. Remix 중심의 기본 Solidity 실습을 넘어, Hardhat 프로젝트 구조와 테스트 기반 개발 흐름으로 확장합니다. 
+</p></div>
+<ul>
+<li>연계 자료: Hardhat dApp 7~9회차 + 20회차 편성안</li>
+<li>실습 가이드: Hardhat 기반 로컬 네트워크 출석관리 dApp 실습 가이드</li>
+</ul>
+<h4>권장 활동</h4>
+<ol>
+<li>Hardhat 프로젝트 초기화와 기본 compile/test 확인</li>
+<li><code>AttendancePayroll.sol</code> 작성</li>
+<li>관리자 전용 직원 등록 기능 구현</li>
+<li>출근·퇴근·근무시간·미지급 급여 계산 구현</li>
+<li>Hardhat + Viem 기반 단위 테스트와 통합 테스트 실행</li>
+</ol>
+<h4>산출물</h4>
+<ul>
+<li><code>AttendancePayroll.sol</code></li>
+<li><code>01-register-employee.ts</code> ~ <code>06-integration.ts</code> 테스트 파일</li>
+<li>정상/실패 케이스 테스트 결과</li>
+<li>보안 검토 메모: 권한, 재진입, 실제 개인정보 금지</li>
+</ul>
+<h3>1. 학습목표</h3>
+<ul>
+<li>Remix에서 기본 컨트랙트를 작성·배포·테스트하고 LLM으로 코드 리뷰한다.</li>
+<li>Solidity 스마트컨트랙트 실습의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>상태변수와 함수</li>
+<li>visibility</li>
+<li>event</li>
+<li>modifier</li>
+<li>storage·memory·calldata</li>
+<li>require와 custom error</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+상태변수는 영구 저장되므로 비용이 큽니다. 지역변수와 calldata를 적절히 사용해야 합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+이벤트는 체인 상태 자체가 아니라 외부 서비스가 트랜잭션 결과를 추적하기 위한 로그입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+LLM의 취약점 분석은 후보 탐지 도구일 뿐 감사 결과가 아닙니다. 반드시 테스트와 전문가 검토가 필요합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+SimpleStorage와 Counter를 작성해 컴파일, 배포, 함수 호출, 이벤트 확인을 시연한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>공통 오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>증상</th><th>먼저 확인할 항목</th><th>강사 대응</th></tr>
+<tr><td>지갑이 연결되지 않음</td><td>브라우저 확장·잠금 상태</td><td>지갑 잠금 해제 후 새로고침</td></tr>
+<tr><td>잘못된 네트워크</td><td>체인 ID·선택 네트워크</td><td>테스트넷으로 전환</td></tr>
+<tr><td>트랜잭션 거부</td><td>사용자 거부·가스·잔액</td><td>오류 원인을 읽고 재승인하지 말고 설명</td></tr>
+<tr><td>화면 데이터 불일치</td><td>컨트랙트 주소·ABI·RPC</td><td>주소·배포 네트워크·ABI를 순서대로 확인</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>예제 8-1. Counter 컨트랙트</p>
+<pre><code class="language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract Counter {
+    uint256 public count;
+    address public immutable owner;
+
+    event CountChanged(uint256 newCount, address indexed caller);
+
+    constructor() { owner = msg.sender; }
+
+    function increment() external {
+        count += 1;
+        emit CountChanged(count, msg.sender);
+    }
+
+    function reset() external {
+        require(msg.sender == owner, &#x27;not owner&#x27;);
+        count = 0;
+        emit CountChanged(0, msg.sender);
+    }
+}</code></pre>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 폴더 구조를 유지하십시오. HTML dApp은 `file://` 대신 `localhost` 서버 실행을 권장합니다. 실제 자산·개인키는 사용하지 않습니다. 
+</p></div>
+<ul>
+<li>8일차 상세 실습교재 열기</li>
+<li>8일차 웹 시뮬레이터 실행</li>
+<li>Ethereum dApp 2종 상세 실습교재 열기</li>
+<li>Ethereum dApp 2종 전체 실행코드 열기</li>
+<li>CoursePoll dApp 실행 안내 열기</li>
+<li>CoursePoll 웹 프론트엔드 열기</li>
+<li>Allowance Risk Guard 실행 안내 열기</li>
+<li>Allowance Risk Guard 웹 프론트엔드 열기</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>SimpleStorage를 작성한다.</li>
+<li>Counter에 owner 전용 reset 기능과 이벤트를 추가한다.</li>
+<li>LLM에게 재진입, 접근제어, 입력검증 관점의 리뷰를 요청하고 결과를 검증한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. calldata의 특징은?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+외부 함수 인자의 읽기 전용 영역으로 복사 비용을 줄일 수 있다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 이벤트를 상태 저장 대신 사용할 수 있는가?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+외부 추적에는 유용하지만 컨트랙트 내부에서 직접 조회할 상태를 완전히 대체하지는 못한다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 Web3 서비스 아키텍처을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>수업 전 실행 점검</h3>
+<ul>
+<li>[ ] 상세 실습교재가 열리는가?</li>
+<li>[ ] HTML 시뮬레이터 또는 dApp이 localhost에서 실행되는가?</li>
+<li>[ ] 지갑 네트워크와 테스트 계정이 올바른가?</li>
+<li>[ ] 컨트랙트 주소·ABI·RPC가 같은 네트워크 기준인가?</li>
+<li>[ ] 오류 시연용 사례와 복구 절차가 준비됐는가?</li>
+<li>[ ] 실제 자산·개인키·시드문구가 자료에 포함되지 않았는가?</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="session-article" id="session-9">
+          <h2>9회차 — Web3 서비스 아키텍처</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.08.03 | 기본 시수: 4시간 
+- **핵심 메시지:** Frontend·Wallet·Contract·Backend·Indexer·Agent를 연결한 아키텍처를 설계한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **실습 환경:** Chrome/Edge · 테스트 지갑 · localhost · 테스트넷 또는 샘플 데이터 
+- **안전 원칙:** 실제 자산·시드문구·개인키를 사용하지 않음 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>활용 방법</strong><p>
+위에서 아래 또는 왼쪽에서 오른쪽으로 각 상자를 설명한 뒤, 학습자가 입력·상태변경·출력·위험지점을 표시하게 합니다. 
+</p></div>
+<h4>프론트엔드·지갑·RPC·컨트랙트 연결 흐름</h4>
+<div class="callout callout-example"><strong>시연 관찰 포인트</strong><p>
+지갑 승인, Provider/RPC 전달, 컨트랙트 실행, 트랜잭션 확인 또는 권한 철회가 어느 단계에서 일어나는지 추적합니다. 
+</p></div>
+<h3>Hardhat dApp 연계 배치 — 9회차 프론트엔드 연결</h3>
+<div class="callout callout-tip"><strong>편성 의도</strong><p>
+이 회차에서는 8회차에서 만든 스마트컨트랙트를 웹 dApp으로 연결합니다. 핵심은 **Frontend–Wallet–RPC–Contract** 흐름을 실제 버튼과 트랜잭션으로 확인하는 것입니다. 
+</p></div>
+<ul>
+<li>연계 자료: Hardhat dApp 7~9회차 + 20회차 편성안</li>
+<li>실습 가이드: Hardhat 기반 로컬 네트워크 출석관리 dApp 실습 가이드</li>
+</ul>
+<h4>권장 활동</h4>
+<ol>
+<li>Vite React TypeScript 프론트엔드 생성</li>
+<li>ABI와 배포 주소 연결</li>
+<li>Viem으로 read/write 함수 호출</li>
+<li>MetaMask 연결과 계정 역할 전환</li>
+<li>직원 등록·출근·퇴근·급여 지급 버튼 구현</li>
+<li>트랜잭션 receipt와 화면 상태 갱신 확인</li>
+</ol>
+<h4>산출물</h4>
+<ul>
+<li>React/Vite 프론트엔드</li>
+<li>ABI 연결 설정</li>
+<li>MetaMask 연결 화면</li>
+<li>직원 등록·출근·퇴근·급여 지급 시연 캡처</li>
+<li>네트워크/계정/컨트랙트 주소 오류 대응표</li>
+</ul>
+<h3>1. 학습목표</h3>
+<ul>
+<li>Frontend·Wallet·Contract·Backend·Indexer·Agent를 연결한 아키텍처를 설계한다.</li>
+<li>Web3 서비스 아키텍처의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>온체인·오프체인 분리</li>
+<li>RPC Provider</li>
+<li>Indexer</li>
+<li>Event Listener</li>
+<li>The Graph</li>
+<li>백엔드 서명자</li>
+<li>Agent Tool Layer</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+모든 데이터를 온체인에 저장하면 비용과 개인정보 문제가 커집니다. 검증이 필요한 핵심 상태만 온체인에 두고 나머지는 오프체인에 둡니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+RPC는 노드 기능에 접근하는 인터페이스이고 Indexer는 조회 친화적 형태로 체인 데이터를 가공합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+Agent는 직접 키를 소유하기보다 정책 엔진과 트랜잭션 시뮬레이터를 거쳐 실행해야 합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+NFT 자격증 검증 서비스의 전체 요청 흐름을 시퀀스 다이어그램으로 그린다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>공통 오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>증상</th><th>먼저 확인할 항목</th><th>강사 대응</th></tr>
+<tr><td>지갑이 연결되지 않음</td><td>브라우저 확장·잠금 상태</td><td>지갑 잠금 해제 후 새로고침</td></tr>
+<tr><td>잘못된 네트워크</td><td>체인 ID·선택 네트워크</td><td>테스트넷으로 전환</td></tr>
+<tr><td>트랜잭션 거부</td><td>사용자 거부·가스·잔액</td><td>오류 원인을 읽고 재승인하지 말고 설명</td></tr>
+<tr><td>화면 데이터 불일치</td><td>컨트랙트 주소·ABI·RPC</td><td>주소·배포 네트워크·ABI를 순서대로 확인</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>예제 9-1. Web3 + Agent 요청 흐름</p>
+<p>사용자 → Web Frontend → Wallet 서명</p>
+<p>→ RPC Provider → Smart Contract</p>
+<p>→ Event Log → Indexer/Backend</p>
+<p>→ Agent Tool → Risk Policy Engine</p>
+<p>→ 설명 리포트 → 사용자 승인</p>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 폴더 구조를 유지하십시오. HTML dApp은 `file://` 대신 `localhost` 서버 실행을 권장합니다. 실제 자산·개인키는 사용하지 않습니다. 
+</p></div>
+<ul>
+<li>9일차 상세 실습교재 열기</li>
+<li>9일차 웹 시뮬레이터 실행</li>
+<li>Ethereum dApp 2종 상세 실습교재 열기</li>
+<li>Ethereum dApp 2종 전체 실행코드 열기</li>
+<li>CoursePoll dApp 실행 안내 열기</li>
+<li>CoursePoll 웹 프론트엔드 열기</li>
+<li>Allowance Risk Guard 실행 안내 열기</li>
+<li>Allowance Risk Guard 웹 프론트엔드 열기</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>사용자 질문→RAG→체인조회→위험평가→응답 흐름을 설계한다.</li>
+<li>온체인 저장 항목과 오프체인 저장 항목을 구분한다.</li>
+<li>장애 지점과 재시도 정책을 작성한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. Indexer가 필요한 이유는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+원시 블록·로그를 서비스 조회 목적에 맞게 빠르고 편리하게 검색하기 위해서다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 백엔드 개인키 운영 시 핵심 통제는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+KMS/HSM, 최소권한, 다중승인, 한도, 감사로그, 키회전 등이다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 토큰 및 디지털 자산을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>수업 전 실행 점검</h3>
+<ul>
+<li>[ ] 상세 실습교재가 열리는가?</li>
+<li>[ ] HTML 시뮬레이터 또는 dApp이 localhost에서 실행되는가?</li>
+<li>[ ] 지갑 네트워크와 테스트 계정이 올바른가?</li>
+<li>[ ] 컨트랙트 주소·ABI·RPC가 같은 네트워크 기준인가?</li>
+<li>[ ] 오류 시연용 사례와 복구 절차가 준비됐는가?</li>
+<li>[ ] 실제 자산·개인키·시드문구가 자료에 포함되지 않았는가?</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="session-article" id="session-10">
+          <h2>10회차 — 토큰 및 디지털 자산</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.08.04 | 기본 시수: 4시간 
+- **핵심 메시지:** ERC-20·721·1155와 SPL Token을 비교하고 승인 위험을 이해한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **실습 환경:** Chrome/Edge · 테스트 지갑 · localhost · 테스트넷 또는 샘플 데이터 
+- **안전 원칙:** 실제 자산·시드문구·개인키를 사용하지 않음 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>활용 방법</strong><p>
+위에서 아래 또는 왼쪽에서 오른쪽으로 각 상자를 설명한 뒤, 학습자가 입력·상태변경·출력·위험지점을 표시하게 합니다. 
+</p></div>
+<h4>ERC-20 allowance 위험 분석 흐름</h4>
+<div class="callout callout-example"><strong>시연 관찰 포인트</strong><p>
+지갑 승인, Provider/RPC 전달, 컨트랙트 실행, 트랜잭션 확인 또는 권한 철회가 어느 단계에서 일어나는지 추적합니다. 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>ERC-20·721·1155와 SPL Token을 비교하고 승인 위험을 이해한다.</li>
+<li>토큰 및 디지털 자산의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>Fungible·NFT·Multi-token</li>
+<li>mint·burn·transfer</li>
+<li>approve·allowance</li>
+<li>operator approval</li>
+<li>metadata</li>
+<li>custody</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+ERC-20은 대체 가능한 자산, ERC-721은 고유 자산, ERC-1155는 여러 유형을 하나의 컨트랙트에서 관리하기 위한 표준입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+approve는 즉시 전송이 아니라 제3자가 나중에 transferFrom을 실행할 수 있는 권한을 줍니다. 무제한 승인은 큰 위험입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+토큰 발행은 기술 문제만이 아니라 권리, 회계, 규제, 준비금, 운영 통제를 함께 설계해야 합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+승인된 spender가 transferFrom으로 토큰을 이동시키는 흐름을 설명한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>공통 오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>증상</th><th>먼저 확인할 항목</th><th>강사 대응</th></tr>
+<tr><td>지갑이 연결되지 않음</td><td>브라우저 확장·잠금 상태</td><td>지갑 잠금 해제 후 새로고침</td></tr>
+<tr><td>잘못된 네트워크</td><td>체인 ID·선택 네트워크</td><td>테스트넷으로 전환</td></tr>
+<tr><td>트랜잭션 거부</td><td>사용자 거부·가스·잔액</td><td>오류 원인을 읽고 재승인하지 말고 설명</td></tr>
+<tr><td>화면 데이터 불일치</td><td>컨트랙트 주소·ABI·RPC</td><td>주소·배포 네트워크·ABI를 순서대로 확인</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>사례 분석 템플릿</p>
+<p>① 상황 ② 참여자 ③ 데이터 흐름 ④ 신뢰 지점 ⑤ 공격 또는 실패 가능성 ⑥ 통제 방안 ⑦ 블록체인·AI Agent 적용 타당성</p>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 폴더 구조를 유지하십시오. HTML dApp은 `file://` 대신 `localhost` 서버 실행을 권장합니다. 실제 자산·개인키는 사용하지 않습니다. 
+</p></div>
+<ul>
+<li>10일차 상세 실습교재 열기</li>
+<li>10일차 웹 시뮬레이터 실행</li>
+<li>Ethereum dApp 2종 상세 실습교재 열기</li>
+<li>Ethereum dApp 2종 전체 실행코드 열기</li>
+<li>Allowance Risk Guard 실행 안내 열기</li>
+<li>Allowance Risk Guard 웹 프론트엔드 열기</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>ERC-20과 SPL Token 구조 비교표를 작성한다.</li>
+<li>무제한 allowance 탐지 규칙을 설계한다.</li>
+<li>디지털 자산 커스터디 운영 체크리스트를 만든다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. approve와 transfer의 차이는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+transfer는 직접 전송이고 approve는 spender에게 향후 인출 권한을 부여한다. 
+</p></div>
+<div class="callout callout-question"><strong>2. ERC-1155 장점은?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+여러 토큰 유형을 한 컨트랙트에서 효율적으로 관리하고 배치 전송할 수 있다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 Solana 구조와 Ethereum 비교을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>수업 전 실행 점검</h3>
+<ul>
+<li>[ ] 상세 실습교재가 열리는가?</li>
+<li>[ ] HTML 시뮬레이터 또는 dApp이 localhost에서 실행되는가?</li>
+<li>[ ] 지갑 네트워크와 테스트 계정이 올바른가?</li>
+<li>[ ] 컨트랙트 주소·ABI·RPC가 같은 네트워크 기준인가?</li>
+<li>[ ] 오류 시연용 사례와 복구 절차가 준비됐는가?</li>
+<li>[ ] 실제 자산·개인키·시드문구가 자료에 포함되지 않았는가?</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
       </div>
 
       <!-- Part 3 -->
-      <div class="part-block" id="part3">
-        <div class="part-head">Part 3. 멀티체인, DeFi, 스테이블코인 & 크로스체인 (11~15회차)</div>
-        <table class="session-table">
-          <thead>
-            <tr><th style="width:70px;">회차</th><th>주제</th><th>핵심 개념 및 강의 내용</th><th style="width:170px;">핵심 산출물</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="session-badge">11회차</span></td>
-              <td><strong>Solana 구조와 Ethereum 비교</strong></td>
-              <td>역사증명(PoH), Sealevel 병렬 처리, 계정 모델 차이, 트랜잭션 수수료 구조</td>
-              <td>Solana 트랜잭션 분석표</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">12회차</span></td>
-              <td><strong>온체인 금융과 토큰화</strong></td>
-              <td>DeFi 기본 원리(AMM DEX, 유동성 풀, 초과담보 대출), RWA(실물자산 토큰화)</td>
-              <td>DeFi / RWA 기획안</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">13회차</span></td>
-              <td><strong>스테이블코인·CBDC·STO·RWA</strong></td>
-              <td>법정화폐 담보(USDT/USDC), 크립토 담보, 알고리즘 스테이블코인, 증권형 토큰</td>
-              <td>디지털 화폐 비교표</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">14회차</span></td>
-              <td><strong>스테이블코인 컨트랙트 설계</strong></td>
-              <td>페깅 유지 알고리즘, 오라클 가격 피드, 디페깅 및 청산 위험 시뮬레이션</td>
-              <td>스테이블코인 위험분석서</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">15회차</span></td>
-              <td><strong>크로스체인과 확장성</strong></td>
-              <td>Layer 2 롤업(Optimistic, ZK), 인터체인 브릿지 프로토콜 및 해킹 위험 분석</td>
-              <td>브릿지 위험 프롬프트</td>
-            </tr>
-          </tbody>
-        </table>
+      <div id="part3">
+        <h2 style="font-size:24px; font-weight:900; margin: 56px 0 24px; border-bottom:3px solid var(--cat-bc); padding-bottom:8px;">
+          Part 3. 멀티체인, DeFi, 스테이블코인 & 크로스체인 (11~15회차)
+        </h2>
+
+        <article class="session-article" id="session-11">
+          <h2>11회차 — Solana 구조와 Ethereum 비교</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.08.05 | 기본 시수: 4시간 
+- **핵심 메시지:** Solana Account·Program·Instruction·PDA·CPI 구조를 이해한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 읽기·쓰기 도구 분리, 최소권한, 테스트넷·샘플 데이터, 사용자 승인, 감사로그 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>강사 활용</strong><p>
+흐름도의 각 상자를 입력·처리·출력·신뢰지점·실패지점으로 구분하여 설명하고, 학습자가 위험 통제를 표시하게 합니다. 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>Solana Account·Program·Instruction·PDA·CPI 구조를 이해한다.</li>
+<li>Solana 구조와 Ethereum 비교의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>Program과 Account 분리</li>
+<li>Instruction</li>
+<li>Transaction</li>
+<li>PDA</li>
+<li>CPI</li>
+<li>Rent</li>
+<li>Compute Unit</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+Solana에서는 프로그램 코드와 데이터 계정이 분리됩니다. 프로그램은 전달받은 계정들을 읽고 수정합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+PDA는 개인키 없이 프로그램 규칙으로 유도되는 주소이며 프로그램이 서명 권한처럼 사용할 수 있습니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+병렬 실행을 위해 어떤 계정을 읽고 쓰는지 트랜잭션이 미리 명시하는 점이 중요합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+Explorer에서 한 트랜잭션의 Instructions, Program, Accounts, Fee를 분석한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>위험·오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>확인 영역</th><th>실패 사례</th><th>강사 점검 포인트</th></tr>
+<tr><td>데이터</td><td>조회 실패·지연·불완전성</td><td>실패를 낮은 위험으로 해석하지 않고 불확실성 표시</td></tr>
+<tr><td>권한</td><td>관리자·delegate·approval 집중</td><td>최소권한, 한도, 만료, 철회 절차 확인</td></tr>
+<tr><td>자동화</td><td>중복 실행·오판·과도한 행동</td><td>idempotency, 시뮬레이션, 사용자 승인 적용</td></tr>
+<tr><td>설명</td><td>점수만 표시·근거 누락</td><td>체인·블록·트랜잭션·규칙 근거 제시</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>사례 분석 템플릿</p>
+<p>① 상황 ② 참여자 ③ 데이터 흐름 ④ 신뢰 지점 ⑤ 공격 또는 실패 가능성 ⑥ 통제 방안 ⑦ 블록체인·AI Agent 적용 타당성</p>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 경로를 유지하고, 실제 자산·개인키 대신 테스트넷·샘플 데이터를 사용합니다. 
+</p></div>
+<ul>
+<li>11일차 상세 실습교재 열기</li>
+<li>11일차 웹 시뮬레이터 실행</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>Ethereum 호출과 Solana instruction을 대응시켜 비교한다.</li>
+<li>PDA를 사용하는 에스크로 시나리오를 설계한다.</li>
+<li>Compute Unit 초과 원인을 가정하고 개선방안을 작성한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. Solana Program은 상태를 어디에 저장하는가?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+별도의 Account 데이터 영역에 저장한다. 
+</p></div>
+<div class="callout callout-question"><strong>2. PDA의 핵심 특징은?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+개인키가 없고 program id와 seed로 유도되며 해당 프로그램이 규칙에 따라 권한을 행사한다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 온체인 금융과 토큰화을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>보안·윤리 확인</h3>
+<ul>
+<li>[ ] 실제 투자 판단이나 자동매매 권고로 설명하지 않는다.</li>
+<li>[ ] 실제 자산·개인키·시드문구를 사용하지 않는다.</li>
+<li>[ ] AI 결과의 사실·추정·불확실성을 구분한다.</li>
+<li>[ ] 쓰기·송금·승인·철회 작업은 사용자 확인 전 자동 실행하지 않는다.</li>
+<li>[ ] 체인·네트워크·주소·블록 높이와 데이터 출처를 기록한다.</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="session-article" id="session-12">
+          <h2>12회차 — 온체인 금융과 토큰화</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.08.06 | 기본 시수: 4시간 
+- **핵심 메시지:** DEX·AMM·Lending·Liquidation·RWA 구조와 위험을 분석한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 읽기·쓰기 도구 분리, 최소권한, 테스트넷·샘플 데이터, 사용자 승인, 감사로그 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>강사 활용</strong><p>
+흐름도의 각 상자를 입력·처리·출력·신뢰지점·실패지점으로 구분하여 설명하고, 학습자가 위험 통제를 표시하게 합니다. 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>DEX·AMM·Lending·Liquidation·RWA 구조와 위험을 분석한다.</li>
+<li>온체인 금융과 토큰화의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>AMM과 x*y=k</li>
+<li>Liquidity Pool</li>
+<li>LP Token</li>
+<li>Lending과 담보비율</li>
+<li>Liquidation</li>
+<li>Oracle</li>
+<li>RWA Tokenization</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+AMM은 주문서 대신 풀의 자산 비율과 가격함수로 교환가격을 계산합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+대출 프로토콜은 담보가치가 기준 이하로 떨어지면 청산을 허용해 지급불능 위험을 통제합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+RWA는 실제 자산 권리를 토큰과 연결하지만 법적 집행, 수탁, 평가, 오라클이 추가 신뢰 지점이 됩니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+100 ETH와 200,000 USDC 풀에서 소규모 스왑 전후 가격과 슬리피지를 계산한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>위험·오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>확인 영역</th><th>실패 사례</th><th>강사 점검 포인트</th></tr>
+<tr><td>데이터</td><td>조회 실패·지연·불완전성</td><td>실패를 낮은 위험으로 해석하지 않고 불확실성 표시</td></tr>
+<tr><td>권한</td><td>관리자·delegate·approval 집중</td><td>최소권한, 한도, 만료, 철회 절차 확인</td></tr>
+<tr><td>자동화</td><td>중복 실행·오판·과도한 행동</td><td>idempotency, 시뮬레이션, 사용자 승인 적용</td></tr>
+<tr><td>설명</td><td>점수만 표시·근거 누락</td><td>체인·블록·트랜잭션·규칙 근거 제시</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>예제 12-1. AMM 가격변화</p>
+<p>초기 풀: x=100 ETH, y=200,000 USDC, k=20,000,000</p>
+<p>사용자가 10 ETH를 넣으면 x'=110</p>
+<p>y'=k/x'=181,818.18 USDC</p>
+<p>사용자가 받는 양(수수료 제외 단순화)=18,181.82 USDC</p>
+<p>평균 체결가=1,818.18 USDC/ETH</p>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 경로를 유지하고, 실제 자산·개인키 대신 테스트넷·샘플 데이터를 사용합니다. 
+</p></div>
+<ul>
+<li>12일차 상세 실습교재 열기</li>
+<li>12일차 웹 시뮬레이터 실행</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>DeFi 포지션 위험 Agent 입력·출력 항목을 정의한다.</li>
+<li>RWA 서비스의 온체인·오프체인 책임을 구분한다.</li>
+<li>오라클 가격 조작 시나리오와 방어책을 작성한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. 비영구적 손실은 언제 발생하는가?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+풀에 예치한 두 자산의 상대가격이 변해 단순 보유 대비 가치가 낮아질 때 발생한다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 오라클 위험이 중요한 이유는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+외부 가격이 잘못되면 대출·청산·파생상품 정산이 연쇄적으로 오작동할 수 있다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 스테이블코인·CBDC·STO·RWA 비교을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>보안·윤리 확인</h3>
+<ul>
+<li>[ ] 실제 투자 판단이나 자동매매 권고로 설명하지 않는다.</li>
+<li>[ ] 실제 자산·개인키·시드문구를 사용하지 않는다.</li>
+<li>[ ] AI 결과의 사실·추정·불확실성을 구분한다.</li>
+<li>[ ] 쓰기·송금·승인·철회 작업은 사용자 확인 전 자동 실행하지 않는다.</li>
+<li>[ ] 체인·네트워크·주소·블록 높이와 데이터 출처를 기록한다.</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="session-article" id="session-13">
+          <h2>13회차 — 스테이블코인·CBDC·STO·RWA 비교</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.08.07 | 기본 시수: 4시간 
+- **핵심 메시지:** 디지털 화폐와 토큰화 자산의 목적·발행주체·상환권·규제를 구분한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 읽기·쓰기 도구 분리, 최소권한, 테스트넷·샘플 데이터, 사용자 승인, 감사로그 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>강사 활용</strong><p>
+흐름도의 각 상자를 입력·처리·출력·신뢰지점·실패지점으로 구분하여 설명하고, 학습자가 위험 통제를 표시하게 합니다. 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>디지털 화폐와 토큰화 자산의 목적·발행주체·상환권·규제를 구분한다.</li>
+<li>스테이블코인·CBDC·STO·RWA 비교의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>법정화폐 담보형</li>
+<li>암호자산 담보형</li>
+<li>알고리즘형</li>
+<li>CBDC</li>
+<li>STO</li>
+<li>준비금 증명</li>
+<li>상환권</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+스테이블코인의 가격 안정은 이름이 아니라 준비자산, 상환구조, 시장유동성에서 나옵니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+CBDC는 중앙은행이 발행하는 디지털 형태의 중앙은행 화폐이며 민간 스테이블코인과 발행주체와 법적 지위가 다릅니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+STO와 RWA는 토큰 기술보다 기초 권리와 법적 집행 가능성이 핵심입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+네 가지 자산을 발행자, 가치근거, 사용자 권리, 주요 위험으로 비교한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>위험·오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>확인 영역</th><th>실패 사례</th><th>강사 점검 포인트</th></tr>
+<tr><td>데이터</td><td>조회 실패·지연·불완전성</td><td>실패를 낮은 위험으로 해석하지 않고 불확실성 표시</td></tr>
+<tr><td>권한</td><td>관리자·delegate·approval 집중</td><td>최소권한, 한도, 만료, 철회 절차 확인</td></tr>
+<tr><td>자동화</td><td>중복 실행·오판·과도한 행동</td><td>idempotency, 시뮬레이션, 사용자 승인 적용</td></tr>
+<tr><td>설명</td><td>점수만 표시·근거 누락</td><td>체인·블록·트랜잭션·규칙 근거 제시</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>사례 분석 템플릿</p>
+<p>① 상황 ② 참여자 ③ 데이터 흐름 ④ 신뢰 지점 ⑤ 공격 또는 실패 가능성 ⑥ 통제 방안 ⑦ 블록체인·AI Agent 적용 타당성</p>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 경로를 유지하고, 실제 자산·개인키 대신 테스트넷·샘플 데이터를 사용합니다. 
+</p></div>
+<ul>
+<li>13일차 상세 실습교재 열기</li>
+<li>13일차 웹 시뮬레이터 실행</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>비교표를 완성한다.</li>
+<li>준비금 데이터 검증 Agent의 데이터 소스를 설계한다.</li>
+<li>결제형과 증권형 토큰을 구분하는 질문 10개를 만든다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. 준비금 증명이 완전한 지급능력을 보장하는가?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+아니다. 자산의 질, 부채 전체, 수탁, 시점, 감사 범위까지 확인해야 한다. 
+</p></div>
+<div class="callout callout-question"><strong>2. CBDC와 스테이블코인의 가장 큰 차이 중 하나는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+일반적으로 발행주체와 법적 화폐성·신용위험 구조가 다르다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 스테이블코인 스마트컨트랙트 설계을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>보안·윤리 확인</h3>
+<ul>
+<li>[ ] 실제 투자 판단이나 자동매매 권고로 설명하지 않는다.</li>
+<li>[ ] 실제 자산·개인키·시드문구를 사용하지 않는다.</li>
+<li>[ ] AI 결과의 사실·추정·불확실성을 구분한다.</li>
+<li>[ ] 쓰기·송금·승인·철회 작업은 사용자 확인 전 자동 실행하지 않는다.</li>
+<li>[ ] 체인·네트워크·주소·블록 높이와 데이터 출처를 기록한다.</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="session-article" id="session-14">
+          <h2>14회차 — 스테이블코인 스마트컨트랙트 설계</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.08.10 | 기본 시수: 4시간 
+- **핵심 메시지:** Mint·Burn·Pause·Blacklist·역할기반 권한을 설계하고 위험을 분석한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 읽기·쓰기 도구 분리, 최소권한, 테스트넷·샘플 데이터, 사용자 승인, 감사로그 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>강사 활용</strong><p>
+흐름도의 각 상자를 입력·처리·출력·신뢰지점·실패지점으로 구분하여 설명하고, 학습자가 위험 통제를 표시하게 합니다. 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>Mint·Burn·Pause·Blacklist·역할기반 권한을 설계하고 위험을 분석한다.</li>
+<li>스테이블코인 스마트컨트랙트 설계의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>Role Based Access Control</li>
+<li>mint·burn</li>
+<li>pause</li>
+<li>blacklist</li>
+<li>upgradeability</li>
+<li>reserve reconciliation</li>
+<li>audit trail</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+발행과 소각 권한은 가장 강력한 권한이므로 단일 개인 키가 아니라 다중승인과 역할 분리가 필요합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+Pause는 사고 대응에 유용하지만 중앙화와 검열 위험을 만듭니다. 어떤 상황에서 누가 얼마나 오래 사용할 수 있는지 정책이 필요합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+컨트랙트 총발행량과 오프체인 준비금 장부를 정기적으로 대사해야 합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+간단한 중앙발행형 토큰 설계에서 역할별 권한표를 만든다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>위험·오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>확인 영역</th><th>실패 사례</th><th>강사 점검 포인트</th></tr>
+<tr><td>데이터</td><td>조회 실패·지연·불완전성</td><td>실패를 낮은 위험으로 해석하지 않고 불확실성 표시</td></tr>
+<tr><td>권한</td><td>관리자·delegate·approval 집중</td><td>최소권한, 한도, 만료, 철회 절차 확인</td></tr>
+<tr><td>자동화</td><td>중복 실행·오판·과도한 행동</td><td>idempotency, 시뮬레이션, 사용자 승인 적용</td></tr>
+<tr><td>설명</td><td>점수만 표시·근거 누락</td><td>체인·블록·트랜잭션·규칙 근거 제시</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>사례 분석 템플릿</p>
+<p>① 상황 ② 참여자 ③ 데이터 흐름 ④ 신뢰 지점 ⑤ 공격 또는 실패 가능성 ⑥ 통제 방안 ⑦ 블록체인·AI Agent 적용 타당성</p>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 경로를 유지하고, 실제 자산·개인키 대신 테스트넷·샘플 데이터를 사용합니다. 
+</p></div>
+<ul>
+<li>14일차 상세 실습교재 열기</li>
+<li>14일차 웹 시뮬레이터 실행</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>Mint/Burn/Pause/Blacklist 요구사항을 작성한다.</li>
+<li>권한 오남용 공격트리를 만든다.</li>
+<li>LLM 감사 프롬프트로 위험 후보를 찾고 수동 검증한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. Pause 기능의 양면성은?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+사고 대응에는 유용하지만 중앙 관리자에 의한 검열과 서비스 중단 위험이 있다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 발행량-준비금 대사의 목적은?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+온체인 유통량이 실제 상환 가능한 준비자산과 일치하는지 확인하기 위해서다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 크로스체인과 확장성을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>보안·윤리 확인</h3>
+<ul>
+<li>[ ] 실제 투자 판단이나 자동매매 권고로 설명하지 않는다.</li>
+<li>[ ] 실제 자산·개인키·시드문구를 사용하지 않는다.</li>
+<li>[ ] AI 결과의 사실·추정·불확실성을 구분한다.</li>
+<li>[ ] 쓰기·송금·승인·철회 작업은 사용자 확인 전 자동 실행하지 않는다.</li>
+<li>[ ] 체인·네트워크·주소·블록 높이와 데이터 출처를 기록한다.</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="session-article" id="session-15">
+          <h2>15회차 — 크로스체인과 확장성</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.08.11 | 기본 시수: 4시간 
+- **핵심 메시지:** 브릿지 구조와 Rollup, 멀티체인 메시징 위험을 이해한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 읽기·쓰기 도구 분리, 최소권한, 테스트넷·샘플 데이터, 사용자 승인, 감사로그 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>강사 활용</strong><p>
+흐름도의 각 상자를 입력·처리·출력·신뢰지점·실패지점으로 구분하여 설명하고, 학습자가 위험 통제를 표시하게 합니다. 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>브릿지 구조와 Rollup, 멀티체인 메시징 위험을 이해한다.</li>
+<li>크로스체인과 확장성의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>Lock & Mint</li>
+<li>Burn & Release</li>
+<li>Validator/MPC Bridge</li>
+<li>Light Client Bridge</li>
+<li>Optimistic Rollup</li>
+<li>ZK Rollup</li>
+<li>Message Replay</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+브릿지는 자산을 순간이동시키는 것이 아니라 한 체인의 잠금 사실을 다른 체인에서 신뢰하고 표현하는 구조입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+브릿지 보안은 스마트컨트랙트뿐 아니라 검증자 키, 메시지 순서, 재전송 방지, 업그레이드 권한까지 포함합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+Rollup은 실행을 체인 밖 또는 별도 계층에서 처리하고 결과를 기본 체인에 게시해 확장성을 높입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+Ethereum에서 토큰을 잠그고 다른 체인에서 wrapped token을 발행하는 흐름을 그린다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>위험·오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>확인 영역</th><th>실패 사례</th><th>강사 점검 포인트</th></tr>
+<tr><td>데이터</td><td>조회 실패·지연·불완전성</td><td>실패를 낮은 위험으로 해석하지 않고 불확실성 표시</td></tr>
+<tr><td>권한</td><td>관리자·delegate·approval 집중</td><td>최소권한, 한도, 만료, 철회 절차 확인</td></tr>
+<tr><td>자동화</td><td>중복 실행·오판·과도한 행동</td><td>idempotency, 시뮬레이션, 사용자 승인 적용</td></tr>
+<tr><td>설명</td><td>점수만 표시·근거 누락</td><td>체인·블록·트랜잭션·규칙 근거 제시</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>사례 분석 템플릿</p>
+<p>① 상황 ② 참여자 ③ 데이터 흐름 ④ 신뢰 지점 ⑤ 공격 또는 실패 가능성 ⑥ 통제 방안 ⑦ 블록체인·AI Agent 적용 타당성</p>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 경로를 유지하고, 실제 자산·개인키 대신 테스트넷·샘플 데이터를 사용합니다. 
+</p></div>
+<ul>
+<li>15일차 상세 실습교재 열기</li>
+<li>15일차 웹 시뮬레이터 실행</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>브릿지 위험 분석 프롬프트를 작성한다.</li>
+<li>메시지 replay와 double mint 방어 규칙을 설계한다.</li>
+<li>Optimistic와 ZK Rollup을 지연시간·증명·비용 관점에서 비교한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. 브릿지의 핵심 신뢰가 어디에 생기는가?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+원체인의 사건을 대상체인이 어떻게 검증하는지에 따라 검증자, 라이트클라이언트, 증명 시스템 등에 생긴다. 
+</p></div>
+<div class="callout callout-question"><strong>2. Replay 공격 방어 요소는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+nonce, source/destination chain id, message id, 처리완료 기록, 만료시간 등이다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 코인 거래소 운영과 AI 자동화을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>보안·윤리 확인</h3>
+<ul>
+<li>[ ] 실제 투자 판단이나 자동매매 권고로 설명하지 않는다.</li>
+<li>[ ] 실제 자산·개인키·시드문구를 사용하지 않는다.</li>
+<li>[ ] AI 결과의 사실·추정·불확실성을 구분한다.</li>
+<li>[ ] 쓰기·송금·승인·철회 작업은 사용자 확인 전 자동 실행하지 않는다.</li>
+<li>[ ] 체인·네트워크·주소·블록 높이와 데이터 출처를 기록한다.</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
       </div>
 
       <!-- Part 4 -->
-      <div class="part-block" id="part4">
-        <div class="part-head">Part 4. AI Agent 융합, 온체인 자동화 & 최종 프로젝트 (16~20회차)</div>
-        <table class="session-table">
-          <thead>
-            <tr><th style="width:70px;">회차</th><th>주제</th><th>핵심 개념 및 강의 내용</th><th style="width:170px;">핵심 산출물</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="session-badge">16회차</span></td>
-              <td><strong>거래소 운영과 AI 자동화</strong></td>
-              <td>오더북 vs AMM, 온체인 이상거래 탐지(FDS), 거래 패턴 모니터링 에이전트</td>
-              <td>거래소 모니터링 시나리오</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">17회차</span></td>
-              <td><strong>DID와 프라이버시 보호</strong></td>
-              <td>탈중앙 신원증명(DID), 검증가능 자격증명(VC), 영지식 증명(ZKP), SSI</td>
-              <td>DID 개인정보 정책문</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">18회차</span></td>
-              <td><strong>AI Agent · RAG · MCP 도구</strong></td>
-              <td>LLM Tool Calling, Model Context Protocol(MCP) 서버 명세, RPC 질의 도구 제작</td>
-              <td>MCP Tool 명세서</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">19회차</span></td>
-              <td><strong>온체인 자동화와 AI 지갑 보안</strong></td>
-              <td>최소권한 정책, 세션키, 일일 송금한도, 트랜잭션 사전 시뮬레이션, 사용자 승인 가드</td>
-              <td>AI Wallet Risk Policy</td>
-            </tr>
-            <tr>
-              <td><span class="session-badge">20회차</span></td>
-              <td><strong>AI 결제·인증 & 최종 프로젝트</strong></td>
-              <td>Hardhat 출석·급여 dApp MVP + AI Agent 자율 모니터링 통합 구현 및 발표</td>
-              <td>최종 프로젝트 발표 자료</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+      <div id="part4">
+        <h2 style="font-size:24px; font-weight:900; margin: 56px 0 24px; border-bottom:3px solid var(--cat-bc); padding-bottom:8px;">
+          Part 4. AI Agent 융합, 온체인 자동화 & 최종 프로젝트 (16~20회차)
+        </h2>
 
-    <!-- Section 2: Hardhat dApp 실습 -->
-    <section id="hardhat-dapp">
-      <div class="section-title">
-        <span>Hardhat 기반 출석·급여 관리 dApp 실습 가이드</span>
-        <span class="mono" style="font-size: 13px; color: var(--cat-bc);">7~9회차 & 20회차 연계</span>
-      </div>
-
-      <div class="highlight-card">
-        <h4>실습 개요 및 아키텍처</h4>
-        <p>
-          Hardhat 3 기반 로컬 이더리움 노드를 구동하고, 근태 기록(출근/퇴근/근무시간 누적) 및 시급 기반 급여를 지급하는
-          <code>AttendancePayroll.sol</code> 스마트컨트랙트를 작성한 뒤, Viem 단위 테스트와 React 프론트엔드 연동을 완성합니다.
-        </p>
-      </div>
-
-      <h3 style="font-size: 18px; margin: 24px 0 10px;">1. 스마트컨트랙트: <code>AttendancePayroll.sol</code> 핵심 코드</h3>
-      <div class="code-box">
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.28;
-
-contract AttendancePayroll {
-    address public owner;
-    uint256 public constant HOURLY_RATE = 0.01 ether; // 시간당 0.01 ETH
-
-    struct Employee {
-        bool isRegistered;
-        uint256 lastCheckInTime;
-        uint256 accumulatedSeconds;
-        uint256 unpaidSalary;
-    }
-
-    mapping(address => Employee) public employees;
-
-    event EmployeeRegistered(address indexed employee);
-    event CheckedIn(address indexed employee, uint256 timestamp);
-    event CheckedOut(address indexed employee, uint256 duration, uint256 unpaidSalary);
-    event PayrollPaid(address indexed employee, uint256 amount);
-
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only owner can call this");
-        _;
-    }
-
-    constructor() payable {
-        owner = msg.sender;
-    }
-
-    function registerEmployee(address _emp) external onlyOwner {
-        require(!employees[_emp].isRegistered, "Already registered");
-        employees[_emp].isRegistered = true;
-        emit EmployeeRegistered(_emp);
-    }
-
-    function checkIn() external {
-        require(employees[msg.sender].isRegistered, "Not registered");
-        require(employees[msg.sender].lastCheckInTime == 0, "Already checked in");
-        employees[msg.sender].lastCheckInTime = block.timestamp;
-        emit CheckedIn(msg.sender, block.timestamp);
-    }
-
-    function checkOut() external {
-        require(employees[msg.sender].lastCheckInTime > 0, "Must check in first");
-        uint256 duration = block.timestamp - employees[msg.sender].lastCheckInTime;
-        employees[msg.sender].accumulatedSeconds += duration;
-        employees[msg.sender].lastCheckInTime = 0;
-
-        uint256 wage = (duration * HOURLY_RATE) / 3600;
-        employees[msg.sender].unpaidSalary += wage;
-        emit CheckedOut(msg.sender, duration, employees[msg.sender].unpaidSalary);
-    }
-
-    function payoutSalary(address payable _emp) external onlyOwner {
-        uint256 amount = employees[_emp].unpaidSalary;
-        require(amount > 0, "No unpaid salary");
-        require(address(this).balance >= amount, "Insufficient contract balance");
-
-        employees[_emp].unpaidSalary = 0;
-        _emp.transfer(amount);
-        emit PayrollPaid(_emp, amount);
-    }
-}
-      </div>
-
-      <h3 style="font-size: 18px; margin: 24px 0 10px;">2. 로컬 실행 및 프론트엔드 연동 4단계</h3>
-      <ol style="padding-left: 20px; line-height: 1.8; font-size: 14.5px; color: var(--text-soft);">
-        <li><strong style="color:var(--text);">로컬 노드 가동:</strong> <code class="mono">npx hardhat node</code> 실행하여 로컬 체인 ID 31337 생성 및 20개 테스트 계정 확보</li>
-        <li><strong style="color:var(--text);">컨트랙트 배포:</strong> <code class="mono">npx hardhat ignition deploy ./ignition/modules/AttendancePayroll.ts --network localhost</code></li>
-        <li><strong style="color:var(--text);">테스트 자동화:</strong> <code class="mono">npx hardhat test</code> 로 직원 등록, 출근, 시간 경과(<code class="mono">time.increase</code>), 퇴근, 급여 지급 검증</li>
-        <li><strong style="color:var(--text);">React + Viem 연동:</strong> MetaMask에서 Localhost 8545 네트워크 추가 후 컨트랙트 주소/ABI 바인딩</li>
-      </ol>
-    </section>
-
-    <!-- Section 3: AI Agent & MCP -->
-    <section id="agent-mcp">
-      <div class="section-title">
-        <span>AI Agent · RAG · MCP 온체인 연동 & AI 지갑 보안</span>
-        <span class="mono" style="font-size: 13px; color: var(--cat-bc);">18~20회차 융합 핵심</span>
-      </div>
-
-      <div class="highlight-card">
-        <h4>Model Context Protocol (MCP) 기반 온체인 에이전트</h4>
-        <p>
-          AI Agent가 사람 대신 블록체인을 감시하거나 거래를 보조할 때, 환각(Hallucination)에 의한 무단 출금이나 자산 손실을 방지하기 위해
-          <strong>3단계 승인 파이프라인</strong>(사전 시뮬레이션 → 금액/화이트리스트 가드 → 최종 사용자 서명)을 설계합니다.
-        </p>
-      </div>
-
-      <div class="code-box">
-// MCP Server Tool 명세 예시: 온체인 근태 및 급여 검증 도구
-{
-  "name": "verify_attendance_payroll",
-  "description": "스마트컨트랙트의 미지급 급여를 조회하고 시뮬레이션 후 관리자 승인을 요청한다",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "employee_address": { "type": "string", "description": "직원 지갑 주소 (0x...)" },
-      "action": { "type": "string", "enum": ["query", "simulate_payout"] }
+        
+        <article class="session-article" id="session-16">
+          <h2>16회차 — 코인 거래소 운영과 AI 자동화</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.08.12 | 기본 시수: 4시간 
+- **핵심 메시지:** 거래소 지갑·내부장부·입출금·정산·이상거래 탐지 업무를 이해한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 읽기·쓰기 도구 분리, 최소권한, 테스트넷·샘플 데이터, 사용자 승인, 감사로그 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>강사 활용</strong><p>
+흐름도의 각 상자를 입력·처리·출력·신뢰지점·실패지점으로 구분하여 설명하고, 학습자가 위험 통제를 표시하게 합니다. 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>거래소 지갑·내부장부·입출금·정산·이상거래 탐지 업무를 이해한다.</li>
+<li>코인 거래소 운영과 AI 자동화의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>Hot/Cold Wallet</li>
+<li>Omnibus Wallet</li>
+<li>내부 원장</li>
+<li>Deposit Confirmation</li>
+<li>Withdrawal Screening</li>
+<li>Reconciliation</li>
+<li>Travel Rule</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+거래소 사용자 잔액은 대개 내부 데이터베이스 장부이며 모든 거래가 즉시 온체인으로 기록되는 것은 아닙니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+핫월렛은 유동성을 제공하지만 공격면이 크고, 콜드월렛은 안전하지만 운영 지연이 있습니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+AI Agent는 이상 패턴을 요약하고 조사 우선순위를 제시할 수 있으나 출금 차단 같은 고위험 조치는 정책과 사람 승인을 거쳐야 합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+입금 탐지→확인 수 대기→내부 잔액 반영→대사 과정을 시연한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>위험·오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>확인 영역</th><th>실패 사례</th><th>강사 점검 포인트</th></tr>
+<tr><td>데이터</td><td>조회 실패·지연·불완전성</td><td>실패를 낮은 위험으로 해석하지 않고 불확실성 표시</td></tr>
+<tr><td>권한</td><td>관리자·delegate·approval 집중</td><td>최소권한, 한도, 만료, 철회 절차 확인</td></tr>
+<tr><td>자동화</td><td>중복 실행·오판·과도한 행동</td><td>idempotency, 시뮬레이션, 사용자 승인 적용</td></tr>
+<tr><td>설명</td><td>점수만 표시·근거 누락</td><td>체인·블록·트랜잭션·규칙 근거 제시</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>사례 분석 템플릿</p>
+<p>① 상황 ② 참여자 ③ 데이터 흐름 ④ 신뢰 지점 ⑤ 공격 또는 실패 가능성 ⑥ 통제 방안 ⑦ 블록체인·AI Agent 적용 타당성</p>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 경로를 유지하고, 실제 자산·개인키 대신 테스트넷·샘플 데이터를 사용합니다. 
+</p></div>
+<ul>
+<li>16일차 상세 실습교재 열기</li>
+<li>16일차 웹 시뮬레이터 실행</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>입출금 모니터링 Agent 시나리오를 작성한다.</li>
+<li>온체인 잔액과 내부장부 불일치 원인 10개를 분류한다.</li>
+<li>출금 위험 점수 규칙과 수동검토 기준을 만든다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. 거래소 내부 거래가 온체인에 없을 수 있는 이유는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+거래소 내부 원장만 갱신하고 실제 체인 전송을 생략할 수 있기 때문이다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 핫월렛과 콜드월렛의 균형은?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+운영에 필요한 최소 유동성만 핫월렛에 두고 나머지는 오프라인·다중통제로 보호한다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 DID와 프라이버시 보호을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>보안·윤리 확인</h3>
+<ul>
+<li>[ ] 실제 투자 판단이나 자동매매 권고로 설명하지 않는다.</li>
+<li>[ ] 실제 자산·개인키·시드문구를 사용하지 않는다.</li>
+<li>[ ] AI 결과의 사실·추정·불확실성을 구분한다.</li>
+<li>[ ] 쓰기·송금·승인·철회 작업은 사용자 확인 전 자동 실행하지 않는다.</li>
+<li>[ ] 체인·네트워크·주소·블록 높이와 데이터 출처를 기록한다.</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        
+        <article class="session-article" id="session-17">
+          <h2>17회차 — DID와 프라이버시 보호</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.08.13 | 기본 시수: 4시간 
+- **핵심 메시지:** DID·VC·VP와 영지식증명의 역할을 이해하고 개인정보 정책을 설계한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 읽기·쓰기 도구 분리, 최소권한, 테스트넷·샘플 데이터, 사용자 승인, 감사로그 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>강사 활용</strong><p>
+흐름도의 각 상자를 입력·처리·출력·신뢰지점·실패지점으로 구분하여 설명하고, 학습자가 위험 통제를 표시하게 합니다. 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>DID·VC·VP와 영지식증명의 역할을 이해하고 개인정보 정책을 설계한다.</li>
+<li>DID와 프라이버시 보호의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>DID Document</li>
+<li>Verifiable Credential</li>
+<li>Issuer·Holder·Verifier</li>
+<li>Selective Disclosure</li>
+<li>ZK Proof</li>
+<li>Revocation</li>
+<li>Data Minimization</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+DID는 중앙 로그인 사업자 없이 식별자와 검증키를 관리하기 위한 표준적 접근입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+VC는 발급자가 서명한 검증 가능한 자격증명이고, VP는 보유자가 검증자에게 필요한 형태로 제시하는 표현입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+프라이버시 보호의 핵심은 블록체인에 개인정보를 직접 올리지 않고 해시·상태·증명만 사용하는 것입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+대학이 졸업자격 VC를 발급하고 기업이 검증하는 흐름을 구성한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>위험·오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>확인 영역</th><th>실패 사례</th><th>강사 점검 포인트</th></tr>
+<tr><td>데이터</td><td>조회 실패·지연·불완전성</td><td>실패를 낮은 위험으로 해석하지 않고 불확실성 표시</td></tr>
+<tr><td>권한</td><td>관리자·delegate·approval 집중</td><td>최소권한, 한도, 만료, 철회 절차 확인</td></tr>
+<tr><td>자동화</td><td>중복 실행·오판·과도한 행동</td><td>idempotency, 시뮬레이션, 사용자 승인 적용</td></tr>
+<tr><td>설명</td><td>점수만 표시·근거 누락</td><td>체인·블록·트랜잭션·규칙 근거 제시</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>사례 분석 템플릿</p>
+<p>① 상황 ② 참여자 ③ 데이터 흐름 ④ 신뢰 지점 ⑤ 공격 또는 실패 가능성 ⑥ 통제 방안 ⑦ 블록체인·AI Agent 적용 타당성</p>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 경로를 유지하고, 실제 자산·개인키 대신 테스트넷·샘플 데이터를 사용합니다. 
+</p></div>
+<ul>
+<li>17일차 상세 실습교재 열기</li>
+<li>17일차 웹 시뮬레이터 실행</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>DID 기반 인증 서비스 정책을 작성한다.</li>
+<li>최소수집 원칙에 따라 필드를 줄인다.</li>
+<li>나이만 19세 이상임을 증명하는 선택적 공개/영지식 시나리오를 설계한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. VC의 세 주체는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+발급자, 보유자, 검증자다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 개인정보를 온체인에 직접 저장하면 안 되는 이유는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+공개성·불변성 때문에 삭제·정정·접근통제가 어렵고 재식별 위험이 있기 때문이다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 AI Agent·RAG·MCP와 블록체인 도구을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>보안·윤리 확인</h3>
+<ul>
+<li>[ ] 실제 투자 판단이나 자동매매 권고로 설명하지 않는다.</li>
+<li>[ ] 실제 자산·개인키·시드문구를 사용하지 않는다.</li>
+<li>[ ] AI 결과의 사실·추정·불확실성을 구분한다.</li>
+<li>[ ] 쓰기·송금·승인·철회 작업은 사용자 확인 전 자동 실행하지 않는다.</li>
+<li>[ ] 체인·네트워크·주소·블록 높이와 데이터 출처를 기록한다.</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <span id="agent-mcp"></span>
+        <article class="session-article" id="session-18">
+          <h2>18회차 — AI Agent·RAG·MCP와 블록체인 도구</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.08.14 | 기본 시수: 4시간 
+- **핵심 메시지:** Agent 구조, RAG, Tool Calling, MCP를 이해하고 Blockchain Tool 명세를 작성한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 읽기·쓰기 도구 분리, 최소권한, 테스트넷·샘플 데이터, 사용자 승인, 감사로그 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>강사 활용</strong><p>
+흐름도의 각 상자를 입력·처리·출력·신뢰지점·실패지점으로 구분하여 설명하고, 학습자가 위험 통제를 표시하게 합니다. 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>Agent 구조, RAG, Tool Calling, MCP를 이해하고 Blockchain Tool 명세를 작성한다.</li>
+<li>AI Agent·RAG·MCP와 블록체인 도구의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>LLM vs Agent</li>
+<li>Planner·Memory·Tool</li>
+<li>RAG Pipeline</li>
+<li>Vector DB</li>
+<li>Tool Schema</li>
+<li>MCP Server</li>
+<li>Prompt Injection</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+LLM은 텍스트를 생성하지만 Agent는 목표를 위해 도구를 선택하고 여러 단계를 수행합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+RAG는 모델 파라미터만 믿지 않고 외부 문서를 검색해 근거를 추가하는 구조입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+MCP 도구는 입력 스키마, 출력 스키마, 오류, 권한, 읽기/쓰기 위험을 명확히 정의해야 합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+주소 잔액 조회, allowance 조회, 트랜잭션 시뮬레이션 도구를 가진 Agent를 설계한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>위험·오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>확인 영역</th><th>실패 사례</th><th>강사 점검 포인트</th></tr>
+<tr><td>데이터</td><td>조회 실패·지연·불완전성</td><td>실패를 낮은 위험으로 해석하지 않고 불확실성 표시</td></tr>
+<tr><td>권한</td><td>관리자·delegate·approval 집중</td><td>최소권한, 한도, 만료, 철회 절차 확인</td></tr>
+<tr><td>자동화</td><td>중복 실행·오판·과도한 행동</td><td>idempotency, 시뮬레이션, 사용자 승인 적용</td></tr>
+<tr><td>설명</td><td>점수만 표시·근거 누락</td><td>체인·블록·트랜잭션·규칙 근거 제시</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>예제 18-1. Blockchain MCP Tool 명세</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;get_token_approvals&quot;,
+  &quot;description&quot;: &quot;주소의 토큰 승인 권한을 조회한다&quot;,
+  &quot;inputSchema&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;chain&quot;: {&quot;enum&quot;: [&quot;ethereum&quot;, &quot;solana&quot;]},
+      &quot;address&quot;: {&quot;type&quot;: &quot;string&quot;}
     },
-    "required": ["employee_address", "action"]
-  }
-}
+    &quot;required&quot;: [&quot;chain&quot;, &quot;address&quot;]
+  },
+  &quot;riskLevel&quot;: &quot;read-only&quot;
+}</code></pre>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 경로를 유지하고, 실제 자산·개인키 대신 테스트넷·샘플 데이터를 사용합니다. 
+</p></div>
+<ul>
+<li>18일차 상세 실습교재 열기</li>
+<li>18일차 웹 시뮬레이터 실행</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>Blockchain MCP Tool 명세를 작성한다.</li>
+<li>Web3 문서검색 RAG의 chunking·metadata·retrieval 정책을 정한다.</li>
+<li>프롬프트 인젝션 공격 예시와 차단 정책을 만든다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. RAG가 필요한 이유는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+최신·조직 고유 문서를 검색해 근거를 제공하고 환각을 줄이기 위해서다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 읽기 도구와 쓰기 도구를 분리해야 하는 이유는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+쓰기 도구는 실제 자산·상태를 변경하므로 더 강한 인증·승인·감사가 필요하기 때문이다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 온체인 자동화와 AI 지갑 보안을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>보안·윤리 확인</h3>
+<ul>
+<li>[ ] 실제 투자 판단이나 자동매매 권고로 설명하지 않는다.</li>
+<li>[ ] 실제 자산·개인키·시드문구를 사용하지 않는다.</li>
+<li>[ ] AI 결과의 사실·추정·불확실성을 구분한다.</li>
+<li>[ ] 쓰기·송금·승인·철회 작업은 사용자 확인 전 자동 실행하지 않는다.</li>
+<li>[ ] 체인·네트워크·주소·블록 높이와 데이터 출처를 기록한다.</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        
+        <article class="session-article" id="session-19">
+          <h2>19회차 — 온체인 자동화와 AI 지갑 보안</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.08.17 | 기본 시수: 4시간 
+- **핵심 메시지:** Event 기반 자동화, Approval 탐지, Account Abstraction, 세션키·한도정책을 설계한다. 
+- **운영 비율:** 설명 30% · 시연 20% · 실습 40% · 공유·피드백 10% 
+- **안전 원칙:** 읽기·쓰기 도구 분리, 최소권한, 테스트넷·샘플 데이터, 사용자 승인, 감사로그 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>과정 개요</li>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<div class="callout callout-note"><strong>강사 활용</strong><p>
+흐름도의 각 상자를 입력·처리·출력·신뢰지점·실패지점으로 구분하여 설명하고, 학습자가 위험 통제를 표시하게 합니다. 
+</p></div>
+<h3>1. 학습목표</h3>
+<ul>
+<li>Event 기반 자동화, Approval 탐지, Account Abstraction, 세션키·한도정책을 설계한다.</li>
+<li>온체인 자동화와 AI 지갑 보안의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>Event Log Listener</li>
+<li>Idempotency</li>
+<li>Transaction Simulation</li>
+<li>Allowance Risk</li>
+<li>Account Abstraction</li>
+<li>Session Key</li>
+<li>Policy Engine</li>
+<li>Human-in-the-loop</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+이벤트 자동화는 동일 이벤트를 여러 번 처리해도 결과가 중복되지 않도록 멱등성이 필요합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+트랜잭션을 보내기 전에 시뮬레이션해 예상 토큰 이동, 권한 변경, 실패 원인을 확인해야 합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+AI 지갑은 자율성보다 통제 가능한 자율성이 중요합니다. 금액, 빈도, 대상 주소, 함수 selector, 만료시간을 제한합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+무제한 approval 이벤트를 감지해 사용자에게 취소 권고 리포트를 생성한다. 
+</p></div>
+<h4>시연 체크리스트</h4>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h4>위험·오류 대응</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>확인 영역</th><th>실패 사례</th><th>강사 점검 포인트</th></tr>
+<tr><td>데이터</td><td>조회 실패·지연·불완전성</td><td>실패를 낮은 위험으로 해석하지 않고 불확실성 표시</td></tr>
+<tr><td>권한</td><td>관리자·delegate·approval 집중</td><td>최소권한, 한도, 만료, 철회 절차 확인</td></tr>
+<tr><td>자동화</td><td>중복 실행·오판·과도한 행동</td><td>idempotency, 시뮬레이션, 사용자 승인 적용</td></tr>
+<tr><td>설명</td><td>점수만 표시·근거 누락</td><td>체인·블록·트랜잭션·규칙 근거 제시</td></tr>
+</table></div>
+<h3>6. 샘플 및 예제</h3>
+<p>예제 19-1. AI Wallet Risk Policy</p>
+<pre><code class="language-yaml">policy:
+  max_value_usd_per_tx: 100
+  max_daily_value_usd: 300
+  allowed_contracts: [&quot;0xTrusted...&quot;]
+  blocked_actions: [&quot;setApprovalForAll&quot;, &quot;unlimitedApprove&quot;]
+  session_expiry_minutes: 30
+  require_human_approval_above_usd: 25
+  simulate_before_send: true</code></pre>
+<div class="callout callout-warning"><strong>자료 실행 주의</strong><p>
+Vault 내부 경로를 유지하고, 실제 자산·개인키 대신 테스트넷·샘플 데이터를 사용합니다. 
+</p></div>
+<ul>
+<li>19일차 상세 실습교재 열기</li>
+<li>19일차 웹 시뮬레이터 실행</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<h4>단계별 수행</h4>
+<ol>
+<li>AI Wallet Risk Policy를 작성한다.</li>
+<li>위험 점수 0~100 산정 규칙을 만든다.</li>
+<li>자동실행·추가확인·차단의 세 단계 정책을 설계한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. 멱등성이 필요한 이유는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+재시도나 체인 재조직으로 같은 이벤트를 중복 처리해도 이중 실행이 발생하지 않게 하기 위해서다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 세션키의 장점은?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+주키를 노출하지 않고 제한된 기간·기능·한도 내에서 자동화를 허용할 수 있다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 AI 기반 결제·인증과 최종 프로젝트을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>보안·윤리 확인</h3>
+<ul>
+<li>[ ] 실제 투자 판단이나 자동매매 권고로 설명하지 않는다.</li>
+<li>[ ] 실제 자산·개인키·시드문구를 사용하지 않는다.</li>
+<li>[ ] AI 결과의 사실·추정·불확실성을 구분한다.</li>
+<li>[ ] 쓰기·송금·승인·철회 작업은 사용자 확인 전 자동 실행하지 않는다.</li>
+<li>[ ] 체인·네트워크·주소·블록 높이와 데이터 출처를 기록한다.</li>
+</ul>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>ver4 전체 원문 확인</li>
+<li>이 문서는 원문을 삭제하지 않고 강사용 가독성 구조로 재편한 버전이다.</li>
+</ul>
+<h3>강사 보강 메모</h3>
+<ul>
+<li>[ ] 실제 수업 후 시간 배분 기록</li>
+<li>[ ] 학습자 질문과 오개념 기록</li>
+<li>[ ] 시연 오류와 해결 방법 기록</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        
+        <article class="session-article" id="session-20">
+          <h2>20회차 — AI 기반 결제·인증과 최종 프로젝트</h2>
+<div class="callout callout-abstract"><strong>수업 한눈에 보기</strong><p>
+- **교육일·시수:** 2026.08.18 | 기본 시수: 4시간 
+- **핵심 메시지:** Multi-chain AI Wallet Risk Agent를 통합 설계하고 발표한다. 
+- **최종 산출물:** Multi-chain AI Wallet Risk Agent MVP·위험리포트·발표자료 
+- **안전 원칙:** 읽기 우선, 쓰기 분리, 시뮬레이션, 사용자 승인, 감사로그 
+</p></div>
+<h3>빠른 이동</h3>
+<ul>
+<li>전체 20회차</li>
+<li>실습자료 허브</li>
+<li>ver4 전체 원문</li>
+</ul>
+<h3>핵심 개념 시각화</h3>
+<h3>분리된 강사용 부록</h3>
+<ol>
+<li>최종 프로젝트 상세 가이드</li>
+<li>공통 프롬프트 템플릿</li>
+<li>학습자 워크시트</li>
+<li>강사용 수업 전 체크리스트</li>
+<li>Ethereum dApp 실제 구현 실습 2종</li>
+</ol>
+<h3>Hardhat dApp 연계 배치 — 20회차 최종 프로젝트 옵션</h3>
+<div class="callout callout-tip"><strong>편성 의도</strong><p>
+7~9회차에서 진행한 Hardhat 출석·급여 dApp을 팀별 최종 프로젝트 선택지로 재사용합니다. 단순 구현보다 **권한, 개인정보, 급여 지급, 사용자 승인, 감사로그**를 함께 평가합니다. 
+</p></div>
+<ul>
+<li>편성안: Hardhat dApp 7~9회차 + 20회차 편성안</li>
+<li>실습 가이드: Hardhat 기반 로컬 네트워크 출석관리 dApp 실습 가이드</li>
+</ul>
+<h4>선택 프로젝트 B — 출석·근무시간·급여 지급 dApp MVP</h4>
+<p>팀 산출물:</p>
+<ul>
+<li><code>AttendancePayroll.sol</code> 최종 코드</li>
+<li>Hardhat 테스트 결과</li>
+<li>React dApp 실행 화면</li>
+<li>MetaMask 연결 및 트랜잭션 캡처</li>
+<li>온체인/오프체인 데이터 분리 설계</li>
+<li>권한·개인정보·급여 지급 위험 분석 보고서</li>
+</ul>
+<h4>AI Agent 확장 과제</h4>
+<ul>
+<li>Agent가 컨트랙트 상태와 트랜잭션 로그를 읽고 위험 리포트를 생성한다.</li>
+<li>Agent는 급여 지급 등 쓰기 트랜잭션을 자동 실행하지 않고, 사용자 승인 전 검토 의견만 제공한다.</li>
+<li>최종 발표에는 사용자 승인, 감사로그, 실제 자산 금지 원칙을 포함한다.</li>
+</ul>
+<h3>1. 학습목표</h3>
+<ul>
+<li>Multi-chain AI Wallet Risk Agent를 통합 설계하고 발표한다.</li>
+<li>AI 기반 결제·인증과 최종 프로젝트의 핵심 용어를 사례와 연결해 설명할 수 있다.</li>
+<li>실습 산출물을 팀원에게 설명하고 위험·한계를 함께 제시할 수 있다.</li>
+</ul>
+<h3>2. 핵심 개념 지도</h3>
+<ul>
+<li>Stablecoin Payment UX</li>
+<li>Wallet/DID Authentication</li>
+<li>Ethereum/Solana Compare</li>
+<li>Multi-chain Data Normalization</li>
+<li>Risk Report</li>
+<li>Explainability</li>
+<li>Demo & Pitch</li>
+</ul>
+<h3>3. 4시간 수업 운영표</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>교수·학습 활동</th><th>산출물/확인</th></tr>
+<tr><td>도입</td><td>20분</td><td>전시학습 확인, 사례 질문, 오늘의 문제 제시</td><td>진단 질문</td></tr>
+<tr><td>개념 1</td><td>45분</td><td>핵심 원리 설명과 사례 비교</td><td>개념 노트</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>개념 2·시연</td><td>45분</td><td>도구·코드·익스플로러 시연</td><td>시연 체크리스트</td></tr>
+<tr><td>실습 1</td><td>50분</td><td>개인 또는 2인 실습</td><td>중간 산출물</td></tr>
+<tr><td>휴식</td><td>10분</td><td>휴식</td><td>-</td></tr>
+<tr><td>실습 2</td><td>45분</td><td>팀 적용·위험분석·발표 준비</td><td>최종 산출물</td></tr>
+<tr><td>공유·평가</td><td>15분</td><td>발표, 피드백, 형성평가</td><td>Exit ticket</td></tr>
+</table></div>
+<h3>4. 상세 이론과 강사 설명 스크립트</h3>
+<h4>설명 1</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+최종 프로젝트는 체인 데이터를 많이 보여주는 것이 아니라 사용자가 안전한 결정을 내리게 하는 것이 목표입니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 2</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+Ethereum의 allowance와 Solana의 delegate·authority 개념을 공통 위험모델로 정규화해야 합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h4>설명 3</h4>
+<div class="callout callout-quote"><strong>강사 설명</strong><p>
+리포트는 점수만 제시하지 말고 어떤 데이터와 규칙 때문에 위험한지 설명해야 합니다. 
+</p></div>
+<div class="callout callout-question"><strong>학습자에게 질문</strong><p>
+“이 구조에서 가장 신뢰해야 하는 주체는 누구이며, 그 주체가 실패하면 어떤 문제가 생길까요?” 
+</p></div>
+<h3>5. 강사 시연</h3>
+<div class="callout callout-example"><strong>강사 시연 핵심</strong><p>
+주소 입력→멀티체인 조회→토큰·권한 분석→위험 점수→LLM 설명→사용자 승인 흐름을 시연한다. 
+</p></div>
+<ul>
+<li>[ ] 시연 전에 학습자에게 관찰할 항목 3개를 제시한다.</li>
+<li>[ ] 강사는 입력값, 처리과정, 출력값을 분리해 설명한다.</li>
+<li>[ ] 오류 또는 위험 사례를 한 번 의도적으로 보여준다.</li>
+<li>[ ] 시연 후 학습자가 같은 절차를 자신의 말로 재설명하게 한다.</li>
+</ul>
+<h3>6. 샘플 및 예제</h3>
+<p>예제 20-1. 설명 가능한 위험점수</p>
+<pre><code class="language-text">RiskScore = 0
++ 30: 무제한 토큰 승인 발견
++ 25: 신규 또는 평판 미확인 spender
++ 20: 최근 24시간 대규모 자산 이동
++ 15: 관리자 권한이 단일 주소에 집중
++ 10: 체인별 데이터 일부 조회 실패
+
+0~29 낮음 / 30~59 주의 / 60~79 높음 / 80~100 매우 높음</code></pre>
+<p>※ ZIP 압축 해제 후 메인 교재와 실습자료 폴더의 위치를 유지해야 링크가 열립니다.</p>
+<ul>
+<li>20일차 상세 실습교재 열기</li>
+<li>20일차 웹 시뮬레이터 실행</li>
+</ul>
+<h3>7. 단계별 실습</h3>
+<ol>
+<li>팀별 MVP 아키텍처와 화면흐름을 확정한다.</li>
+<li>샘플 주소 데이터로 위험리포트를 생성한다.</li>
+<li>5분 발표와 3분 질의응답을 진행한다.</li>
+</ol>
+<div class="callout callout-check"><strong>제출 형식</strong><p>
+A4 1~2쪽 또는 슬라이드 2장. 반드시 “구조도 1개, 위험요인 3개 이상, 통제방안 3개 이상, 남은 불확실성 1개”를 포함한다. 
+</p></div>
+<h3>8. 실습 평가 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>우수</th><th>보통</th><th>보완 필요</th></tr>
+<tr><td>개념 정확성</td><td>핵심 용어와 흐름이 정확함</td><td>일부 표현이 모호함</td><td>핵심 개념 오류가 있음</td></tr>
+<tr><td>구조 설계</td><td>주체·데이터·권한이 명확함</td><td>일부 관계가 빠짐</td><td>구조가 연결되지 않음</td></tr>
+<tr><td>위험 분석</td><td>현실적 위험과 통제가 대응됨</td><td>위험은 있으나 통제가 약함</td><td>위험 분석이 피상적임</td></tr>
+<tr><td>설명력</td><td>근거와 한계를 함께 제시함</td><td>결론은 있으나 근거가 약함</td><td>결론만 제시함</td></tr>
+</table></div>
+<h3>9. 형성평가</h3>
+<div class="callout callout-question"><strong>1. 좋은 위험리포트의 조건은?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+근거 데이터, 규칙, 불확실성, 권고행동, 사용자 친화적 설명이 포함되어야 한다. 
+</p></div>
+<div class="callout callout-question"><strong>2. 멀티체인 정규화가 필요한 이유는?</strong><p>
+</p></div>
+<div class="callout callout-success"><strong>- 정답과 해설</strong><p>
+체인별 데이터 모델과 권한 표현이 달라도 공통 위험정책으로 비교·판단하기 위해서다. 
+</p></div>
+<h3>10. 과제 및 다음 차시 연결</h3>
+<div class="callout callout-todo"><strong>과제와 다음 차시</strong><p>
+과제: 오늘 작성한 산출물을 보완해 1쪽 요약본으로 제출한다. 다음 차시에는 이 결과를 바탕으로 최종 프로젝트 개선계획을 연결한다. 
+</p></div>
+<h3>11. 강사 운영 팁과 예상 질문</h3>
+<div class="callout callout-tip"><strong>강사 운영 팁</strong><p>
+- 기술 용어를 먼저 정의하기보다 일상 사례→문제→기술 개념 순으로 설명한다. 
+- 가격 전망이나 투자 권유로 수업이 흐르지 않도록 기술 구조와 위험 중심으로 되돌린다. 
+- 학습자가 실제 자산을 사용하려 할 경우 즉시 테스트넷·샘플 데이터로 전환한다. 
+- LLM 답변은 근거 확인 질문을 추가해 비판적으로 검토하게 한다. 
+</p></div>
+<h3>최종 발표 운영</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>확인 내용</th></tr>
+<tr><td>팀 발표</td><td>5분</td><td>문제·구조·데모·위험·한계</td></tr>
+<tr><td>질의응답</td><td>3분</td><td>근거 데이터·통제·불확실성</td></tr>
+<tr><td>피드백</td><td>2분</td><td>다음 버전 우선순위</td></tr>
+</table></div>
+<h3>원문 및 변경 이력</h3>
+<ul>
+<li>본문의 장문 부록은 내용 손실 없이 5개 강사용 부록 노트로 분리했다.</li>
+<li>원본 DOCX와 전체 추출문은 변경하지 않았다.</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 20px;">
-        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
-          <h4 style="margin:0 0 6px; font-size:15px; color:var(--cat-bc);">1. 최소권한 원칙</h4>
-          <p style="margin:0; font-size:13px; color:var(--text-soft);">Agent 전용 세션키에 오직 읽기 및 제한된 승인 권한만 부여하며 마스터 개인키는 절대 전달하지 않음</p>
-        </div>
-        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
-          <h4 style="margin:0 0 6px; font-size:15px; color:var(--cat-bc);">2. 일일 전송 한도 가드</h4>
-          <p style="margin:0; font-size:13px; color:var(--text-soft);">스마트컨트랙트 레벨에서 24시간 내 최대 전송 가능 금액을 하드코딩하여 탈취 위험 차단</p>
-        </div>
-        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
-          <h4 style="margin:0 0 6px; font-size:15px; color:var(--cat-bc);">3. Human-in-the-Loop</h4>
-          <p style="margin:0; font-size:13px; color:var(--text-soft);">임계값(예: 0.1 ETH) 이상의 트랜잭션은 관리자의 서명 승인이 완료되어야만 온체인 전송 실행</p>
-        </div>
+      <!-- Section: Hardhat AttendancePayroll Fullstack Lab -->
+      <div id="hardhat-lab" style="margin-top:64px;">
+        <span id="hardhat-dapp"></span>
+        <h2 style="font-size:24px; font-weight:900; margin: 40px 0 24px; border-bottom:3px solid var(--cat-bc); padding-bottom:8px;">
+          실전 실습 랩 1: Hardhat 기반 로컬 네트워크 출석·급여 dApp 실습 가이드
+        </h2>
+        <article class="session-article">
+          <h2>Hardhat 기반 로컬 네트워크 구축 및 출석 관리 dApp 실습 가이드</h2>
+<div class="callout callout-info"><strong>원문 보존</strong><p>
+Notion 원문은 Hardhat dApp Notion 원문 기록에 보존했다. 이 문서는 강의·실습 운영용으로 구조화한 정리본이다. 
+</p></div>
+<div class="callout callout-warning"><strong>실습 안전</strong><p>
+이 실습은 **Hardhat 로컬 네트워크와 교육용 MetaMask 계정**만 사용한다. 실제 개인키·시드문구·가치 있는 ETH/토큰·개인정보를 사용하지 않는다. 
+</p></div>
+<h3>1. 한 줄 요약</h3>
+<p>Hardhat 3, Solidity, Viem, TypeScript, React/Vite, MetaMask를 사용해 <strong>로컬 Ethereum 네트워크에서 출석·근무시간·급여 지급 dApp</strong>을 단계적으로 구현하는 실습 가이드다.</p>
+<h3>2. 핵심 키워드</h3>
+<ul>
+<li><strong>개발환경</strong>: Node.js 22.13+, npm, VS Code, PowerShell, Hardhat 3, TypeScript</li>
+<li><strong>스마트컨트랙트</strong>: Solidity, AttendancePayroll, owner/admin, struct, mapping, event, custom error, reentrancy lock</li>
+<li><strong>테스트</strong>: node:test, Viem, Hardhat Network Helpers, time.increase, 단위 테스트, 통합 테스트</li>
+<li><strong>블록체인 실행</strong>: Hardhat local network, JSON-RPC, account/private key, deployment script, ABI, artifact</li>
+<li><strong>지갑/프론트엔드</strong>: MetaMask, React, Vite, viem wallet client, readContract, writeContract, waitForTransactionReceipt</li>
+<li><strong>업무 도메인</strong>: 직원 등록, 출근, 퇴근, 근무시간 누적, 미지급 급여, 회사 금고, 급여 지급, 관리자 운영</li>
+<li><strong>오류 대응</strong>: TypeScript 서버 재시작, VS Code reload, 예제 파일 정리, 계정 불일치, MetaMask 네트워크/계정 전환</li>
+</ul>
+<h3>3. 강의에서 활용하기 좋은 위치</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>회차</th><th>연결 포인트</th><th>활용 방식</th></tr>
+<tr><td>07회차</td><td>EOA, Contract Account, RPC, 로컬 네트워크</td><td>Hardhat node와 MetaMask 계정 연결 실습</td></tr>
+<tr><td>08회차</td><td>Solidity 컨트랙트 작성</td><td>AttendancePayroll 컨트랙트 단계별 확장</td></tr>
+<tr><td>09회차</td><td>프론트엔드·ABI·지갑·RPC 연결</td><td>React/Vite + Viem + MetaMask 연결</td></tr>
+<tr><td>20회차</td><td>최종 프로젝트</td><td>출석·급여 dApp을 팀 프로젝트 예시로 사용</td></tr>
+</table></div>
+<h3>4. 전체 실습 산출물</h3>
+<p>최종적으로 다음 구조의 프로젝트를 만든다.</p>
+<pre><code class="language-text">hardhat-attendance-payroll/
+├─ contracts/
+│  └─ AttendancePayroll.sol
+├─ test/
+│  ├─ 01-register-employee.ts
+│  ├─ 02-check-in.ts
+│  ├─ 03-check-out.ts
+│  ├─ 04-payroll.ts
+│  ├─ 05-admin-functions.ts
+│  └─ 06-integration.ts
+├─ ignition/ 또는 scripts/
+│  └─ deploy-local.ts
+├─ frontend/
+│  ├─ src/App.tsx
+│  ├─ src/App.css
+│  └─ src/abi/AttendancePayroll.json
+├─ hardhat.config.ts
+└─ package.json</code></pre>
+<h3>5. 단계별 정리</h3>
+<h4>5.1 0~1단계 — 환경 준비와 Hardhat 프로젝트 초기화</h4>
+<p><strong>목표</strong></p>
+<ul>
+<li>Node.js와 npm 버전 확인</li>
+<li>프로젝트 폴더 생성</li>
+<li>Hardhat 3 프로젝트 초기화</li>
+<li>기본 compile/test 실행 확인</li>
+</ul>
+<p><strong>핵심 확인</strong></p>
+<pre><code class="language-powershell">node -v
+npm -v
+npx hardhat --version
+npm run build
+npm test</code></pre>
+<p><strong>강의 포인트</strong></p>
+<ul>
+<li>Hardhat은 Solidity 개발·컴파일·테스트·로컬 체인 실행을 묶어 주는 개발 프레임워크다.</li>
+<li>학생 PC마다 Node 버전 차이가 가장 흔한 초기 오류 원인이다.</li>
+</ul>
+<h4>5.2 2단계 — 첫 스마트컨트랙트와 테스트</h4>
+<p><strong>목표</strong></p>
+<ul>
+<li>간단한 직원 이름 저장 컨트랙트 작성</li>
+<li>Viem + node:test 기반 테스트 작성</li>
+<li>배포 후 상태 조회 테스트 통과</li>
+</ul>
+<p><strong>핵심 키워드</strong></p>
+<ul>
+<li><code>contract</code></li>
+<li><code>string</code></li>
+<li><code>constructor</code></li>
+<li><code>public view</code></li>
+<li><code>network.create()</code></li>
+<li><code>readContract</code></li>
+</ul>
+<p><strong>의미</strong></p>
+<p>학생들이 Solidity 문법 자체보다 <strong>컨트랙트 배포 → 함수 호출 → 결과 검증</strong>의 기본 루프를 먼저 경험하도록 하는 단계다.</p>
+<h4>5.3 3단계 — 관리자 전용 직원 등록</h4>
+<p><strong>목표</strong></p>
+<ul>
+<li><code>owner</code> 주소 저장</li>
+<li>직원 정보를 <code>struct</code>로 정의</li>
+<li><code>mapping(address => Employee)</code>로 직원 관리</li>
+<li>관리자만 직원 등록 가능하도록 권한 검사</li>
+<li>일반 사용자 등록 실패 테스트 작성</li>
+</ul>
+<p><strong>핵심 개념</strong></p>
+<div class="table-responsive"><table class="data-table">
+<tr><th>개념</th><th>설명</th></tr>
+<tr><td>`msg.sender`</td><td>현재 트랜잭션 호출자 주소</td></tr>
+<tr><td>`owner`</td><td>관리자 계정</td></tr>
+<tr><td>`modifier` 또는 권한 검사</td><td>관리자 기능 접근 제한</td></tr>
+<tr><td>custom error</td><td>실패 이유를 명확히 표현</td></tr>
+</table></div>
+<p><strong>수업 질문</strong></p>
+<ul>
+<li>“지갑 주소가 직원 ID 역할을 할 때 장점과 위험은 무엇인가?”</li>
+<li>“관리자 주소를 잘못 설정하면 어떤 문제가 생기는가?”</li>
+</ul>
+<h4>5.4 4단계 — 출근 기능 구현</h4>
+<p><strong>목표</strong></p>
+<ul>
+<li>등록된 직원만 출근 가능</li>
+<li>활성 직원만 출근 가능</li>
+<li>중복 출근 차단</li>
+<li>출근 시간 저장</li>
+<li><code>CheckedIn</code> 이벤트 발생</li>
+</ul>
+<p><strong>핵심 상태값</strong></p>
+<ul>
+<li><code>isCheckedIn</code></li>
+<li><code>checkInTime</code></li>
+<li><code>isActive</code></li>
+</ul>
+<p><strong>검증해야 할 실패 케이스</strong></p>
+<ul>
+<li>등록되지 않은 주소의 출근</li>
+<li>비활성 직원의 출근</li>
+<li>이미 출근한 직원의 중복 출근</li>
+</ul>
+<h4>5.5 5단계 — 퇴근·근무시간·급여 계산 검증</h4>
+<p><strong>목표</strong></p>
+<ul>
+<li>출근한 직원만 퇴근 가능</li>
+<li>근무시간 누적</li>
+<li>시급 기반 미지급 급여 계산</li>
+<li>테스트 체인의 시간 증가를 사용해 1시간·여러 번 근무 케이스 검증</li>
+</ul>
+<p><strong>핵심 도구</strong></p>
+<ul>
+<li>Hardhat Network Helpers</li>
+<li><code>time.increase()</code></li>
+<li><code>pendingSalary</code></li>
+<li><code>totalWorkedSeconds</code></li>
+</ul>
+<p><strong>주의</strong></p>
+<p>테스트는 동일 네트워크 상태를 공유하거나 시간 범위가 환경에 따라 달라질 수 있으므로, 테스트별 독립 배포 함수와 허용 범위를 명확히 둔다.</p>
+<h4>5.6 중간 정리 — 남아 있는 예제 파일 제거</h4>
+<p><strong>문제 상황</strong></p>
+<p>초기 Hardhat 예제 파일인 <code>Counter.sol</code>, <code>HelloAttendance</code> 테스트가 남아 있으면 실제 프로젝트 테스트와 충돌할 수 있다.</p>
+<p><strong>정리 대상 예시</strong></p>
+<pre><code class="language-text">contracts/Counter.sol
+test/Counter.ts
+test/01-hello-attendance.ts
+test/02-hello-attendance.ts</code></pre>
+<p><strong>강의 운영 팁</strong></p>
+<p>오류를 단순히 “안 된다”로 처리하지 말고, <strong>Artifact가 없다는 메시지 → 삭제된 컨트랙트를 참조하는 테스트가 남음</strong>이라는 원인 추적 흐름을 보여 주면 좋다.</p>
+<h4>5.7 6단계 — 급여 금고와 급여 지급</h4>
+<p><strong>목표</strong></p>
+<ul>
+<li>회사 금고에 ETH 충전</li>
+<li>직원별 미지급 급여 관리</li>
+<li>급여 지급 시 pending salary 감소</li>
+<li>누적 지급 급여 기록</li>
+<li>잔액 부족·권한 오류·재진입 위험 통제</li>
+</ul>
+<p><strong>핵심 함수</strong></p>
+<div class="table-responsive"><table class="data-table">
+<tr><th>함수</th><th>역할</th></tr>
+<tr><td>`depositFunds()`</td><td>회사 금고에 ETH 입금</td></tr>
+<tr><td>`paySalary(address employee)`</td><td>직원에게 미지급 급여 지급</td></tr>
+<tr><td>`getContractBalance()`</td><td>컨트랙트 잔액 확인</td></tr>
+<tr><td>`getEmployee()`</td><td>직원 상태 조회</td></tr>
+</table></div>
+<p><strong>보안 키워드</strong></p>
+<ul>
+<li>Checks-Effects-Interactions</li>
+<li>reentrancy guard</li>
+<li>payable</li>
+<li>contract balance</li>
+<li>external call</li>
+</ul>
+<h4>5.8 7단계 — 관리자 운영 기능</h4>
+<p><strong>목표</strong></p>
+<ul>
+<li>직원 활성/비활성 변경</li>
+<li>직원 시급 변경</li>
+<li>관리자 권한 이전</li>
+<li>출근 중인 직원 비활성화 차단</li>
+<li>일반 사용자의 관리자 기능 접근 차단</li>
+</ul>
+<p><strong>수업 포인트</strong></p>
+<p>스마트컨트랙트는 배포 후 쉽게 수정할 수 없으므로, 운영 기능과 권한 변경 시나리오를 초기 설계 단계에서 고려해야 한다.</p>
+<h4>5.9 8단계 — 통합 테스트와 로컬 배포</h4>
+<p><strong>목표</strong></p>
+<p>다음 전체 흐름을 하나의 통합 테스트로 확인한다.</p>
+<pre><code class="language-text">관리자 배포
+→ 직원 등록
+→ 직원 출근
+→ 근무시간 경과
+→ 직원 퇴근
+→ 급여 적립
+→ 회사 금고 충전
+→ 급여 지급
+→ 최종 상태 확인</code></pre>
+<p><strong>로컬 배포 준비</strong></p>
+<ul>
+<li>Hardhat 로컬 노드 실행</li>
+<li>배포 스크립트 작성</li>
+<li>배포된 컨트랙트 주소와 ABI 확인</li>
+</ul>
+<h4>5.10 9단계 — React 웹 생성과 MetaMask 연결</h4>
+<p><strong>목표</strong></p>
+<ul>
+<li>Vite React TypeScript 프론트엔드 생성</li>
+<li>Viem 설치</li>
+<li>Hardhat Local 네트워크를 MetaMask에 추가</li>
+<li>배포된 컨트랙트 주소와 ABI 연결</li>
+<li>관리자 주소와 회사 금고 잔액 조회</li>
+</ul>
+<p><strong>핵심 키워드</strong></p>
+<ul>
+<li><code>window.ethereum</code></li>
+<li>MetaMask provider</li>
+<li><code>createWalletClient</code></li>
+<li><code>createPublicClient</code></li>
+<li>ABI</li>
+<li>contract address</li>
+<li>chain ID</li>
+</ul>
+<p><strong>학생 오류 가능성이 높은 부분</strong></p>
+<ul>
+<li>MetaMask가 Hardhat Local 네트워크가 아닌 다른 네트워크에 연결됨</li>
+<li>배포 후 재시작으로 컨트랙트 주소가 바뀌었는데 프론트엔드 <code>.env</code>를 갱신하지 않음</li>
+<li>Hardhat 기본 계정과 MetaMask 계정이 일치하지 않음</li>
+</ul>
+<h4>5.11 10단계 — 웹에서 직원 등록·출근·퇴근·급여 지급</h4>
+<p><strong>목표</strong></p>
+<p>웹 화면에서 전체 기능을 실행한다.</p>
+<ul>
+<li>관리자: 직원 등록</li>
+<li>직원: 출근</li>
+<li>직원: 퇴근</li>
+<li>관리자 또는 사용자: 회사 금고 충전</li>
+<li>관리자: 직원 급여 지급</li>
+<li>직원 정보 조회</li>
+</ul>
+<p><strong>트랜잭션 처리 흐름</strong></p>
+<pre><code class="language-text">사용자 버튼 클릭
+→ MetaMask 서명 요청
+→ writeContract 실행
+→ 트랜잭션 해시 생성
+→ waitForTransactionReceipt로 블록 반영 대기
+→ 화면 상태 갱신</code></pre>
+<h3>6. 계정·MetaMask 오류 대응</h3>
+<h4>6.1 Hardhat 기본 계정과 MetaMask 계정 비교</h4>
+<p>Hardhat 로컬 네트워크의 기본 계정과 MetaMask 현재 계정이 다르면 관리자 기능이나 직원 기능이 예상과 다르게 실패한다.</p>
+<p><strong>확인 항목</strong></p>
+<ul>
+<li>Hardhat Account #0 또는 #1 주소</li>
+<li>MetaMask Account 1 주소</li>
+<li>현재 연결된 네트워크</li>
+<li>컨트랙트 배포자 주소</li>
+<li>직원 등록에 사용한 주소</li>
+</ul>
+<h4>6.2 Hardhat 계정을 MetaMask로 가져오기</h4>
+<p>교육용 로컬 실습에서는 Hardhat 기본 계정의 개인키를 MetaMask로 가져와 테스트할 수 있다. 단, 이 개인키는 공개된 개발용 키이며 실제 자산을 절대 넣지 않는다.</p>
+<h4>6.3 역할 구분</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>역할</th><th>계정 예시</th><th>기능</th></tr>
+<tr><td>관리자</td><td>배포자 계정</td><td>직원 등록, 시급 변경, 급여 지급, 관리자 이전</td></tr>
+<tr><td>직원</td><td>등록된 직원 주소</td><td>출근, 퇴근, 본인 상태 확인</td></tr>
+<tr><td>일반 사용자</td><td>등록되지 않은 주소</td><td>대부분의 업무 기능 실패 확인용</td></tr>
+</table></div>
+<h3>7. VS Code / TypeScript 빨간줄 대응</h3>
+<p>Notion 원문에는 <code>.ts</code> 파일이 실제 오류가 아닌데 빨간줄이 남는 경우의 해결책도 포함되어 있다.</p>
+<ol>
+<li><code>.ts</code> 파일 탭을 활성화한 뒤 <code>TypeScript: Restart TS Server</code> 실행</li>
+<li><code>Developer: Reload Window</code> 실행</li>
+<li>VS Code를 완전히 종료 후 재실행</li>
+</ol>
+<p>강의 중에는 2번이 가장 범용적인 해결책이다.</p>
+<h3>8. 강사용 운영 체크리스트</h3>
+<ul>
+<li>[ ] Node.js 22.13 이상 설치 확인</li>
+<li>[ ] npm 실행 확인</li>
+<li>[ ] VS Code와 TypeScript 확장 상태 확인</li>
+<li>[ ] Hardhat 프로젝트 초기화 성공</li>
+<li>[ ] <code>npm run build</code> 또는 <code>npx hardhat compile</code> 성공</li>
+<li>[ ] 단위 테스트 파일이 예제 파일과 충돌하지 않는지 확인</li>
+<li>[ ] Hardhat 로컬 노드 실행</li>
+<li>[ ] 배포 컨트랙트 주소 기록</li>
+<li>[ ] MetaMask Hardhat Local 네트워크 설정</li>
+<li>[ ] 관리자 계정과 직원 계정 구분</li>
+<li>[ ] React 프론트엔드 <code>.env</code>의 컨트랙트 주소 갱신</li>
+<li>[ ] 실제 자산 계정 사용 금지 안내</li>
+</ul>
+<h3>9. 학생용 제출물 예시</h3>
+<ul>
+<li>프로젝트 폴더 ZIP 또는 GitHub 저장소</li>
+<li><code>AttendancePayroll.sol</code> 최종 코드</li>
+<li>테스트 실행 결과 캡처</li>
+<li>로컬 배포 컨트랙트 주소</li>
+<li>MetaMask 연결 화면 캡처</li>
+<li>직원 등록·출근·퇴근·급여 지급 화면 캡처</li>
+<li>오류 1개 이상과 해결 과정 기록</li>
+<li>“실제 서비스로 확장할 때 필요한 보안·개인정보·운영 통제” 1쪽 메모</li>
+</ul>
+<h3>10. 평가 루브릭 초안</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>항목</th><th>배점</th><th>확인 기준</th></tr>
+<tr><td>환경 구성</td><td>15</td><td>Node/Hardhat/프로젝트 초기화와 기본 테스트 성공</td></tr>
+<tr><td>컨트랙트 구현</td><td>25</td><td>직원 등록, 출근, 퇴근, 급여 계산, 관리자 기능 구현</td></tr>
+<tr><td>테스트</td><td>20</td><td>정상/실패 케이스와 통합 테스트 포함</td></tr>
+<tr><td>프론트엔드</td><td>20</td><td>MetaMask 연결, read/write, 상태 갱신, 오류 메시지 구현</td></tr>
+<tr><td>보안·운영 이해</td><td>10</td><td>실제 자산 금지, 권한 관리, 재진입·계정 위험 설명</td></tr>
+<tr><td>문서화</td><td>10</td><td>실행 방법, 오류 대응, 스크린샷, 회고 정리</td></tr>
+</table></div>
+<h3>11. 강의 확장 아이디어</h3>
+<ul>
+<li>출석 시간을 실제 개인정보로 보지 않고 해시·익명화하는 방법 토론</li>
+<li>급여 지급을 ERC-20 토큰으로 바꾸기</li>
+<li>관리자 권한을 단일 EOA가 아니라 멀티시그로 바꾸기</li>
+<li>출근 위치 인증·DID·영지식 증명과 연결하기</li>
+<li>AI Agent가 테스트 실패 로그를 읽고 수정 제안을 생성하는 실습으로 확장하기</li>
+</ul>
+<h3>12. 원문 내 주요 단계 색인</h3>
+<ul>
+<li>원문: TypeScript 빨간줄 대응</li>
+<li>원문: 1단계 Hardhat 프로젝트 초기화</li>
+<li>원문: 2단계 직원 이름 저장 컨트랙트</li>
+<li>원문: 3단계 관리자 전용 직원 등록</li>
+<li>원문: 4단계 출근 기능</li>
+<li>원문: 5단계 퇴근·근무시간·급여 계산 검증</li>
+<li>원문: 예제 파일 정리</li>
+<li>원문: 6단계 급여 금고와 급여 지급</li>
+<li>원문: 7단계 관리자 운영 기능</li>
+<li>원문: 8단계 통합 테스트와 로컬 배포</li>
+<li>원문: 9단계 React 웹과 MetaMask 연결</li>
+<li>원문: 10단계 웹에서 등록·출근·퇴근·급여 지급</li>
+</ul>
+<h3>13. 다음 작업 후보</h3>
+<ul>
+<li>[ ] Notion 원문에 포함된 Solidity/TypeScript/React 코드를 파일 단위로 분리해 <code>12_Attachments</code> 또는 별도 실습 코드 폴더에 보존</li>
+<li>[ ] 08회차 Solidity 실습 교안에 이 가이드의 2~5단계 연결</li>
+<li>[ ] 09회차 Web3 아키텍처 교안에 React/Viem/MetaMask 연결 단계 반영</li>
+<li>[ ] 20회차 최종 프로젝트 선택지에 “출석·급여 dApp” 추가</li>
+</ul>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
       </div>
-    </section>
-  </main>
+
+      <!-- Section: Appendix DApp Labs (CoursePoll & Allowance Guard) -->
+      <div id="appendix-labs" style="margin-top:64px;">
+        <h2 style="font-size:24px; font-weight:900; margin: 40px 0 24px; border-bottom:3px solid var(--cat-bc); padding-bottom:8px;">
+          실전 실습 랩 2 & 3: CoursePoll 온체인 투표 & ERC-20 Allowance Risk Guard
+        </h2>
+        <article class="session-article">
+          <h2>20회차 부록 E — Ethereum dApp 실제 구현 실습 2종</h2>
+<div class="callout callout-warning"><strong>실습 안전</strong><p>
+Sepolia 테스트넷과 교육용 계정만 사용합니다. 실제 개인키·시드문구·가치 있는 자산을 사용하지 않습니다. 
+</p></div>
+<h3>빠른 링크</h3>
+<ul>
+<li>20회차 본문으로 돌아가기</li>
+<li>실행코드 ZIP</li>
+<li>CoursePoll README</li>
+<li>Allowance Guard README</li>
+</ul>
+<h3>교재 보강 안내</h3>
+<p>이 부록은 제7장 이더리움과 Web3 구조, 제8장 Solidity, 제9장 Web3 아키텍처, 제10장 토큰 및 디지털 자산을 실제 웹 dApp 구현으로 연결한다.</p>
+<h3>교재 반영 개요</h3>
+<p>반영 목적</p>
+<p>기존 제7장은 Ethereum·Web3 구조, 제8장은 Solidity, 제9장은 서비스 아키텍처, 제10장은 토큰과 승인 위험을 설명한다. 본 보강편은 네 장의 이론을 실제 Sepolia dApp 두 개로 연결한다.</p>
+<div class="table-responsive"><table class="data-table">
+<tr><th>프로젝트</th><th>핵심 학습</th><th>주요 장 연계</th></tr>
+<tr><td>CoursePoll</td><td>지갑 연결, ABI, read/write, 가스, 이벤트, 트랜잭션 확인</td><td>제7·8·9장</td></tr>
+<tr><td>Allowance Risk Guard</td><td>ERC-20, approve, allowance, transferFrom, revoke, 위험점수</td><td>제8·9·10·18·19장</td></tr>
+</table></div>
+<h3>공통 준비환경</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>항목</th><th>준비 내용</th><th>확인</th></tr>
+<tr><td>브라우저</td><td>Chrome 또는 Edge</td><td>최신 버전</td></tr>
+<tr><td>지갑</td><td>MetaMask 테스트 계정</td><td>실제 자산 계정 사용 금지</td></tr>
+<tr><td>개발도구</td><td>Remix IDE</td><td>브라우저 접속</td></tr>
+<tr><td>테스트넷</td><td>Sepolia</td><td>chain ID 11155111</td></tr>
+<tr><td>프론트엔드</td><td>HTML·CSS·JavaScript·ethers v6</td><td>Python 로컬 서버</td></tr>
+<tr><td>테스트 ETH</td><td>Sepolia 전용</td><td>Faucet 정책에 따라 확보</td></tr>
+</table></div>
+<h3>중요 안전수칙</h3>
+<p>실제 개인키·시드문구·가치 있는 토큰을 사용하지 않는다. 모든 컨트랙트 주소와 네트워크를 확인하고, MetaMask 승인창에서 함수·대상·금액을 읽은 뒤 승인한다.</p>
+<h3>공통 실행 구조</h3>
+<p>프론트엔드 실행</p>
+<p>cd frontend</p>
+<p>python -m http.server 8000</p>
+<p>브라우저: http://localhost:8000</p>
+<p>왜 로컬 서버를 사용하는가</p>
+<p>HTML 파일을 file://로 직접 열면 브라우저 확장 주입이나 보안 정책이 제한될 수 있다. localhost HTTP 서버를 사용하면 MetaMask와 프론트엔드 동작을 더 안정적으로 확인할 수 있다.</p>
+<h3>실습 프로젝트 1. CoursePoll 온체인 투표 dApp</h3>
+<p>그림 E-1. CoursePoll 전체 요청 흐름</p>
+<h4>1. 학습목표</h4>
+<p>EOA가 Contract Account의 view 함수와 상태 변경 함수를 호출하는 차이를 설명한다.</p>
+<p>Remix에서 Solidity 컨트랙트를 컴파일·배포하고 생성자 인자를 입력한다.</p>
+<p>ethers v6 BrowserProvider와 Contract로 MetaMask와 컨트랙트를 연결한다.</p>
+<p>트랜잭션 해시, 블록 번호, gasUsed, VoteCast 이벤트를 확인한다.</p>
+<p>지갑 1개=사람 1명이 아니라는 한계와 실제 선거 적용 위험을 설명한다.</p>
+<h4>2. 수업 운영 예시</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>활동</th><th>확인</th></tr>
+<tr><td>개념 연결</td><td>20분</td><td>EOA·Contract·ABI·RPC·read/write 복습</td><td>구조도</td></tr>
+<tr><td>컨트랙트 작성</td><td>35분</td><td>CoursePoll.sol 입력·컴파일</td><td>컴파일 성공</td></tr>
+<tr><td>Remix VM 테스트</td><td>25분</td><td>투표·재투표 오류·이벤트</td><td>실행 로그</td></tr>
+<tr><td>Sepolia 배포</td><td>30분</td><td>Injected Provider로 배포</td><td>컨트랙트 주소</td></tr>
+<tr><td>웹 연결</td><td>50분</td><td>로컬 서버·MetaMask·ethers</td><td>웹 화면</td></tr>
+<tr><td>오류 시연</td><td>25분</td><td>네트워크·주소·재투표·거부</td><td>오류표</td></tr>
+<tr><td>위험 분석·발표</td><td>25분</td><td>신원·공개성·가스·운영 한계</td><td>제출물</td></tr>
+</table></div>
+<h4>3. 강사 설명 스크립트</h4>
+<p>스크립트 1</p>
+<p>“Remix에서 버튼을 누르는 것과 웹 dApp에서 버튼을 누르는 것은 결국 같은 ABI 함수 호출을 만듭니다. 차이는 웹 dApp이 사용자 화면, 지갑 연결, 네트워크 검사, 오류 메시지, Explorer 링크를 직접 구현한다는 점입니다.”</p>
+<p>스크립트 2</p>
+<p>“question과 getOptions는 view 함수이므로 Provider를 통해 조회할 수 있습니다. vote는 hasVoted와 voteCounts를 바꾸므로 Signer, MetaMask 승인, 가스, 블록 포함이 필요합니다.”</p>
+<p>스크립트 3</p>
+<p>“유효한 지갑 서명은 특정 주소가 호출했다는 사실을 보여 줄 뿐, 한 주소가 한 사람이라는 사실은 보장하지 않습니다. 따라서 이 예제는 기술 투표 실습이지 실제 선거 솔루션이 아닙니다.”</p>
+<h4>4. Solidity 컨트랙트</h4>
+<h4>CoursePoll.sol</h4>
+<pre><code class="language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+/// @title CoursePoll
+/// @notice 교육용 단일 투표 컨트랙트. 실제 공공선거에 사용하지 마십시오.
+contract CoursePoll {
+    address public immutable owner;
+    string public question;
+
+    string[] private options;
+    uint256[] private voteCounts;
+
+    mapping(address =&gt; bool) public hasVoted;
+
+    event VoteCast(
+        address indexed voter,
+        uint256 indexed optionId,
+        uint256 newCount
+    );
+
+    error AlreadyVoted(address voter);
+    error InvalidOption(uint256 optionId);
+
+    constructor(string memory question_, string[] memory options_) {
+        require(bytes(question_).length &gt; 0, &quot;Empty question&quot;);
+        require(options_.length &gt;= 2, &quot;At least two options&quot;);
+
+        owner = msg.sender;
+        question = question_;
+        options = options_;
+        voteCounts = new uint256[](options_.length);
+    }
+
+    function vote(uint256 optionId) external {
+        if (hasVoted[msg.sender]) revert AlreadyVoted(msg.sender);
+        if (optionId &gt;= options.length) revert InvalidOption(optionId);
+
+        hasVoted[msg.sender] = true;
+        voteCounts[optionId] += 1;
+
+        emit VoteCast(msg.sender, optionId, voteCounts[optionId]);
+    }
+
+    function getOptions()
+        external
+        view
+        returns (string[] memory names, uint256[] memory counts)
+    {
+        return (options, voteCounts);
+    }
+
+    function optionCount() external view returns (uint256) {
+        return options.length;
+    }
+}</code></pre>
+<h4>5. Remix 단계별 배포</h4>
+<p>Chrome에서 Remix IDE를 연다.</p>
+<p>File Explorer에서 contracts/CoursePoll.sol을 만든다.</p>
+<p>코드를 붙여 넣고 Solidity Compiler에서 0.8.24 이상을 선택한다.</p>
+<p>Compile CoursePoll.sol을 눌러 오류가 없는지 확인한다.</p>
+<p>Deploy & Run에서 먼저 Remix VM을 선택한다.</p>
+<p>생성자 question_에 "블록체인이 적합한 사례는?"를 입력한다.</p>
+<p>options_에 ["공동 자격증 원장","개인 메모장","단일기관 내부 통계"]를 입력한다.</p>
+<p>Deploy 후 question, getOptions를 조회한다.</p>
+<p>vote(0)을 실행하고 getOptions와 hasVoted를 확인한다.</p>
+<p>같은 계정으로 다시 vote를 실행해 AlreadyVoted 오류를 확인한다.</p>
+<p>MetaMask를 Sepolia로 전환한다.</p>
+<p>Deploy & Run의 Environment를 Injected Provider - MetaMask로 바꾼다.</p>
+<p>컨트랙트를 배포하고 MetaMask에서 배포 트랜잭션을 승인한다.</p>
+<p>배포 주소와 트랜잭션 해시를 기록한다.</p>
+<p>시연 전 관찰 항목</p>
+<p>1) view 함수는 MetaMask 승인을 요구하는가?</p>
+<p>2) vote는 어떤 주소가 서명하는가?</p>
+<p>3) 재투표 오류는 프론트엔드가 막는가, 컨트랙트가 막는가?</p>
+<h4>6. 웹 dApp 실행</h4>
+<p>실행코드 압축을 풀고 lab01-course-poll/frontend 폴더를 연다.</p>
+<p>PowerShell 주소창에 powershell을 입력하거나 폴더에서 터미널을 연다.</p>
+<p>python -m http.server 8000을 실행한다.</p>
+<p>브라우저에서 http://localhost:8000을 연다.</p>
+<p>MetaMask 연결을 누르고 테스트 계정을 승인한다.</p>
+<p>Sepolia 전환 버튼을 눌러 chain ID를 확인한다.</p>
+<p>Remix에서 배포한 CoursePoll 주소를 입력한다.</p>
+<p>투표 불러오기를 눌러 question과 options를 조회한다.</p>
+<p>선택지의 투표 버튼을 누르고 MetaMask 승인창을 확인한다.</p>
+<p>트랜잭션 해시를 눌러 Etherscan에서 Status, From, To, Gas, Input Data를 확인한다.</p>
+<p>결과가 갱신되고 같은 주소의 버튼이 비활성화되는지 확인한다.</p>
+<h4>프론트엔드 핵심 코드</h4>
+<pre><code class="language-javascript">provider = new ethers.BrowserProvider(window.ethereum);
+await provider.send(&quot;eth_requestAccounts&quot;, []);
+signer = await provider.getSigner();
+
+contract = new ethers.Contract(
+    contractAddress,
+    ABI,
+    signer
+);
+
+const question = await contract.question();   // read
+const tx = await contract.vote(optionId);     // write
+const receipt = await tx.wait();</code></pre>
+<h4>7. 입력·처리·출력</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구분</th><th>내용</th></tr>
+<tr><td>입력</td><td>지갑 계정, Sepolia chain ID, 컨트랙트 주소, optionId</td></tr>
+<tr><td>처리</td><td>ABI 인코딩→MetaMask 서명→RPC 전파→EVM 실행→블록 포함</td></tr>
+<tr><td>출력</td><td>투표 결과, tx hash, block number, gasUsed, VoteCast 이벤트</td></tr>
+<tr><td>실패</td><td>잘못된 네트워크·주소, 재투표, 사용자 거부, 가스 부족</td></tr>
+</table></div>
+<h4>8. 오류 시연과 해결</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>오류</th><th>재현 방법</th><th>예상 결과</th><th>해결</th></tr>
+<tr><td>Wrong network</td><td>Ethereum Mainnet 등으로 전환</td><td>Sepolia가 아니라는 오류</td><td>Sepolia 전환</td></tr>
+<tr><td>Invalid address</td><td>주소 한 글자 삭제</td><td>컨트랙트 연결 실패</td><td>배포 주소 재복사</td></tr>
+<tr><td>AlreadyVoted</td><td>같은 주소로 두 번째 투표</td><td>custom error/revert</td><td>다른 테스트 계정 또는 새 배포</td></tr>
+<tr><td>User rejected</td><td>MetaMask에서 거절</td><td>ACTION_REJECTED</td><td>승인 내용을 다시 확인</td></tr>
+<tr><td>Insufficient funds</td><td>테스트 ETH 없는 계정</td><td>가스 추정·전송 실패</td><td>Sepolia ETH 확보</td></tr>
+</table></div>
+<h4>9. 위험과 한계</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>위험</th><th>설명</th><th>통제·토론</th></tr>
+<tr><td>Sybil</td><td>한 사람이 여러 지갑 생성</td><td>DID/VC, 허용목록, 등록절차</td></tr>
+<tr><td>공개투표</td><td>주소와 선택이 이벤트로 노출</td><td>Commit-reveal, ZK, 오프체인 비밀투표</td></tr>
+<tr><td>피싱 프론트엔드</td><td>다른 컨트랙트 호출 가능</td><td>주소 고정, 소스 검증, 시뮬레이션</td></tr>
+<tr><td>불변 오류</td><td>배포 후 로직 수정 어려움</td><td>충분한 테스트, 버전·마이그레이션</td></tr>
+<tr><td>가스·지연</td><td>네트워크 혼잡</td><td>상태 UI, 재시도, 사용자 안내</td></tr>
+</table></div>
+<h4>10. 제출물</h4>
+<p>필수 제출</p>
+<p>Frontend→MetaMask→RPC→CoursePoll 구조도 1개, 배포 주소, 투표 tx hash, gasUsed, 오류 캡처 1개, 위험요인 3개, 통제방안 3개, 남은 불확실성 1개.</p>
+<h3>실습 프로젝트 2. ERC-20 Allowance Risk Guard</h3>
+<p>그림 E-2. approve→transferFrom→revoke와 위험분석</p>
+<h4>1. 학습목표</h4>
+<p>ERC-20 transfer와 approve·transferFrom의 차이를 실제 트랜잭션으로 확인한다.</p>
+<p>OpenZeppelin ERC20을 상속한 교육용 토큰을 배포한다.</p>
+<p>토큰 보유자와 spender operator 계정을 분리해 역할을 체험한다.</p>
+<p>allowance·잔액·노출액을 읽어 위험점수와 근거를 생성한다.</p>
+<p>무제한 승인의 위험과 approve(0) 철회 절차를 설명한다.</p>
+<h4>2. 수업 운영 예시</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구간</th><th>시간</th><th>활동</th><th>확인</th></tr>
+<tr><td>개념</td><td>25분</td><td>transfer·approve·allowance·transferFrom</td><td>흐름도</td></tr>
+<tr><td>컨트랙트 작성</td><td>45분</td><td>MockToken·DemoSpender</td><td>컴파일</td></tr>
+<tr><td>계정 역할</td><td>20분</td><td>Account 1 보유자, Account 2 operator</td><td>역할표</td></tr>
+<tr><td>Sepolia 배포</td><td>35분</td><td>두 컨트랙트 배포</td><td>주소 2개</td></tr>
+<tr><td>웹 실습</td><td>60분</td><td>정확한 승인·무제한·pull·revoke</td><td>tx 4개</td></tr>
+<tr><td>위험 분석</td><td>35분</td><td>점수·근거·통제</td><td>리포트</td></tr>
+<tr><td>발표</td><td>20분</td><td>오류와 한계 공유</td><td>최종 산출물</td></tr>
+</table></div>
+<h4>3. 강사 설명 스크립트</h4>
+<p>스크립트 1</p>
+<p>“approve 버튼을 누를 때 토큰은 이동하지 않습니다. 사용자는 spender 컨트랙트가 나중에 transferFrom을 실행할 수 있도록 한도를 기록합니다.”</p>
+<p>스크립트 2</p>
+<p>“Allowance 위험은 토큰 잔액뿐 아니라 spender의 신뢰도, 승인 한도, 컨트랙트 업그레이드 가능성, 철회 여부를 함께 봐야 합니다.”</p>
+<p>스크립트 3</p>
+<p>“무제한 승인은 편리하지만 spender가 침해되거나 악성 로직으로 바뀌면 미래에 들어오는 토큰까지 노출될 수 있습니다. 실습 후 반드시 approve(0)으로 철회합니다.”</p>
+<h4>4. Solidity 컨트랙트</h4>
+<h4>MockCourseToken.sol</h4>
+<pre><code class="language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import {ERC20} from &quot;@openzeppelin/contracts/token/ERC20/ERC20.sol&quot;;
+
+/// @title MockCourseToken
+/// @notice 교육용 테스트 토큰. 실제 가치가 없습니다.
+contract MockCourseToken is ERC20 {
+    constructor() ERC20(&quot;Course Token&quot;, &quot;CRS&quot;) {
+        _mint(msg.sender, 1_000 ether);
+    }
+}</code></pre>
+<h4>DemoSpender.sol</h4>
+<pre><code class="language-solidity">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import {IERC20} from &quot;@openzeppelin/contracts/token/ERC20/IERC20.sol&quot;;
+
+/// @title DemoSpender
+/// @notice allowance와 transferFrom 위험을 관찰하기 위한 교육용 spender.
+contract DemoSpender {
+    address public immutable operator;
+
+    event TokensPulled(
+        address indexed token,
+        address indexed tokenOwner,
+        address indexed recipient,
+        uint256 amount
+    );
+
+    error NotOperator(address caller);
+    error InvalidRecipient();
+    error TransferFailed();
+
+    constructor() {
+        operator = msg.sender;
+    }
+
+    function pullTokens(
+        address token,
+        address tokenOwner,
+        address recipient,
+        uint256 amount
+    ) external {
+        if (msg.sender != operator) revert NotOperator(msg.sender);
+        if (recipient == address(0)) revert InvalidRecipient();
+
+        bool success = IERC20(token).transferFrom(
+            tokenOwner,
+            recipient,
+            amount
+        );
+        if (!success) revert TransferFailed();
+
+        emit TokensPulled(token, tokenOwner, recipient, amount);
+    }
+}</code></pre>
+<h4>5. 배포 역할과 순서</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>역할</th><th>MetaMask 계정</th><th>수행 작업</th></tr>
+<tr><td>토큰 보유자</td><td>Account 1</td><td>MockCourseToken 배포, approve, revoke</td></tr>
+<tr><td>Spender operator</td><td>Account 2</td><td>DemoSpender 배포, pullTokens 실행</td></tr>
+<tr><td>수신자</td><td>Account 2 또는 Account 3</td><td>transferFrom 토큰 수신</td></tr>
+</table></div>
+<p>Remix에서 MockCourseToken.sol과 DemoSpender.sol을 생성한다.</p>
+<p>OpenZeppelin import가 로드되는지 확인하고 컴파일한다.</p>
+<p>MetaMask Account 1로 MockCourseToken을 Sepolia에 배포한다.</p>
+<p>Account 1의 balanceOf를 확인해 1,000 CRS를 기록한다.</p>
+<p>MetaMask Account 2로 전환하고 DemoSpender를 배포한다.</p>
+<p>Token 주소와 Spender 주소를 기록한다.</p>
+<p>Account 1로 돌아와 프론트엔드에서 두 주소를 연결한다.</p>
+<p>100 CRS 정확한 금액 승인을 실행한다.</p>
+<p>allowance와 위험점수를 확인한다.</p>
+<p>Account 2로 전환하고 pullTokens로 Account 1에서 10 CRS를 이동한다.</p>
+<p>Account 1로 돌아와 잔액과 allowance 감소를 확인한다.</p>
+<p>무제한 승인을 실행하고 위험점수 변화를 확인한다.</p>
+<p>approve(0)을 실행해 승인 권한을 철회한다.</p>
+<h4>6. 웹 dApp 실행</h4>
+<p>로컬 서버</p>
+<p>cd lab02-allowance-guard/frontend</p>
+<p>python -m http.server 8001</p>
+<p>브라우저: http://localhost:8001</p>
+<p>중요</p>
+<p>Spender 실행 버튼은 DemoSpender를 배포한 operator 계정에서만 성공한다. 계정 변경 후 페이지가 새로고침되므로 토큰·spender 주소를 다시 입력할 수 있다.</p>
+<h4>7. 위험점수 규칙</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>조건</th><th>점수</th><th>근거</th></tr>
+<tr><td>무제한 또는 사실상 무제한</td><td>50</td><td>spender가 장기간 광범위 권한 보유</td></tr>
+<tr><td>allowance ≥ 현재 잔액</td><td>25</td><td>현재 잔액 전부 노출 가능</td></tr>
+<tr><td>allowance > 0</td><td>10</td><td>활성 transferFrom 권한</td></tr>
+<tr><td>알 수 없는·업그레이드 가능한 spender</td><td>추가 평가</td><td>프론트엔드 예제 밖에서 수동 확인</td></tr>
+</table></div>
+<h4>위험점수 핵심 코드</h4>
+<pre><code class="language-javascript">const effectivelyUnlimited =
+    allowance &gt; ethers.MaxUint256 / 2n;
+
+if (effectivelyUnlimited) score += 50;
+if (balance &gt; 0n &amp;&amp; allowance &gt;= balance) score += 25;
+if (allowance &gt; 0n) score += 10;</code></pre>
+<h4>8. 입력·처리·출력</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>구분</th><th>내용</th></tr>
+<tr><td>입력</td><td>holder, token address, spender address, allowance amount, pull amount</td></tr>
+<tr><td>처리</td><td>approve 기록→allowance 조회→operator transferFrom→잔액·allowance 갱신</td></tr>
+<tr><td>출력</td><td>Approval·Transfer·TokensPulled 이벤트, tx hash, 위험점수, 노출근거</td></tr>
+<tr><td>철회</td><td>approve(spender, 0)으로 allowance 0 설정</td></tr>
+</table></div>
+<h4>9. 오류 시연</h4>
+<div class="table-responsive"><table class="data-table">
+<tr><th>오류</th><th>재현</th><th>예상</th><th>학습 포인트</th></tr>
+<tr><td>Insufficient allowance</td><td>100 승인 후 200 pull</td><td>revert</td><td>spender는 allowance 범위만 사용</td></tr>
+<tr><td>NotOperator</td><td>Account 1로 pull</td><td>custom error</td><td>spender 내부 접근제어</td></tr>
+<tr><td>Zero/invalid recipient</td><td>잘못된 수신자</td><td>프론트 또는 컨트랙트 오류</td><td>입력 검증</td></tr>
+<tr><td>Unlimited approval</td><td>MaxUint256 승인</td><td>높은 위험점수</td><td>편의와 노출의 trade-off</td></tr>
+<tr><td>Revoked</td><td>approve(0) 후 pull</td><td>revert</td><td>권한 철회 효과</td></tr>
+</table></div>
+<h4>10. AI Agent 연계</h4>
+<p>Agent Tool 명세 예시</p>
+<p>{</p>
+<p>"name": "get_erc20_allowance",</p>
+<p>"risk": "read",</p>
+<p>"inputs": ["chainId", "token", "owner", "spender"],</p>
+<p>"outputs": ["allowance", "balance", "blockNumber"],</p>
+<p>"controls": ["address validation", "latest-block check", "audit log"]</p>
+<p>}</p>
+<p>연계 흐름</p>
+<p>제10장에서 allowance 구조를 학습한 뒤, 제18장에서는 조회 Tool, 제19장에서는 무제한 승인 탐지 정책, 제20장에서는 위험 리포트와 사용자 승인 후 revoke 흐름으로 확장한다.</p>
+<h4>11. 제출물</h4>
+<p>필수 제출</p>
+<p>approve→allowance→transferFrom→revoke 구조도, Token·Spender 주소, Approval·Transfer tx hash, 정확한 승인과 무제한 승인 비교표, 위험요인 3개, 통제방안 3개, 철회 결과 캡처, 남은 불확실성 1개.</p>
+<h3>통합 평가와 강사 운영자료</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>평가요소</th><th>배점</th><th>우수 기준</th></tr>
+<tr><td>컨트랙트 구현</td><td>20</td><td>컴파일·배포·기능·오류처리가 재현 가능</td></tr>
+<tr><td>웹 연결</td><td>20</td><td>MetaMask·chain ID·ABI·주소·상태 UI 정상</td></tr>
+<tr><td>트랜잭션 분석</td><td>15</td><td>hash·block·gas·event를 정확히 설명</td></tr>
+<tr><td>위험 분석</td><td>20</td><td>현실적 위험과 통제가 일대일 대응</td></tr>
+<tr><td>설명력</td><td>15</td><td>read/write, approve/transferFrom을 자신의 말로 설명</td></tr>
+<tr><td>안전수칙</td><td>10</td><td>실제 자산·키 미사용, 실습 후 allowance 철회</td></tr>
+</table></div>
+<h3>형성평가</h3>
+<h4>1. BrowserProvider의 역할은?</h4>
+<p>정답 및 해설: MetaMask 같은 EIP-1193 Provider를 ethers의 Provider 인터페이스로 감싸 계정·체인 조회와 Signer 접근을 제공한다.</p>
+<h4>2. Contract를 Provider에만 연결한 경우와 Signer에 연결한 경우의 차이는?</h4>
+<p>정답 및 해설: Provider 연결은 주로 읽기 호출, Signer 연결은 상태변경 트랜잭션 서명·전송이 가능하다.</p>
+<h4>3. vote가 가스를 요구하는 이유는?</h4>
+<p>정답 및 해설: 컨트랙트 상태를 변경하고 블록에 기록하기 때문이다.</p>
+<h4>4. approve는 토큰을 즉시 이동시키는가?</h4>
+<p>정답 및 해설: 아니다. spender가 향후 transferFrom을 사용할 한도를 기록한다.</p>
+<h4>5. 무제한 승인 후 잔액이 0이면 안전한가?</h4>
+<p>정답 및 해설: 아니다. 미래에 들어오는 토큰도 allowance 범위에 노출될 수 있다.</p>
+<h4>6. approve(0)의 목적은?</h4>
+<p>정답 및 해설: spender의 allowance를 0으로 만들어 향후 transferFrom 권한을 철회하는 것이다.</p>
+<h3>강사 문제 해결 체크리스트</h3>
+<div class="table-responsive"><table class="data-table">
+<tr><th>증상</th><th>확인 순서</th></tr>
+<tr><td>MetaMask가 안 보임</td><td>확장 설치→localhost 사용→사이트 권한→새로고침</td></tr>
+<tr><td>Wrong network</td><td>chain ID 11155111 확인→Sepolia 전환</td></tr>
+<tr><td>Contract 연결 실패</td><td>주소 형식→배포 네트워크→ABI 일치→코드 존재 확인</td></tr>
+<tr><td>트랜잭션 실패</td><td>revert reason→계정 역할→allowance/hasVoted→테스트 ETH</td></tr>
+<tr><td>웹 갱신 안 됨</td><td>receipt 대기→refresh 호출→브라우저 콘솔 확인</td></tr>
+<tr><td>OpenZeppelin import 오류</td><td>인터넷→경로 철자→컴파일러 버전 확인</td></tr>
+</table></div>
+<h3>공식 참고문서</h3>
+<p>ethers v6 Providers / BrowserProvider: https://docs.ethers.org/v6/api/providers/</p>
+<p>ethers v6 Getting Started / Contract and Transaction: https://docs.ethers.org/v6/getting-started/</p>
+<p>MetaMask Ethereum Provider API: https://docs.metamask.io/metamask-connect/evm/reference/provider-api/</p>
+<p>Remix Deploy & Run: https://remix-ide.readthedocs.io/en/latest/run.html</p>
+<p>Remix Creating and Deploying a Contract: https://remix-ide.readthedocs.io/en/latest/create_deploy.html</p>
+<p>OpenZeppelin Contracts 5.x ERC20: https://docs.openzeppelin.com/contracts/5.x/api/token/ERC20</p>
+<p>OpenZeppelin Contracts 5.x: https://docs.openzeppelin.com/contracts/5.x/</p>
+<p>버전 관리</p>
+<p>웹 라이브러리와 도구 UI는 변경될 수 있다. 수업 전 Remix, MetaMask, ethers, OpenZeppelin의 현재 공식 문서와 UI를 확인하고 스크린샷·메뉴 이름을 갱신한다.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+      </div>
+    </main>
+  </div>
 </body>
 </html>
