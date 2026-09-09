@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BC · 200 AI Agent × Web3 블록체인 융합 과정 | 교재 랩</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;800;900&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <style>
+    :root {
+      --bg: #f6f4ee; --surface: #ffffff; --surface-raised: #ffffff;
+      --text: #15171e; --text-soft: #565b6b; --text-faint: #8c8f9c;
+      --border: #e6e2d5; --border-strong: #d3cdb9;
+      --cat-bc: #0f8f74; --accent: #0f8f74; --accent-ink: #ffffff;
+      --ok: #22875a; --warn: #b9791f;
+      --shadow: 0 1px 2px rgba(21,23,30,.04), 0 16px 32px -20px rgba(21,23,30,.22);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0b0c10; --surface: #14161c; --surface-raised: #191c24;
+        --text: #f3f1e9; --text-soft: #a8acb9; --text-faint: #6c707e;
+        --border: #262a35; --border-strong: #343948;
+        --cat-bc: #3fe0bb; --accent: #3fe0bb; --accent-ink: #06241c;
+        --ok: #5fd08a; --warn: #f5b83d;
+        --shadow: 0 1px 2px rgba(0,0,0,.5), 0 20px 40px -20px rgba(0,0,0,.65);
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #0b0c10; --surface: #14161c; --surface-raised: #191c24;
+      --text: #f3f1e9; --text-soft: #a8acb9; --text-faint: #6c707e;
+      --border: #262a35; --border-strong: #343948;
+      --cat-bc: #3fe0bb; --accent: #3fe0bb; --accent-ink: #06241c;
+      --ok: #5fd08a; --warn: #f5b83d;
+      --shadow: 0 1px 2px rgba(0,0,0,.5), 0 20px 40px -20px rgba(0,0,0,.65);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "IBM Plex Sans KR", "Noto Sans KR", system-ui, sans-serif;
+      font-size: 15.5px; line-height: 1.7;
+    }
+    .mono { font-family: "JetBrains Mono", monospace; }
+    header.top-nav {
+      position: sticky; top: 0; z-index: 40;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(14px); border-bottom: 1px solid var(--border);
+      padding: 14px 28px; display: flex; align-items: center; justify-content: space-between;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .back-link {
+      font-family: "JetBrains Mono", monospace; font-size: 13px; font-weight: 700;
+      text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px;
+    }
+    .nav-links { display: flex; gap: 12px; }
+    .nav-links a {
+      font-family: "JetBrains Mono", monospace; font-size: 12.5px; font-weight: 600;
+      color: var(--text-soft); text-decoration: none; padding: 4px 10px; border-radius: 6px;
+    }
+    .nav-links a:hover { color: var(--text); background: color-mix(in srgb, var(--cat-bc) 12%, transparent); }
+
+    .hero {
+      max-width: 1200px; margin: 0 auto; padding: 48px 28px 36px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: "JetBrains Mono", monospace; font-size: 11.5px; font-weight: 700;
+      color: var(--cat-bc); background: color-mix(in srgb, var(--cat-bc) 14%, transparent);
+      border: 1px solid color-mix(in srgb, var(--cat-bc) 35%, transparent);
+      padding: 4px 12px; border-radius: 999px; margin-bottom: 16px;
+    }
+    h1 { font-family: "Gothic A1", sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 900; margin: 0 0 14px; }
+    p.lead { font-size: 16px; color: var(--text-soft); max-width: 76ch; margin: 0 0 32px; }
+
+    .feature-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-bottom: 48px;
+    }
+    .feature-card {
+      background: var(--surface-raised); border: 1px solid var(--border-strong);
+      border-radius: 14px; padding: 22px 24px; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; justify-content: space-between; gap: 14px;
+    }
+    .feature-card h3 { margin: 0; font-size: 18px; font-weight: 800; }
+    .feature-card p { margin: 0; font-size: 13.5px; color: var(--text-soft); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px 16px; border-radius: 9px; font-family: "JetBrains Mono", monospace;
+      font-size: 12.5px; font-weight: 700; text-decoration: none;
+      background: var(--cat-bc); color: var(--accent-ink); transition: opacity .15s ease, transform .15s ease;
+    }
+    .btn:hover { opacity: .92; transform: translateY(-1px); }
+    .btn-secondary {
+      background: color-mix(in srgb, var(--cat-bc) 14%, transparent);
+      color: var(--cat-bc); border: 1px solid color-mix(in srgb, var(--cat-bc) 35%, transparent);
+    }
+
+    main { max-width: 1200px; margin: 0 auto; padding: 0 28px 80px; }
+    .section-title {
+      font-size: 24px; font-weight: 800; margin: 56px 0 20px;
+      border-bottom: 2px solid var(--border); padding-bottom: 12px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .part-block { margin-bottom: 32px; }
+    .part-head {
+      font-family: "JetBrains Mono", monospace; font-size: 13px; font-weight: 700;
+      color: var(--cat-bc); margin-bottom: 12px; text-transform: uppercase; letter-spacing: .06em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .part-head::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--cat-bc); }
+
+    .session-table {
+      width: 100%; border-collapse: collapse; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-size: 14px;
+    }
+    .session-table th, .session-table td {
+      padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border);
+    }
+    .session-table th {
+      background: color-mix(in srgb, var(--cat-bc) 8%, var(--surface));
+      font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 700; color: var(--text);
+    }
+    .session-table tr:last-child td { border-bottom: none; }
+    .session-badge {
+      display: inline-block; font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 700;
+      padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--cat-bc) 14%, transparent);
+      color: var(--cat-bc);
+    }
+
+    .code-box {
+      background: #14161c; color: #f3f1e9; padding: 20px 24px; border-radius: 12px;
+      overflow-x: auto; font-family: "JetBrains Mono", monospace; font-size: 12.5px; line-height: 1.6;
+      border: 1px solid var(--border-strong); margin: 16px 0;
+    }
+    .highlight-card {
+      background: var(--surface-raised); border: 1px solid var(--border-strong);
+      border-left: 4px solid var(--cat-bc); border-radius: 10px; padding: 20px 24px; margin: 20px 0;
+    }
+    .highlight-card h4 { margin: 0 0 8px; font-size: 16px; font-weight: 800; }
+    .highlight-card p { margin: 0; font-size: 13.5px; color: var(--text-soft); }
+
+    @media (max-width: 640px) {
+      .session-table th:nth-child(3), .session-table td:nth-child(3) { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-nav">
+    <a href="../index.html" class="back-link">← 김태경 교재 랩 홈으로</a>
+    <div class="nav-links">
+      <a href="#curriculum">20회차 커리큘럼</a>
+      <a href="#hardhat-dapp">Hardhat dApp 실습</a>
+      <a href="#agent-mcp">AI Agent & MCP</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-badge">BC · 200 · AI Agent × Web3 블록체인 융합 20회차 완결 (80시간)</div>
+    <h1>AI Agent × Web3 블록체인 융합 교재 & 실습 랩</h1>
+    <p class="lead">
+      <code class="mono">LLMWiki_Obsidian_Hermes_Starter</code> 기반 공식 교재입니다.
+      블록체인 분산원장 핵심 원리부터 이더리움·Solana, Solidity 스마트컨트랙트, Hardhat 로컬 dApp 풀스택,
+      그리고 LLM Agent(Tool Calling, MCP Server)와 온체인 지갑 보안 가드레일까지 20회차 80시간 완결 커리큘럼과 실습 코드를 제공합니다.
+    </p>
+
+    <div class="feature-grid">
+      <div class="feature-card" style="border-color: var(--cat-bc);">
+        <div>
+          <span class="mono" style="font-size:11px; color:var(--cat-bc); font-weight:700;">BC · 201 | COMPREHENSIVE TEXTBOOK</span>
+          <h3>20회차 80시간 정규 교재</h3>
+          <p>분산원장, 스마트컨트랙트, DeFi/RWA, 스테이블코인, 크로스체인, DID, AI 융합까지 전 20회차 이론·강사스크립트·평가 완결</p>
+        </div>
+        <a href="#curriculum" class="btn">20회차 로드맵 확인 →</a>
+      </div>
+
+      <div class="feature-card">
+        <div>
+          <span class="mono" style="font-size:11px; color:var(--cat-bc); font-weight:700;">BC · 202 | FULLSTACK DAPP LAB</span>
+          <h3>Hardhat 로컬 출석·급여 dApp</h3>
+          <p>Hardhat 3 기반 <code>AttendancePayroll.sol</code> 컨트랙트, 단위 테스트(Viem), React/MetaMask 프론트엔드 연동 실습</p>
+        </div>
+        <a href="#hardhat-dapp" class="btn btn-secondary">dApp 실습 가이드 보기 →</a>
+      </div>
+
+      <div class="feature-card">
+        <div>
+          <span class="mono" style="font-size:11px; color:var(--cat-bc); font-weight:700;">BC · 203 | AI AGENT & SECURITY</span>
+          <h3>AI Agent · RAG · MCP 온체인 지갑</h3>
+          <p>Model Context Protocol(MCP) 기반 온체인 질의·트랜잭션 시뮬레이션 및 최소권한·일일한도 지갑 안전 정책</p>
+        </div>
+        <a href="#agent-mcp" class="btn btn-secondary">Agent 연동 아키텍처 보기 →</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- Section 1: 20회차 커리큘럼 -->
+    <section id="curriculum">
+      <div class="section-title">
+        <span>20회차 전체 커리큘럼 로드맵 (80시간)</span>
+        <span class="mono" style="font-size: 13px; font-weight: 500; color: var(--text-soft);">이론 30% · 시연 20% · 실습 40% · 피드백 10%</span>
+      </div>
+
+      <!-- Part 1 -->
+      <div class="part-block" id="part1">
+        <div class="part-head">Part 1. 블록체인 기본 구조 & 핵심 원리 (1~6회차)</div>
+        <table class="session-table">
+          <thead>
+            <tr><th style="width:70px;">회차</th><th>주제</th><th>핵심 개념 및 강의 내용</th><th style="width:170px;">핵심 산출물</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="session-badge">01회차</span></td>
+              <td><strong>블록체인 기본 구조 이해</strong></td>
+              <td>중앙집중형 vs 분산원장, 단일 장애점(SPOF), 노드·합의 규칙, AI 윤리 2시간</td>
+              <td>블록체인 적용 판단표</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">02회차</span></td>
+              <td><strong>블록체인과 코인의 관계</strong></td>
+              <td>인센티브 구조, Sybil 공격 방어, 채굴/검증 보상, 트랜잭션 생애주기</td>
+              <td>트랜잭션 생애주기 도식</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">03회차</span></td>
+              <td><strong>블록체인 핵심 기술</strong></td>
+              <td>단방향 암호화 해시(SHA-256), 비대칭키 암호화(ECDSA), 디지털 전자서명 및 검증</td>
+              <td>서명·검증 순서도</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">04회차</span></td>
+              <td><strong>지갑과 사용자 인증</strong></td>
+              <td>개인키·공개키·지갑주소 유도, 시드문구(BIP-39), 하드웨어 지갑, AI 지갑 보안 수칙</td>
+              <td>AI 지갑 보안정책 초안</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">05회차</span></td>
+              <td><strong>퍼블릭·프라이빗·컨소시엄</strong></td>
+              <td>체인 유형별 거버넌스, 데이터 공개 범위, 트라이레마(확장성/보안/탈중앙성)</td>
+              <td>체인 유형 의사결정 메모</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">06회차</span></td>
+              <td><strong>비트코인 개념과 UTXO</strong></td>
+              <td>UTXO(미사용 트랜잭션 출력값) 모델, 잔액 계산 원리, Bitcoin Script 기초</td>
+              <td>UTXO 계산표</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Part 2 -->
+      <div class="part-block" id="part2">
+        <div class="part-head">Part 2. 이더리움, Solidity 스마트컨트랙트 & Web3 풀스택 (7~10회차)</div>
+        <table class="session-table">
+          <thead>
+            <tr><th style="width:70px;">회차</th><th>주제</th><th>핵심 개념 및 강의 내용</th><th style="width:170px;">핵심 산출물</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="session-badge">07회차</span></td>
+              <td><strong>이더리움과 Web3 구조</strong></td>
+              <td>EVM(가상머신), Gas(가스비) 메커니즘, EOA와 CA 계정 구조, Hardhat 로컬 노드 가동</td>
+              <td>dApp 아키텍처 구조도</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">08회차</span></td>
+              <td><strong>Solidity 스마트컨트랙트 실습</strong></td>
+              <td>Solidity 문법, <code>AttendancePayroll.sol</code> 작성, require 검증, 이벤트 발행, 단위 테스트</td>
+              <td>Solidity 컨트랙트 코드</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">09회차</span></td>
+              <td><strong>Web3 서비스 아키텍처</strong></td>
+              <td>JSON-RPC, Viem 라이브러리, MetaMask 지갑 연결, React 프론트엔드 출퇴근 UI</td>
+              <td>Web3 풀스택 dApp MVP</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">10회차</span></td>
+              <td><strong>토큰 및 디지털 자산</strong></td>
+              <td>ERC-20 대체가능 토큰 표준, ERC-721/ERC-1155 NFT 표준, 메타데이터 구조</td>
+              <td>토큰 표준 비교 보고서</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Part 3 -->
+      <div class="part-block" id="part3">
+        <div class="part-head">Part 3. 멀티체인, DeFi, 스테이블코인 & 크로스체인 (11~15회차)</div>
+        <table class="session-table">
+          <thead>
+            <tr><th style="width:70px;">회차</th><th>주제</th><th>핵심 개념 및 강의 내용</th><th style="width:170px;">핵심 산출물</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="session-badge">11회차</span></td>
+              <td><strong>Solana 구조와 Ethereum 비교</strong></td>
+              <td>역사증명(PoH), Sealevel 병렬 처리, 계정 모델 차이, 트랜잭션 수수료 구조</td>
+              <td>Solana 트랜잭션 분석표</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">12회차</span></td>
+              <td><strong>온체인 금융과 토큰화</strong></td>
+              <td>DeFi 기본 원리(AMM DEX, 유동성 풀, 초과담보 대출), RWA(실물자산 토큰화)</td>
+              <td>DeFi / RWA 기획안</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">13회차</span></td>
+              <td><strong>스테이블코인·CBDC·STO·RWA</strong></td>
+              <td>법정화폐 담보(USDT/USDC), 크립토 담보, 알고리즘 스테이블코인, 증권형 토큰</td>
+              <td>디지털 화폐 비교표</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">14회차</span></td>
+              <td><strong>스테이블코인 컨트랙트 설계</strong></td>
+              <td>페깅 유지 알고리즘, 오라클 가격 피드, 디페깅 및 청산 위험 시뮬레이션</td>
+              <td>스테이블코인 위험분석서</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">15회차</span></td>
+              <td><strong>크로스체인과 확장성</strong></td>
+              <td>Layer 2 롤업(Optimistic, ZK), 인터체인 브릿지 프로토콜 및 해킹 위험 분석</td>
+              <td>브릿지 위험 프롬프트</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Part 4 -->
+      <div class="part-block" id="part4">
+        <div class="part-head">Part 4. AI Agent 융합, 온체인 자동화 & 최종 프로젝트 (16~20회차)</div>
+        <table class="session-table">
+          <thead>
+            <tr><th style="width:70px;">회차</th><th>주제</th><th>핵심 개념 및 강의 내용</th><th style="width:170px;">핵심 산출물</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="session-badge">16회차</span></td>
+              <td><strong>거래소 운영과 AI 자동화</strong></td>
+              <td>오더북 vs AMM, 온체인 이상거래 탐지(FDS), 거래 패턴 모니터링 에이전트</td>
+              <td>거래소 모니터링 시나리오</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">17회차</span></td>
+              <td><strong>DID와 프라이버시 보호</strong></td>
+              <td>탈중앙 신원증명(DID), 검증가능 자격증명(VC), 영지식 증명(ZKP), SSI</td>
+              <td>DID 개인정보 정책문</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">18회차</span></td>
+              <td><strong>AI Agent · RAG · MCP 도구</strong></td>
+              <td>LLM Tool Calling, Model Context Protocol(MCP) 서버 명세, RPC 질의 도구 제작</td>
+              <td>MCP Tool 명세서</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">19회차</span></td>
+              <td><strong>온체인 자동화와 AI 지갑 보안</strong></td>
+              <td>최소권한 정책, 세션키, 일일 송금한도, 트랜잭션 사전 시뮬레이션, 사용자 승인 가드</td>
+              <td>AI Wallet Risk Policy</td>
+            </tr>
+            <tr>
+              <td><span class="session-badge">20회차</span></td>
+              <td><strong>AI 결제·인증 & 최종 프로젝트</strong></td>
+              <td>Hardhat 출석·급여 dApp MVP + AI Agent 자율 모니터링 통합 구현 및 발표</td>
+              <td>최종 프로젝트 발표 자료</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 2: Hardhat dApp 실습 -->
+    <section id="hardhat-dapp">
+      <div class="section-title">
+        <span>Hardhat 기반 출석·급여 관리 dApp 실습 가이드</span>
+        <span class="mono" style="font-size: 13px; color: var(--cat-bc);">7~9회차 & 20회차 연계</span>
+      </div>
+
+      <div class="highlight-card">
+        <h4>실습 개요 및 아키텍처</h4>
+        <p>
+          Hardhat 3 기반 로컬 이더리움 노드를 구동하고, 근태 기록(출근/퇴근/근무시간 누적) 및 시급 기반 급여를 지급하는
+          <code>AttendancePayroll.sol</code> 스마트컨트랙트를 작성한 뒤, Viem 단위 테스트와 React 프론트엔드 연동을 완성합니다.
+        </p>
+      </div>
+
+      <h3 style="font-size: 18px; margin: 24px 0 10px;">1. 스마트컨트랙트: <code>AttendancePayroll.sol</code> 핵심 코드</h3>
+      <div class="code-box">
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.28;
+
+contract AttendancePayroll {
+    address public owner;
+    uint256 public constant HOURLY_RATE = 0.01 ether; // 시간당 0.01 ETH
+
+    struct Employee {
+        bool isRegistered;
+        uint256 lastCheckInTime;
+        uint256 accumulatedSeconds;
+        uint256 unpaidSalary;
+    }
+
+    mapping(address => Employee) public employees;
+
+    event EmployeeRegistered(address indexed employee);
+    event CheckedIn(address indexed employee, uint256 timestamp);
+    event CheckedOut(address indexed employee, uint256 duration, uint256 unpaidSalary);
+    event PayrollPaid(address indexed employee, uint256 amount);
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this");
+        _;
+    }
+
+    constructor() payable {
+        owner = msg.sender;
+    }
+
+    function registerEmployee(address _emp) external onlyOwner {
+        require(!employees[_emp].isRegistered, "Already registered");
+        employees[_emp].isRegistered = true;
+        emit EmployeeRegistered(_emp);
+    }
+
+    function checkIn() external {
+        require(employees[msg.sender].isRegistered, "Not registered");
+        require(employees[msg.sender].lastCheckInTime == 0, "Already checked in");
+        employees[msg.sender].lastCheckInTime = block.timestamp;
+        emit CheckedIn(msg.sender, block.timestamp);
+    }
+
+    function checkOut() external {
+        require(employees[msg.sender].lastCheckInTime > 0, "Must check in first");
+        uint256 duration = block.timestamp - employees[msg.sender].lastCheckInTime;
+        employees[msg.sender].accumulatedSeconds += duration;
+        employees[msg.sender].lastCheckInTime = 0;
+
+        uint256 wage = (duration * HOURLY_RATE) / 3600;
+        employees[msg.sender].unpaidSalary += wage;
+        emit CheckedOut(msg.sender, duration, employees[msg.sender].unpaidSalary);
+    }
+
+    function payoutSalary(address payable _emp) external onlyOwner {
+        uint256 amount = employees[_emp].unpaidSalary;
+        require(amount > 0, "No unpaid salary");
+        require(address(this).balance >= amount, "Insufficient contract balance");
+
+        employees[_emp].unpaidSalary = 0;
+        _emp.transfer(amount);
+        emit PayrollPaid(_emp, amount);
+    }
+}
+      </div>
+
+      <h3 style="font-size: 18px; margin: 24px 0 10px;">2. 로컬 실행 및 프론트엔드 연동 4단계</h3>
+      <ol style="padding-left: 20px; line-height: 1.8; font-size: 14.5px; color: var(--text-soft);">
+        <li><strong style="color:var(--text);">로컬 노드 가동:</strong> <code class="mono">npx hardhat node</code> 실행하여 로컬 체인 ID 31337 생성 및 20개 테스트 계정 확보</li>
+        <li><strong style="color:var(--text);">컨트랙트 배포:</strong> <code class="mono">npx hardhat ignition deploy ./ignition/modules/AttendancePayroll.ts --network localhost</code></li>
+        <li><strong style="color:var(--text);">테스트 자동화:</strong> <code class="mono">npx hardhat test</code> 로 직원 등록, 출근, 시간 경과(<code class="mono">time.increase</code>), 퇴근, 급여 지급 검증</li>
+        <li><strong style="color:var(--text);">React + Viem 연동:</strong> MetaMask에서 Localhost 8545 네트워크 추가 후 컨트랙트 주소/ABI 바인딩</li>
+      </ol>
+    </section>
+
+    <!-- Section 3: AI Agent & MCP -->
+    <section id="agent-mcp">
+      <div class="section-title">
+        <span>AI Agent · RAG · MCP 온체인 연동 & AI 지갑 보안</span>
+        <span class="mono" style="font-size: 13px; color: var(--cat-bc);">18~20회차 융합 핵심</span>
+      </div>
+
+      <div class="highlight-card">
+        <h4>Model Context Protocol (MCP) 기반 온체인 에이전트</h4>
+        <p>
+          AI Agent가 사람 대신 블록체인을 감시하거나 거래를 보조할 때, 환각(Hallucination)에 의한 무단 출금이나 자산 손실을 방지하기 위해
+          <strong>3단계 승인 파이프라인</strong>(사전 시뮬레이션 → 금액/화이트리스트 가드 → 최종 사용자 서명)을 설계합니다.
+        </p>
+      </div>
+
+      <div class="code-box">
+// MCP Server Tool 명세 예시: 온체인 근태 및 급여 검증 도구
+{
+  "name": "verify_attendance_payroll",
+  "description": "스마트컨트랙트의 미지급 급여를 조회하고 시뮬레이션 후 관리자 승인을 요청한다",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "employee_address": { "type": "string", "description": "직원 지갑 주소 (0x...)" },
+      "action": { "type": "string", "enum": ["query", "simulate_payout"] }
+    },
+    "required": ["employee_address", "action"]
+  }
+}
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 20px;">
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
+          <h4 style="margin:0 0 6px; font-size:15px; color:var(--cat-bc);">1. 최소권한 원칙</h4>
+          <p style="margin:0; font-size:13px; color:var(--text-soft);">Agent 전용 세션키에 오직 읽기 및 제한된 승인 권한만 부여하며 마스터 개인키는 절대 전달하지 않음</p>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
+          <h4 style="margin:0 0 6px; font-size:15px; color:var(--cat-bc);">2. 일일 전송 한도 가드</h4>
+          <p style="margin:0; font-size:13px; color:var(--text-soft);">스마트컨트랙트 레벨에서 24시간 내 최대 전송 가능 금액을 하드코딩하여 탈취 위험 차단</p>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
+          <h4 style="margin:0 0 6px; font-size:15px; color:var(--cat-bc);">3. Human-in-the-Loop</h4>
+          <p style="margin:0; font-size:13px; color:var(--text-soft);">임계값(예: 0.1 ETH) 이상의 트랜잭션은 관리자의 서명 승인이 완료되어야만 온체인 전송 실행</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
