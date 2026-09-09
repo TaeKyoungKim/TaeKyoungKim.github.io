@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&display=swap');
+    body { margin: 0; font-family: 'Pretendard', -apple-system, sans-serif; }
+    doc-page:not(:defined) { visibility: hidden; }
+    .note h2, .note h3 { color: #201c4a; }
+    .note pre { break-inside: avoid; background:#f4f1e8; border:1px solid #e0dccb; border-radius:4px; padding:14px 18px; overflow-x:auto; font-family:'IBM Plex Mono',monospace; font-size:10.5pt; line-height:1.55; color:#2a2d38; }
+    .note .week { break-before: page; }
+    .note .box { break-inside: avoid; margin:14px 0; }
+  </style>
+  <script src="./doc-page.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] } };</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+</helmet>
+
+<doc-page margin="0.85in">
+<div class="note" style="color:#2a2d38; font-size:11.5pt; line-height:1.65;">
+
+  <div style="border-bottom:3px solid #2d2a6e; padding-bottom:18px; margin-bottom:28px;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10.5pt; letter-spacing:0.12em; color:#c9871f; font-weight:600;">LECTURE NOTES</div>
+    <h1 style="font-size:28pt; margin:6px 0 8px; font-weight:700;">머신러닝 개론 · 강의노트</h1>
+    <div style="font-size:11.5pt; color:#5c5f6c;">주차별 개념 설명, 수식, 코드 예제, 연습문제 모음</div>
+  </div>
+
+  <div class="week" style="break-before:auto;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 1</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">머신러닝 개관 및 개발환경</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>머신러닝은 명시적으로 규칙을 프로그래밍하지 않고, 데이터로부터 패턴을 학습해 예측이나 판단을 수행하는 방법론이다. 인공지능(AI)이 "지능적인 행동을 하는 시스템 전체"를 가리키는 넓은 개념이라면, 머신러닝은 그 하위 집합으로 데이터 기반 학습에 초점을 둔다. 딥러닝은 다시 머신러닝의 하위 집합으로, 다층 신경망을 이용한 학습 방식을 말한다.</p>
+    <p>학습 방식에 따라 세 가지로 구분한다. <strong>지도학습</strong>은 입력 $x$와 정답 레이블 $y$의 쌍 $(x,y)$으로부터 함수 $f: x \to y$를 학습한다(예: 집값 예측, 스팸 분류). <strong>비지도학습</strong>은 레이블 없이 데이터의 구조를 찾는다(예: 고객 군집화). <strong>강화학습</strong>은 에이전트가 환경과 상호작용하며 보상을 최대화하는 행동을 학습한다.</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">머신러닝 파이프라인</h3>
+    <p>실무에서 머신러닝 프로젝트는 일반적으로 다음 단계를 거친다: (1) 문제 정의 및 데이터 수집 → (2) 데이터 전처리 및 탐색 → (3) 특성 선택/공학 → (4) 모델 선택 및 학습 → (5) 평가 및 검증 → (6) 배포 및 모니터링. 이 강의는 3~14주차에 걸쳐 이 파이프라인의 각 단계에 필요한 이론을 다룬다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — 개발환경 확인</h3>
+      <pre>import sys, numpy, pandas, sklearn, tensorflow as tf
+print(sys.version)
+print("numpy", numpy.__version__)
+print("pandas", pandas.__version__)
+print("scikit-learn", sklearn.__version__)
+print("tensorflow", tf.__version__)</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>다음 문제들을 지도학습/비지도학습/강화학습으로 분류하라: (a) 이메일 스팸 필터링, (b) 고객 세분화, (c) 바둑 AI 학습.</li>
+      <li>Colab 환경에서 NumPy 배열을 생성하고 평균과 표준편차를 계산하는 코드를 작성하라.</li>
+    </ol>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 2</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">데이터 처리 기초</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>NumPy는 다차원 배열(ndarray)과 벡터화 연산을 제공해 반복문 없이 빠른 수치 계산을 가능케 한다. 브로드캐스팅은 크기가 다른 배열 간 연산을 자동으로 확장해 처리하는 규칙이다. Pandas의 DataFrame은 레이블이 있는 2차원 테이블 구조로, 실제 데이터 분석에서 가장 많이 쓰이는 자료구조다.</p>
+    <p>결측치는 삭제(dropna) 또는 대체(평균·중앙값·최빈값 대치, KNN 대치 등)로 처리한다. 범주형 변수는 모델이 이해할 수 있도록 원-핫 인코딩이나 레이블 인코딩으로 수치화한다. 특성 스케일링(정규화, 표준화)은 거리 기반 모델과 경사하강법 기반 모델의 학습 안정성에 중요하다.</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">표준화 공식</h3>
+    <p>$$ z = \frac{x - \mu}{\sigma} $$</p>
+    <p>여기서 $\mu$는 특성의 평균, $\sigma$는 표준편차다. 표준화된 데이터는 평균 0, 표준편차 1을 갖는다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — 전처리 파이프라인</h3>
+      <pre>import pandas as pd
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+
+df = pd.read_csv("titanic.csv")
+num_cols = ["Age", "Fare"]
+cat_cols = ["Sex", "Embarked"]
+
+preprocess = ColumnTransformer([
+    ("num", SimpleImputer(strategy="median"), num_cols),
+    ("cat", OneHotEncoder(handle_unknown="ignore"), cat_cols),
+])
+X = preprocess.fit_transform(df)</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>Titanic 데이터셋에서 결측치 비율을 계산하고, 적절한 대치 방법을 선택해 근거를 설명하라.</li>
+      <li>표준화와 정규화(Min-Max)의 차이를 설명하고, 각각 어떤 상황에 적합한지 서술하라.</li>
+    </ol>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 3</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">확률과 통계 기초</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>확률변수 $X$는 표본공간의 결과를 실수로 대응시키는 함수다. 이산확률변수는 확률질량함수(PMF)로, 연속확률변수는 확률밀도함수(PDF)로 분포를 나타낸다. 머신러닝에서 가장 자주 쓰이는 분포는 정규분포, 베르누이분포, 이항분포다.</p>
+    <p>기댓값 $E[X]$는 확률변수의 평균적인 값, 분산 $Var(X)$는 값이 퍼진 정도를 나타낸다. 공분산과 상관계수는 두 변수 간의 선형 관계를 측정한다.</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">베이즈 정리와 최대우도추정</h3>
+    <p>$$ P(\theta \mid D) = \frac{P(D \mid \theta) P(\theta)}{P(D)} $$</p>
+    <p>베이즈 정리는 데이터 $D$를 관측한 후 파라미터 $\theta$에 대한 믿음(사후확률)을 갱신하는 방법을 제공한다. 최대우도추정(MLE)은 사전확률을 고려하지 않고 우도 $P(D \mid \theta)$를 최대화하는 $\theta$를 찾는다:</p>
+    <p>$$ \hat{\theta}_{MLE} = \arg\max_{\theta} \prod_{i=1}^{n} P(x_i \mid \theta) $$</p>
+    <p>많은 머신러닝 손실함수(예: 교차엔트로피, 최소제곱)는 특정 분포 가정 하의 MLE로부터 유도된다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — 분포 시뮬레이션</h3>
+      <pre>import numpy as np
+import matplotlib.pyplot as plt
+
+samples = np.random.normal(loc=0, scale=1, size=10000)
+plt.hist(samples, bins=50, density=True)
+plt.title("N(0,1) 표본 분포")
+plt.show()
+
+print("표본 평균:", samples.mean(), "표본 분산:", samples.var())</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>동전을 10번 던져 앞면이 7번 나왔다. 앞면이 나올 확률 $p$의 MLE를 구하라.</li>
+      <li>베이즈 정리를 이용해 스팸 필터가 어떻게 동작하는지 예시를 들어 설명하라.</li>
+    </ol>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 4</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">선형회귀</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>선형회귀는 입력 특성의 선형 결합으로 연속적인 출력을 예측하는 모델이다. 가설함수는 다음과 같다:</p>
+    <p>$$ \hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \dots + \theta_n x_n = \theta^T x $$</p>
+    <p>모델의 좋고 나쁨은 비용함수(cost function)로 측정한다. 선형회귀에서는 평균제곱오차(MSE)를 주로 사용한다:</p>
+    <p>$$ J(\theta) = \frac{1}{2m}\sum_{i=1}^{m} (\hat{y}^{(i)} - y^{(i)})^2 $$</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">최적화: 정규방정식과 경사하강법</h3>
+    <p>정규방정식은 비용함수를 최소화하는 $\theta$를 해석적으로 구한다:</p>
+    <p>$$ \theta = (X^T X)^{-1} X^T y $$</p>
+    <p>특성 수가 많을 때는 $(X^TX)^{-1}$ 계산 비용이 크므로 경사하강법을 사용한다. 각 반복에서 파라미터를 비용함수의 기울기 반대 방향으로 갱신한다:</p>
+    <p>$$ \theta_j \leftarrow \theta_j - \alpha \frac{\partial J(\theta)}{\partial \theta_j} $$</p>
+    <p>여기서 $\alpha$는 학습률이다. 배치(전체 데이터), 확률적(SGD, 샘플 1개), 미니배치(작은 묶음) 방식으로 나뉜다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — 주택가격 예측</h3>
+      <pre>from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+model = LinearRegression()
+model.fit(X_train, y_train)
+pred = model.predict(X_test)
+
+print("RMSE:", mean_squared_error(y_test, pred, squared=False))
+print("R^2:", r2_score(y_test, pred))</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>학습률 $\alpha$가 너무 크거나 너무 작을 때 경사하강법에 어떤 문제가 생기는지 그래프로 설명하라.</li>
+      <li>다중공선성이 회귀계수 해석에 미치는 영향을 설명하고, 이를 진단하는 방법(VIF 등)을 조사하라.</li>
+    </ol>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 5</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">로지스틱 회귀와 분류</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>로지스틱 회귀는 선형회귀의 출력을 시그모이드 함수로 변환해 0~1 사이의 확률로 해석한다:</p>
+    <p>$$ \sigma(z) = \frac{1}{1+e^{-z}}, \quad \hat{y} = \sigma(\theta^T x) $$</p>
+    <p>MSE 대신 교차엔트로피(로그 손실)를 사용하는데, 이는 시그모이드와 결합했을 때 볼록함수가 되어 최적화가 안정적이기 때문이다:</p>
+    <p>$$ J(\theta) = -\frac{1}{m}\sum_{i=1}^{m} \left[ y^{(i)} \log \hat{y}^{(i)} + (1-y^{(i)}) \log(1-\hat{y}^{(i)}) \right] $$</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">다중 클래스 분류</h3>
+    <p>One-vs-Rest는 클래스마다 이진 분류기를 학습해 가장 높은 점수의 클래스를 선택한다. Softmax 회귀는 여러 클래스의 확률을 한 번에 정규화한다:</p>
+    <p>$$ P(y=k \mid x) = \frac{e^{\theta_k^T x}}{\sum_{j=1}^{K} e^{\theta_j^T x}} $$</p>
+    <p>클래스 불균형이 심한 경우 정확도만으로는 성능을 제대로 판단할 수 없어, 클래스 가중치 조정이나 오버/언더샘플링(SMOTE 등)을 함께 고려한다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — 이진/다중 분류</h3>
+      <pre>from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report
+
+clf = LogisticRegression(max_iter=1000, multi_class="multinomial")
+clf.fit(X_train, y_train)
+pred = clf.predict(X_test)
+print(classification_report(y_test, pred))</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>교차엔트로피 손실이 MSE보다 로지스틱 회귀에 적합한 이유를 볼록성 관점에서 설명하라.</li>
+      <li>붓꽃(Iris) 데이터셋에 Softmax 회귀를 적용하고 클래스별 정밀도/재현율을 계산하라.</li>
+    </ol>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 6</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">모델 평가와 검증</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>편향(bias)은 모델이 지나치게 단순해 데이터를 제대로 설명하지 못하는 정도(과소적합), 분산(variance)은 모델이 훈련 데이터의 잡음까지 학습해 새로운 데이터에 일반화하지 못하는 정도(과적합)를 뜻한다. 두 오류는 트레이드오프 관계에 있으며, 학습곡선(learning curve)으로 진단할 수 있다.</p>
+    <p>K-겹 교차검증은 데이터를 K개로 나눠 K번 학습·검증을 반복해 평균 성능을 추정하는 방법으로, 데이터가 적을 때 특히 유용하다.</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">분류 성능 지표</h3>
+    <p>혼동행렬을 기반으로 다음 지표를 정의한다:</p>
+    <p>$$ \text{정밀도} = \frac{TP}{TP+FP}, \quad \text{재현율} = \frac{TP}{TP+FN}, \quad F1 = \frac{2 \cdot \text{정밀도} \cdot \text{재현율}}{\text{정밀도}+\text{재현율}} $$</p>
+    <p>ROC 곡선은 여러 임계값에서 재현율(TPR)과 위양성률(FPR)의 관계를 나타내며, 곡선 아래 면적(AUC)이 1에 가까울수록 좋은 분류기다.</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">정규화</h3>
+    <p>과적합을 줄이기 위해 비용함수에 페널티 항을 추가한다. Ridge(L2)는 $\lambda \sum \theta_j^2$, Lasso(L1)는 $\lambda \sum |\theta_j|$를 더한다. L1은 일부 계수를 0으로 만들어 특성 선택 효과가 있다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — 교차검증과 튜닝</h3>
+      <pre>from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn.linear_model import Ridge
+
+scores = cross_val_score(Ridge(), X_train, y_train, cv=5, scoring="r2")
+print("CV R^2 평균:", scores.mean())
+
+param_grid = {"alpha": [0.01, 0.1, 1, 10, 100]}
+grid = GridSearchCV(Ridge(), param_grid, cv=5)
+grid.fit(X_train, y_train)
+print("최적 alpha:", grid.best_params_)</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>정밀도와 재현율 중 하나를 희생해야 하는 실제 상황의 예를 들고, 어떤 지표를 우선해야 하는지 논하라.</li>
+      <li>Ridge와 Lasso 정규화의 차이를 기하학적으로(제약 영역 관점에서) 설명하라.</li>
+    </ol>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 7</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">KNN과 서포트벡터머신</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>k-최근접이웃(KNN)은 별도의 학습 과정 없이, 예측 시점에 새 데이터와 가장 가까운 k개의 훈련 데이터를 찾아 다수결(분류) 또는 평균(회귀)으로 예측하는 게으른 학습(lazy learning) 방법이다. 거리 척도로는 유클리드 거리, 맨해튼 거리 등을 사용한다.</p>
+    <p>SVM은 두 클래스를 나누는 초평면 중 마진(margin, 결정경계와 가장 가까운 데이터 사이 거리)을 최대화하는 초평면을 찾는다. 마진 위에 있는 데이터를 서포트 벡터라 부른다.</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">최적화 문제와 커널 트릭</h3>
+    <p>선형 SVM의 목적함수는 다음과 같다(소프트 마진):</p>
+    <p>$$ \min_{w,b} \frac{1}{2}\|w\|^2 + C\sum_{i=1}^{m}\xi_i \quad \text{s.t. } y^{(i)}(w^Tx^{(i)}+b) \ge 1-\xi_i $$</p>
+    <p>$C$는 마진 위반에 대한 페널티 강도다. 비선형 분류가 필요할 때는 커널 함수(RBF, 다항 등)를 이용해 데이터를 고차원 공간으로 매핑한 효과를 계산 비용 증가 없이 얻는다(커널 트릭).</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — 커널 비교</h3>
+      <pre>from sklearn.svm import SVC
+
+for kernel in ["linear", "rbf", "poly"]:
+    clf = SVC(kernel=kernel, C=1.0, gamma="scale")
+    clf.fit(X_train, y_train)
+    print(kernel, "정확도:", clf.score(X_test, y_test))</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>KNN에서 k 값이 너무 작거나 클 때 각각 어떤 문제가 발생하는지 편향-분산 관점에서 설명하라.</li>
+      <li>SVM의 하이퍼파라미터 C와 gamma를 바꿔가며 결정경계가 어떻게 달라지는지 시각화하라.</li>
+    </ol>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 8</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">의사결정나무와 앙상블 기법</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>결정트리는 특성값에 따라 데이터를 재귀적으로 분할해 예측하는 모델이다. 분할 기준으로 지니 불순도나 엔트로피를 사용한다:</p>
+    <p>$$ Gini = 1-\sum_{k=1}^{K}p_k^2, \qquad Entropy = -\sum_{k=1}^{K}p_k \log_2 p_k $$</p>
+    <p>단일 트리는 과적합되기 쉬워, 여러 모델을 결합하는 앙상블 기법을 함께 사용한다.</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">배깅과 부스팅</h3>
+    <p>배깅(Bagging)은 부트스트랩으로 여러 훈련셋을 만들어 각각 모델을 학습한 뒤 결과를 평균/투표한다. 랜덤포레스트는 배깅에 특성 무작위 선택을 추가해 트리 간 상관을 낮춘다. 부스팅은 이전 모델이 틀린 샘플에 가중치를 주며 순차적으로 모델을 추가한다(AdaBoost). Gradient Boosting은 잔차(residual)를 새로운 트리로 학습해 오차를 줄여나가며, XGBoost는 이를 정규화와 병렬화로 최적화한 구현체다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — 랜덤포레스트와 XGBoost 비교</h3>
+      <pre>from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
+
+rf = RandomForestClassifier(n_estimators=200, max_depth=8, random_state=42)
+rf.fit(X_train, y_train)
+
+xgb = XGBClassifier(n_estimators=200, max_depth=4, learning_rate=0.1)
+xgb.fit(X_train, y_train)
+
+print("RF 정확도:", rf.score(X_test, y_test))
+print("XGB 정확도:", xgb.score(X_test, y_test))
+print("특성 중요도:", rf.feature_importances_)</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>배깅과 부스팅의 핵심 차이를 편향-분산 관점에서 비교 설명하라.</li>
+      <li>랜덤포레스트의 특성 중요도를 이용해 상위 5개 특성을 시각화하고 해석하라.</li>
+    </ol>
+  </div>
+
+  <div class="week" style="background:#f4f1e8; padding:24px 28px; border-radius:4px;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 9</div>
+    <h2 style="font-size:16pt; margin:4px 0 10px;">중간고사 및 프로젝트 중간발표</h2>
+    <p style="margin:0;">1~8주차 범위(선형/로지스틱 회귀, 모델 평가, KNN/SVM, 앙상블)에 대한 필기시험을 진행한다. 시험 후에는 팀별로 프로젝트에 사용할 데이터셋과 문제 정의를 발표하고, 담당 교수와 조교의 피드백을 받는다. 발표에는 문제 정의, 데이터 개요, 초기 EDA 결과가 포함되어야 한다.</p>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 10</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">비지도학습: 군집화</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>K-means는 데이터를 K개의 군집으로 나누고, 각 군집의 중심(centroid)과 데이터 간 거리 제곱합을 최소화한다:</p>
+    <p>$$ J = \sum_{i=1}^{m}\sum_{k=1}^{K} r_{ik}\|x^{(i)}-\mu_k\|^2 $$</p>
+    <p>초기 중심값에 따라 결과가 달라질 수 있어 여러 번 초기화(k-means++)하거나, 적절한 K를 찾기 위해 엘보우 기법과 실루엣 계수를 활용한다.</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">계층적 군집화와 DBSCAN</h3>
+    <p>계층적 군집화(응집형)는 가장 가까운 두 군집을 반복적으로 병합해 덴드로그램을 만든다. DBSCAN은 밀도가 일정 기준 이상인 영역을 군집으로 인식해, K를 미리 정할 필요가 없고 이상치(노이즈)를 자연스럽게 식별한다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — K-means와 실루엣 계수</h3>
+      <pre>from sklearn.cluster import KMeans, DBSCAN
+from sklearn.metrics import silhouette_score
+
+for k in range(2, 7):
+    km = KMeans(n_clusters=k, n_init=10, random_state=42).fit(X)
+    score = silhouette_score(X, km.labels_)
+    print(f"k={k}, silhouette={score:.3f}")
+
+db = DBSCAN(eps=0.5, min_samples=5).fit(X)
+print("DBSCAN 군집 수:", len(set(db.labels_)) - (1 if -1 in db.labels_ else 0))</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>엘보우 기법과 실루엣 계수를 각각 이용해 최적의 K를 찾고 결과를 비교하라.</li>
+      <li>DBSCAN이 K-means보다 적합한 데이터 형태(예: 비구형 군집)를 예시와 함께 설명하라.</li>
+    </ol>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 11</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">차원 축소</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>차원이 높아질수록 데이터가 공간에 희소하게 퍼지고 거리 기반 방법의 효과가 떨어지는 현상을 "차원의 저주"라 한다. 차원 축소는 정보 손실을 최소화하면서 특성 수를 줄이는 기법이다.</p>
+    <p>주성분분석(PCA)은 데이터의 분산이 가장 큰 방향(주성분)을 찾아 그 방향으로 데이터를 사영한다. 이는 공분산 행렬의 고유벡터를 구하는 문제와 같다:</p>
+    <p>$$ \Sigma v = \lambda v $$</p>
+    <p>고유값 $\lambda$가 큰 순서대로 고유벡터를 선택하면, 해당 방향이 설명하는 분산 비율을 알 수 있다. PCA는 특이값분해(SVD) $X = U\Sigma V^T$로도 계산할 수 있다.</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">t-SNE</h3>
+    <p>t-SNE는 고차원에서 가까운 점들이 저차원에서도 가깝게 유지되도록 확률분포 간 KL divergence를 최소화하는 비선형 시각화 기법이다. 주로 2~3차원으로 임베딩해 데이터를 시각적으로 탐색하는 데 쓰이며, 축의 값 자체는 해석적 의미가 없다는 점에 유의해야 한다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — PCA로 분산 설명력 확인</h3>
+      <pre>from sklearn.decomposition import PCA
+
+pca = PCA(n_components=0.95)  # 분산 95% 유지
+X_reduced = pca.fit_transform(X_scaled)
+print("선택된 주성분 수:", pca.n_components_)
+print("누적 설명 분산 비율:", pca.explained_variance_ratio_.cumsum())</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>MNIST 손글씨 데이터셋에 PCA를 적용해 2차원으로 축소하고 숫자별로 산점도를 그려라.</li>
+      <li>PCA와 t-SNE의 목적과 사용 시 주의점을 비교하라.</li>
+    </ol>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 12</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">신경망 기초와 역전파</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>퍼셉트론은 입력의 가중합에 활성화 함수를 적용해 출력을 내는 가장 단순한 신경망 단위다. 퍼셉트론을 여러 층으로 쌓은 다층퍼셉트론(MLP)은 비선형 활성화 함수 덕분에 선형으로 분리되지 않는 문제도 학습할 수 있다. 대표 활성화 함수로 시그모이드, tanh, ReLU $f(x)=\max(0,x)$가 있으며, ReLU는 기울기 소실 문제를 완화해 깊은 신경망에서 널리 쓰인다.</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">순전파와 역전파</h3>
+    <p>순전파는 입력에서 출력까지 층별로 계산을 진행하는 과정이다. 학습은 손실함수 $L$을 각 가중치에 대해 미분해 기울기를 구하고(연쇄법칙), 이를 이용해 가중치를 갱신하는 역전파로 이루어진다:</p>
+    <p>$$ \frac{\partial L}{\partial w^{(l)}} = \frac{\partial L}{\partial a^{(l+1)}} \cdot \frac{\partial a^{(l+1)}}{\partial z^{(l+1)}} \cdot \frac{\partial z^{(l+1)}}{\partial w^{(l)}} $$</p>
+    <p>Adam은 모멘텀(과거 기울기의 이동평균)과 적응적 학습률(기울기 제곱의 이동평균)을 결합한 옵티마이저로, 실무에서 기본값으로 널리 사용된다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — Keras MLP</h3>
+      <pre>from tensorflow import keras
+
+model = keras.Sequential([
+    keras.layers.Dense(64, activation="relu", input_shape=(X_train.shape[1],)),
+    keras.layers.Dense(32, activation="relu"),
+    keras.layers.Dense(1, activation="sigmoid"),
+])
+model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+history = model.fit(X_train, y_train, epochs=30, validation_split=0.2)</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>NumPy만으로 2층 신경망의 순전파와 역전파를 직접 구현하라(XOR 문제 등).</li>
+      <li>시그모이드 대신 ReLU를 사용하면 왜 깊은 신경망 학습에 유리한지 기울기 관점에서 설명하라.</li>
+    </ol>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 13</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">딥러닝 심화</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>가중치 초기화가 0이거나 모두 같으면 뉴런들이 동일하게 학습되는 대칭성 문제가 생긴다. Xavier 초기화는 시그모이드/tanh에, He 초기화는 ReLU 계열에 적합하도록 층의 크기에 비례해 초기 분산을 조정한다.</p>
+    <p>배치 정규화는 각 층의 입력 분포를 평균 0, 분산 1로 정규화한 뒤 학습 가능한 스케일·이동 파라미터를 적용해, 학습을 안정화하고 가속한다:</p>
+    <p>$$ \hat{x} = \frac{x-\mu_B}{\sqrt{\sigma_B^2+\epsilon}}, \quad y = \gamma\hat{x}+\beta $$</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">과적합 방지</h3>
+    <p>드롭아웃은 학습 시 무작위로 일부 뉴런을 꺼서 뉴런 간 과도한 공동적응을 막는다. 조기 종료는 검증 손실이 더 이상 개선되지 않을 때 학습을 멈춘다. 학습률 스케줄링(단계적 감소, 코사인 감쇠 등)은 학습 후반에 더 정밀한 수렴을 돕는다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — 배치정규화와 드롭아웃</h3>
+      <pre>model = keras.Sequential([
+    keras.layers.Dense(128, use_bias=False, input_shape=(X_train.shape[1],)),
+    keras.layers.BatchNormalization(),
+    keras.layers.Activation("relu"),
+    keras.layers.Dropout(0.3),
+    keras.layers.Dense(1, activation="sigmoid"),
+])
+callback = keras.callbacks.EarlyStopping(patience=5, restore_best_weights=True)
+model.compile(optimizer="adam", loss="binary_crossentropy")
+model.fit(X_train, y_train, epochs=100, validation_split=0.2, callbacks=[callback])</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>드롭아웃 비율을 0.1, 0.3, 0.5로 바꿔가며 학습·검증 손실 곡선을 비교하라.</li>
+      <li>배치 정규화가 학습을 안정화하는 이유를 내부 공변량 변화(internal covariate shift) 관점에서 설명하라.</li>
+    </ol>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 14</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">CNN과 이미지 처리</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>합성곱 신경망(CNN)은 이미지의 공간적 구조를 보존하며 특성을 추출한다. 합성곱 연산은 작은 필터(커널)를 이미지 위에서 이동시키며 국소 영역의 가중합을 계산한다. 필터 크기, 스트라이드(이동 간격), 패딩(경계 처리)이 출력 크기를 결정한다:</p>
+    <p>$$ \text{출력 크기} = \left\lfloor \frac{N - F + 2P}{S} \right\rfloor + 1 $$</p>
+    <p>풀링 계층(Max/Average Pooling)은 특성맵의 크기를 줄이고 약간의 위치 변화에 강건하게 만든다.</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">대표 아키텍처와 전이학습</h3>
+    <p>LeNet은 초기 CNN 구조로 손글씨 인식에 사용됐다. VGG는 작은 3×3 필터를 깊게 쌓아 성능을 높였고, ResNet은 잔차 연결(skip connection)로 매우 깊은 네트워크에서도 기울기 소실 없이 학습이 가능하게 했다. 전이학습은 대규모 데이터로 미리 학습된 모델(ImageNet 등)의 가중치를 가져와, 적은 데이터로도 새로운 문제에 맞게 미세조정(fine-tuning)하는 방법이다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — 이미지 분류 CNN</h3>
+      <pre>model = keras.Sequential([
+    keras.layers.Conv2D(32, 3, activation="relu", input_shape=(32,32,3)),
+    keras.layers.MaxPooling2D(2),
+    keras.layers.Conv2D(64, 3, activation="relu"),
+    keras.layers.MaxPooling2D(2),
+    keras.layers.Flatten(),
+    keras.layers.Dense(64, activation="relu"),
+    keras.layers.Dense(10, activation="softmax"),
+])
+model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+model.fit(X_train, y_train, epochs=15, validation_split=0.2)</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>Fashion-MNIST에 위 CNN을 학습시키고, 합성곱 필터 수를 바꿔가며 정확도 변화를 관찰하라.</li>
+      <li>ResNet의 잔차 연결이 기울기 소실 문제를 어떻게 완화하는지 수식으로 설명하라.</li>
+    </ol>
+  </div>
+
+  <div class="week">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 15</div>
+    <h2 style="font-size:16pt; margin:4px 0 14px;">RNN과 자연어처리 기초</h2>
+
+    <h3 style="font-size:12pt; margin-bottom:6px;">개념 설명</h3>
+    <p>순환신경망(RNN)은 이전 시점의 은닉상태를 다음 시점의 입력과 함께 사용해 순차 데이터를 처리한다:</p>
+    <p>$$ h_t = \tanh(W_{hh}h_{t-1} + W_{xh}x_t + b) $$</p>
+    <p>긴 시퀀스에서는 기울기가 반복 곱해지며 소실되거나 발산하는 문제가 있다. LSTM과 GRU는 게이트 구조(입력·망각·출력 게이트)로 정보를 선택적으로 유지·삭제해 장기 의존성을 학습할 수 있게 한다.</p>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">단어 임베딩과 Attention</h3>
+    <p>Word2Vec, GloVe 같은 단어 임베딩은 단어를 저차원 밀집 벡터로 표현해, 의미적으로 유사한 단어가 벡터 공간에서 가깝게 위치하도록 학습한다. Attention 메커니즘은 출력의 각 시점이 입력 시퀀스의 어느 부분에 집중할지 가중치로 학습하며, Transformer는 순환 구조 없이 Self-Attention만으로 시퀀스를 처리해 병렬화와 장거리 의존성 학습에서 RNN보다 우수한 성능을 보인다.</p>
+
+    <div class="box" style="background:#f4f1e8; padding:14px 18px; border-radius:4px;">
+      <h3 style="font-size:11.5pt; margin:0 0 8px;">코드 예제 — LSTM 감성 분석</h3>
+      <pre>model = keras.Sequential([
+    keras.layers.Embedding(input_dim=10000, output_dim=64),
+    keras.layers.LSTM(64),
+    keras.layers.Dense(1, activation="sigmoid"),
+])
+model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+model.fit(X_train_seq, y_train, epochs=10, validation_split=0.2)</pre>
+    </div>
+
+    <h3 style="font-size:12pt; margin:14px 0 6px;">연습 문제</h3>
+    <ol style="margin:0; padding-left:22px;">
+      <li>IMDB 영화 리뷰 데이터셋으로 LSTM 감성 분석 모델을 학습시키고 정확도를 확인하라.</li>
+      <li>RNN 대비 Transformer가 갖는 장점을 병렬화와 장기 의존성 두 측면에서 설명하라.</li>
+    </ol>
+  </div>
+
+  <div class="week" style="background:#f4f1e8; padding:24px 28px; border-radius:4px;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:10pt; color:#c9871f; font-weight:600;">WEEK 16</div>
+    <h2 style="font-size:16pt; margin:4px 0 10px;">최종 프로젝트 발표 및 총정리</h2>
+    <p style="margin:0 0 10px;">팀별로 한 학기 동안 진행한 프로젝트의 문제 정의, 데이터 전처리, 모델링 과정, 평가 결과를 10분간 발표하고 코드를 제출한다. 이어서 한 학기 동안 다룬 지도학습·비지도학습·모델평가·딥러닝의 흐름을 정리하고, 강화학습, 생성모델(GAN, Diffusion), MLOps/배포 등 이후 심화 학습 방향을 소개한다.</p>
+  </div>
+
+</div>
+</doc-page>
+
+</x-dc>
+</body>
+</html>

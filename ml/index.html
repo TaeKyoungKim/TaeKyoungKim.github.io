@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI · 101 머신러닝 개론 | 교재 랩</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;800;900&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <style>
+    :root {
+      --bg: #f6f4ee; --surface: #ffffff; --surface-raised: #ffffff;
+      --text: #15171e; --text-soft: #565b6b; --text-faint: #8c8f9c;
+      --border: #e6e2d5; --border-strong: #d3cdb9;
+      --cat-ai: #4653c4; --accent: #4653c4; --accent-ink: #ffffff;
+      --ok: #22875a; --warn: #b9791f;
+      --shadow: 0 1px 2px rgba(21,23,30,.04), 0 16px 32px -20px rgba(21,23,30,.22);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0b0c10; --surface: #14161c; --surface-raised: #191c24;
+        --text: #f3f1e9; --text-soft: #a8acb9; --text-faint: #6c707e;
+        --border: #262a35; --border-strong: #343948;
+        --cat-ai: #8fa0ff; --accent: #8fa0ff; --accent-ink: #0d122b;
+        --ok: #5fd08a; --warn: #f5b83d;
+        --shadow: 0 1px 2px rgba(0,0,0,.5), 0 20px 40px -20px rgba(0,0,0,.65);
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #0b0c10; --surface: #14161c; --surface-raised: #191c24;
+      --text: #f3f1e9; --text-soft: #a8acb9; --text-faint: #6c707e;
+      --border: #262a35; --border-strong: #343948;
+      --cat-ai: #8fa0ff; --accent: #8fa0ff; --accent-ink: #0d122b;
+      --ok: #5fd08a; --warn: #f5b83d;
+      --shadow: 0 1px 2px rgba(0,0,0,.5), 0 20px 40px -20px rgba(0,0,0,.65);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "IBM Plex Sans KR", "Noto Sans KR", system-ui, sans-serif;
+      font-size: 16px; line-height: 1.7;
+    }
+    .mono { font-family: "JetBrains Mono", monospace; }
+    header.top-nav {
+      position: sticky; top: 0; z-index: 30;
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      backdrop-filter: blur(14px); border-bottom: 1px solid var(--border);
+      padding: 14px 28px; display: flex; align-items: center; justify-content: space-between;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .back-link {
+      font-family: "JetBrains Mono", monospace; font-size: 13px; font-weight: 700;
+      text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px;
+    }
+    .hero {
+      max-width: 1200px; margin: 0 auto; padding: 48px 28px 32px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: "JetBrains Mono", monospace; font-size: 11.5px; font-weight: 700;
+      color: var(--cat-ai); background: color-mix(in srgb, var(--cat-ai) 12%, transparent);
+      border: 1px solid color-mix(in srgb, var(--cat-ai) 30%, transparent);
+      padding: 4px 12px; border-radius: 999px; margin-bottom: 16px;
+    }
+    h1 { font-family: "Gothic A1", sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 900; margin: 0 0 12px; }
+    p.lead { font-size: 16.5px; color: var(--text-soft); max-width: 72ch; margin: 0 0 32px; }
+    .resource-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-bottom: 48px;
+    }
+    .resource-card {
+      background: var(--surface-raised); border: 1px solid var(--border-strong);
+      border-radius: 14px; padding: 22px 24px; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
+    }
+    .resource-card h3 { margin: 0; font-size: 18px; font-weight: 800; }
+    .resource-card p { margin: 0; font-size: 13.5px; color: var(--text-soft); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 18px; border-radius: 10px; font-family: "JetBrains Mono", monospace;
+      font-size: 13px; font-weight: 700; text-decoration: none;
+      background: var(--cat-ai); color: #fff; transition: opacity .15s ease, transform .15s ease;
+    }
+    .btn:hover { opacity: .92; transform: translateY(-1px); }
+    .btn-secondary {
+      background: color-mix(in srgb, var(--cat-ai) 12%, transparent);
+      color: var(--cat-ai); border: 1px solid color-mix(in srgb, var(--cat-ai) 30%, transparent);
+    }
+    .btn-secondary:hover { background: color-mix(in srgb, var(--cat-ai) 22%, transparent); }
+    .curriculum-list {
+      max-width: 1200px; margin: 0 auto; padding: 0 28px 64px;
+    }
+    .curriculum-list h2 { font-size: 24px; font-weight: 800; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
+    .week-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 14px;
+    }
+    .week-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px;
+    }
+    .week-no { font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 700; color: var(--cat-ai); margin-bottom: 4px; }
+    .week-title { font-weight: 700; font-size: 15px; margin: 0 0 6px; }
+    .week-desc { font-size: 12.5px; color: var(--text-soft); margin: 0; }
+  </style>
+</head>
+<body>
+  <header class="top-nav">
+    <a href="../index.html" class="back-link">← 김태경 교재 랩 홈으로</a>
+    <span class="mono" style="font-size: 12px; color: var(--text-faint);">AI · 101</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-badge">AI · 101 · 16주차 전과정 완결</div>
+      <h1>머신러닝 개론 (Introduction to Machine Learning)</h1>
+      <p class="lead">학부 및 대학원 강의를 위해 체계적으로 집필된 16주차 머신러닝 교재입니다. 지도학습·비지도학습의 수학적 원리부터 Scikit-Learn 실습, 신경망 및 XAI·윤리까지 단행본 분량의 강의교안, 강의노트, 발표자료를 제공합니다.</p>
+
+      <div class="resource-grid">
+        <div class="resource-card">
+          <div>
+            <span class="mono" style="font-size:11px; color:var(--cat-ai); font-weight:700;">SYLLABUS</span>
+            <h3>강의교안</h3>
+            <p>한 학기(16주) 3학점 커리큘럼, 주차별 학습목표, 주교재 및 부교재, 성적 평가 기준 안내</p>
+          </div>
+          <a href="syllabus.html" class="btn btn-secondary">강의교안 보기 →</a>
+        </div>
+
+        <div class="resource-card" style="border-color: var(--cat-ai);">
+          <div>
+            <span class="mono" style="font-size:11px; color:var(--cat-ai); font-weight:700;">COMPREHENSIVE NOTES</span>
+            <h3>16주 전과정 강의노트</h3>
+            <p>전 16주차 개념 설명, 수식 유도(MathJax), 파이썬 코드 예제, 주차별 연습문제 모음</p>
+          </div>
+          <a href="notes.html" class="btn">강의노트 전문 열기 →</a>
+        </div>
+
+        <div class="resource-card">
+          <div>
+            <span class="mono" style="font-size:11px; color:var(--cat-ai); font-weight:700;">SLIDES DECK</span>
+            <h3>강의교안 발표자료</h3>
+            <p>강의 및 프레젠테이션용 슬라이드 덱 (deck-stage 기반 키보드 탐색 지원)</p>
+          </div>
+          <a href="slides.html" class="btn btn-secondary">슬라이드 열기 →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="curriculum-list">
+      <h2>16주차 커리큘럼 구성</h2>
+      <div class="week-grid">
+        <div class="week-card">
+          <div class="week-no">WEEK 01</div>
+          <div class="week-title">머신러닝 개관 및 환경</div>
+          <p class="week-desc">AI-ML-DL 관계, 지도/비지도/강화학습, scikit-learn 환경 구성</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 02</div>
+          <div class="week-title">선형대수와 미적분 기초</div>
+          <p class="week-desc">벡터·행렬 연산, 고유값 분해, 편미분과 경사하강법의 수학</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 03</div>
+          <div class="week-title">데이터 전처리와 특성 공학</div>
+          <p class="week-desc">결측치·이상치 처리, 인코딩, 스케일링, 특성 선택 기법</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 04</div>
+          <div class="week-title">선형 회귀 (Linear Regression)</div>
+          <p class="week-desc">단순/다중 선형 회귀, 최소제곱법(OLS), 비용함수와 경사하강</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 05</div>
+          <div class="week-title">로지스틱 회귀 (Classification)</div>
+          <p class="week-desc">시그모이드 함수, 이진 분류, 로그 손실(BCE), 다중 클래스 분류</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 06</div>
+          <div class="week-title">모델 평가와 검증</div>
+          <p class="week-desc">혼동행렬, 정밀도/재현율/F1, ROC-AUC, K-Fold 교차검증</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 07</div>
+          <div class="week-title">규제화 기법</div>
+          <p class="week-desc">과적합 방지, 편향-분산 트레이드오프, Ridge, Lasso, ElasticNet</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 08</div>
+          <div class="week-title">중간고사 및 실습 리뷰</div>
+          <p class="week-desc">전반부 이론 평가 및 데이터셋 모델링 실습 코드 리뷰</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 09</div>
+          <div class="week-title">서포트 벡터 머신 (SVM)</div>
+          <p class="week-desc">최대 마진 분할 초평면, 슬랙 변수, 커널 트릭(RBF, 다항)</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 10</div>
+          <div class="week-title">의사결정나무와 앙상블</div>
+          <p class="week-desc">지니계수, 엔트로피, Random Forest, Bagging vs Boosting</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 11</div>
+          <div class="week-title">비지도학습 1: 군집화</div>
+          <p class="week-desc">K-Means, 계층적 군집화, DBSCAN, 실루엣 점수 평가</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 12</div>
+          <div class="week-title">비지도학습 2: 차원축소</div>
+          <p class="week-desc">주성분 분석(PCA), 공분산 행렬 분해, t-SNE 시각화</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 13</div>
+          <div class="week-title">인공신경망 기초 (MLP)</div>
+          <p class="week-desc">퍼셉트론, 다층 퍼셉트론, 활성화 함수, 오차 역전파 알고리즘</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 14</div>
+          <div class="week-title">딥러닝 입문 (CNN, RNN)</div>
+          <p class="week-desc">합성곱 연산과 이미지 처리, 순환신경망과 시계열 구조</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 15</div>
+          <div class="week-title">최신 트렌드 & XAI · 윤리</div>
+          <p class="week-desc">설명가능한 AI 개요, 데이터 편향, 모델 공정성 및 AI 윤리</p>
+        </div>
+        <div class="week-card">
+          <div class="week-no">WEEK 16</div>
+          <div class="week-title">기말 프로젝트 발표 및 종합</div>
+          <p class="week-desc">엔드투엔드 머신러닝 파이프라인 팀 프로젝트 최종 평가</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

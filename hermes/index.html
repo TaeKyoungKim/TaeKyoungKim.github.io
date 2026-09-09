@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI · 103 Hermes Agent · LLM-Wiki 가이드북 | 교재 랩</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;800;900&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.2.0/github-markdown.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark-dimmed.min.css">
+  <style>
+    :root {
+      --bg: #f6f4ee; --surface: #ffffff; --surface-raised: #ffffff;
+      --text: #15171e; --text-soft: #565b6b; --text-faint: #8c8f9c;
+      --border: #e6e2d5; --border-strong: #d3cdb9;
+      --cat-ai: #4653c4; --accent: #4653c4;
+      --shadow: 0 1px 2px rgba(21,23,30,.04), 0 16px 32px -20px rgba(21,23,30,.22);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0b0c10; --surface: #14161c; --surface-raised: #191c24;
+        --text: #f3f1e9; --text-soft: #a8acb9; --text-faint: #6c707e;
+        --border: #262a35; --border-strong: #343948;
+        --cat-ai: #8fa0ff; --accent: #8fa0ff;
+        --shadow: 0 1px 2px rgba(0,0,0,.5), 0 20px 40px -20px rgba(0,0,0,.65);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "IBM Plex Sans KR", "Noto Sans KR", system-ui, sans-serif;
+      font-size: 15.5px; line-height: 1.75;
+    }
+    .mono { font-family: "JetBrains Mono", monospace; }
+    header.top-nav {
+      position: sticky; top: 0; z-index: 40;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(14px); border-bottom: 1px solid var(--border);
+      padding: 12px 24px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .back-link {
+      font-family: "JetBrains Mono", monospace; font-size: 13px; font-weight: 700;
+      text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px;
+    }
+    .layout-wrap {
+      display: grid; grid-template-columns: 280px 1fr; max-width: 1300px;
+      margin: 0 auto; min-height: calc(100vh - 54px);
+    }
+    aside.toc-sidebar {
+      position: sticky; top: 54px; height: calc(100vh - 54px); overflow-y: auto;
+      border-right: 1px solid var(--border); padding: 24px 18px; font-size: 13px;
+    }
+    aside.toc-sidebar h3 {
+      font-family: "Gothic A1", sans-serif; font-size: 13px; font-weight: 800;
+      color: var(--text-faint); text-transform: uppercase; letter-spacing: .08em;
+      margin: 0 0 14px;
+    }
+    .toc-nav { display: flex; flex-direction: column; gap: 6px; }
+    .toc-nav a {
+      color: var(--text-soft); text-decoration: none; padding: 6px 10px; border-radius: 6px;
+      line-height: 1.4; transition: all .15s ease;
+    }
+    .toc-nav a:hover, .toc-nav a.active {
+      color: var(--text); background: color-mix(in srgb, var(--accent) 12%, transparent);
+      font-weight: 600;
+    }
+    main.content-area {
+      padding: 36px 48px 80px; max-width: 900px; overflow-wrap: break-word;
+    }
+    .badge-bar {
+      display: flex; gap: 8px; align-items: center; margin-bottom: 16px;
+    }
+    .badge {
+      font-family: "JetBrains Mono", monospace; font-size: 11.5px; font-weight: 700;
+      padding: 4px 10px; border-radius: 999px;
+      background: color-mix(in srgb, var(--cat-ai) 14%, transparent);
+      color: var(--cat-ai); border: 1px solid color-mix(in srgb, var(--cat-ai) 35%, transparent);
+    }
+    /* Markdown body styling overrides */
+    .markdown-body {
+      background: transparent !important; color: var(--text) !important;
+      font-family: inherit !important;
+    }
+    .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+      font-family: "Gothic A1", sans-serif; color: var(--text) !important;
+      border-bottom-color: var(--border) !important;
+    }
+    .markdown-body pre {
+      background: #181a20 !important; border: 1px solid var(--border) !important;
+      border-radius: 8px;
+    }
+    .markdown-body code {
+      font-family: "JetBrains Mono", monospace !important;
+    }
+    .markdown-body table {
+      border-collapse: collapse; width: 100%; border-color: var(--border);
+    }
+    .markdown-body th, .markdown-body td {
+      border-color: var(--border) !important;
+    }
+    .markdown-body blockquote {
+      color: var(--text-soft) !important; border-left-color: var(--accent) !important;
+    }
+    @media (max-width: 860px) {
+      .layout-wrap { grid-template-columns: 1fr; }
+      aside.toc-sidebar { display: none; }
+      main.content-area { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-nav">
+    <a href="../index.html" class="back-link">← 김태경 교재 랩 홈으로</a>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span class="badge">AI · 103</span>
+      <span class="mono" style="font-size: 12px; color: var(--text-soft);">약 6,400줄 전문 공개</span>
+    </div>
+  </header>
+
+  <div class="layout-wrap">
+    <aside class="toc-sidebar">
+      <h3>목차 (Chapters)</h3>
+      <nav class="toc-nav" id="tocNav">
+        <a href="#서문-introduction">서문 (Introduction)</a>
+        <a href="#chapter-1-패러다임의-전환-rag를-넘어-llm-wiki와-hermes-agent로">1장. RAG를 넘어 LLM-Wiki로</a>
+        <a href="#chapter-2-kubernetes-기반-hermes-아키텍처">2장. K8s 기반 Hermes 아키텍처</a>
+        <a href="#chapter-3-지식-저장소-및-정규화-파이프라인">3장. 지식 저장소 및 정규화</a>
+        <a href="#chapter-4-자율-학습-엔진-observer-detector-writer-critic">4장. 자율 학습 엔진</a>
+        <a href="#chapter-5-human-in-the-loop--gitops-기반-지식-검증-파이프라인">5장. Human-in-the-Loop & GitOps</a>
+        <a href="#chapter-6-채널-연동slackdiscord과-코드-실행-샌드박스-실습">6장. Slack/Discord & 샌드박스</a>
+        <a href="#chapter-7-프로덕션-운영-모니터링-및-프롬프트-가드레일">7장. 프로덕션 운영 & 가드레일</a>
+      </nav>
+    </aside>
+
+    <main class="content-area">
+      <div id="render-target" class="markdown-body">
+        <p style="color:var(--text-soft); font-size:14px;">교재 본문을 불러오는 중입니다...</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script>
+    fetch('book.md')
+      .then(r => r.text())
+      .then(md => {
+        marked.setOptions({
+          highlight: function(code, lang) {
+            const language = highlight.getLanguage(lang) ? lang : 'plaintext';
+            return highlight.highlight(code, { language }).value;
+          },
+          gfm: true,
+          breaks: false
+        });
+        document.getElementById('render-target').innerHTML = marked.parse(md);
+      })
+      .catch(err => {
+        document.getElementById('render-target').innerHTML = '<p>문서를 불러오는 중 오류가 발생했습니다: ' + err + '</p>';
+      });
+  </script>
+</body>
+</html>

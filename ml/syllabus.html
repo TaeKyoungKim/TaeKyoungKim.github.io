@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&display=swap');
+    body { margin: 0; font-family: 'Pretendard', -apple-system, sans-serif; }
+    doc-page:not(:defined) { visibility: hidden; }
+    .ml-doc h1, .ml-doc h2, .ml-doc h3 { font-family: 'Pretendard', sans-serif; color: #201c4a; }
+    .ml-doc table { border-collapse: collapse; width: 100%; }
+    .ml-doc .week { break-inside: avoid; }
+  </style>
+  <script src="./doc-page.js"></script>
+</helmet>
+
+<doc-page margin="0.85in">
+<div class="ml-doc" style="color:#2a2d38; font-size:12.5pt; line-height:1.65;">
+
+  <div style="border-bottom:3px solid #2d2a6e; padding-bottom:18px; margin-bottom:28px;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:11pt; letter-spacing:0.12em; color:#c9871f; font-weight:600;">COURSE SYLLABUS</div>
+    <h1 style="font-size:30pt; margin:6px 0 8px; font-weight:700;">머신러닝 개론</h1>
+    <div style="font-size:12pt; color:#5c5f6c;">Introduction to Machine Learning · 한 학기(16주) · 이론 3학점 + 실습 병행</div>
+  </div>
+
+  <h2 style="font-size:16pt; margin-bottom:10px;">1. 강의 개요</h2>
+  <p>이 강의는 머신러닝의 핵심 이론과 알고리즘을 체계적으로 다루는 이론 중심 과목이다. 지도학습과 비지도학습의 수학적 원리를 이해하고, 모델을 평가·검증하는 방법을 익히며, 신경망과 딥러닝의 기초까지 확장해 학습한다. 매 주차 이론 강의와 함께 Python(scikit-learn, Pandas, NumPy, TensorFlow/Keras)을 활용한 실습을 병행하여, 개념이 실제 데이터에서 어떻게 동작하는지 확인한다.</p>
+
+  <table style="margin:18px 0; font-size:11pt;">
+    <tr>
+      <td style="width:25%; padding:10px 14px; background:#f4f1e8; border:1px solid #e0dccb; font-weight:600;">대상</td>
+      <td style="padding:10px 14px; border:1px solid #e0dccb;">학부 3~4학년 및 대학원생 (확률·통계, 선형대수 기초 수강 권장)</td>
+    </tr>
+    <tr>
+      <td style="padding:10px 14px; background:#f4f1e8; border:1px solid #e0dccb; font-weight:600;">선수 지식</td>
+      <td style="padding:10px 14px; border:1px solid #e0dccb;">Python 기초 문법, 미적분학, 선형대수(벡터·행렬), 확률과 통계 개론</td>
+    </tr>
+    <tr>
+      <td style="padding:10px 14px; background:#f4f1e8; border:1px solid #e0dccb; font-weight:600;">사용 도구</td>
+      <td style="padding:10px 14px; border:1px solid #e0dccb;">Python, Jupyter/Colab, NumPy, Pandas, scikit-learn, TensorFlow/Keras</td>
+    </tr>
+    <tr>
+      <td style="padding:10px 14px; background:#f4f1e8; border:1px solid #e0dccb; font-weight:600;">교재</td>
+      <td style="padding:10px 14px; border:1px solid #e0dccb;">『Hands-On Machine Learning』(Aurélien Géron) · 『패턴 인식과 머신러닝』(Bishop, 참고) · 강의자료 슬라이드</td>
+    </tr>
+  </table>
+
+  <h2 style="font-size:16pt; margin-bottom:10px;">2. 학습 목표</h2>
+  <p>이 강의를 마치면 학생은 다음을 할 수 있다.</p>
+  <ul style="margin:0 0 8px; padding-left:22px;">
+    <li>지도학습·비지도학습 알고리즘의 수학적 원리를 설명하고 적절한 상황에 적용할 수 있다.</li>
+    <li>모델의 성능을 올바른 지표와 검증 절차로 평가하고, 과적합·과소적합을 진단·해결할 수 있다.</li>
+    <li>신경망의 순전파·역전파 원리를 이해하고, CNN·RNN 등 대표 딥러닝 구조를 설계할 수 있다.</li>
+    <li>실제 데이터셋에 전처리부터 모델링, 평가까지 전체 파이프라인을 구현할 수 있다.</li>
+  </ul>
+
+  <h2 style="font-size:16pt; margin-bottom:10px;">3. 평가 방법</h2>
+  <table style="margin:0 0 20px; font-size:11pt;">
+    <thead>
+      <tr>
+        <th style="text-align:left; padding:8px 14px; background:#2d2a6e; color:#fff; font-weight:600;">항목</th>
+        <th style="text-align:left; padding:8px 14px; background:#2d2a6e; color:#fff; font-weight:600;">비중</th>
+        <th style="text-align:left; padding:8px 14px; background:#2d2a6e; color:#fff; font-weight:600;">내용</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding:8px 14px; border-bottom:1px solid #e0dccb;">출석 및 참여</td><td style="padding:8px 14px; border-bottom:1px solid #e0dccb;">10%</td><td style="padding:8px 14px; border-bottom:1px solid #e0dccb;">출석, 실습 참여도</td></tr>
+      <tr><td style="padding:8px 14px; border-bottom:1px solid #e0dccb;">주간 실습 과제</td><td style="padding:8px 14px; border-bottom:1px solid #e0dccb;">20%</td><td style="padding:8px 14px; border-bottom:1px solid #e0dccb;">매 주차 코딩 실습 제출</td></tr>
+      <tr><td style="padding:8px 14px; border-bottom:1px solid #e0dccb;">중간고사</td><td style="padding:8px 14px; border-bottom:1px solid #e0dccb;">20%</td><td style="padding:8px 14px; border-bottom:1px solid #e0dccb;">1~8주차 이론 평가 (9주차)</td></tr>
+      <tr><td style="padding:8px 14px; border-bottom:1px solid #e0dccb;">기말고사</td><td style="padding:8px 14px; border-bottom:1px solid #e0dccb;">25%</td><td style="padding:8px 14px; border-bottom:1px solid #e0dccb;">전 범위 이론 평가</td></tr>
+      <tr><td style="padding:8px 14px;">팀 프로젝트</td><td style="padding:8px 14px;">25%</td><td style="padding:8px 14px;">실데이터 기반 모델링 프로젝트 및 발표 (16주차)</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-size:16pt; margin-bottom:10px;">4. 주차별 강의 계획</h2>
+  <table style="margin:0 0 28px; font-size:10.5pt;">
+    <thead>
+      <tr>
+        <th style="text-align:left; padding:7px 10px; background:#2d2a6e; color:#fff;">주차</th>
+        <th style="text-align:left; padding:7px 10px; background:#2d2a6e; color:#fff;">주제</th>
+        <th style="text-align:left; padding:7px 10px; background:#2d2a6e; color:#fff;">핵심 키워드</th>
+      </tr>
+    </thead>
+    <tbody id="schedule-body">
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">1</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">머신러닝 개관 및 개발환경</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">AI/ML/DL, 지도·비지도·강화학습</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">2</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">데이터 처리 기초</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">NumPy, Pandas, 전처리, 시각화</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">3</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">확률과 통계 기초</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">분포, 베이즈정리, 최대우도추정</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">4</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">선형회귀</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">최소제곱법, 경사하강법</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">5</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">로지스틱 회귀와 분류</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">시그모이드, 교차엔트로피, softmax</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">6</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">모델 평가와 검증</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">교차검증, 정밀도/재현율, 정규화</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">7</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">KNN과 SVM</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">거리 기반 분류, 마진 최대화, 커널</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">8</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">의사결정나무와 앙상블</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">랜덤포레스트, 부스팅, XGBoost</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb; background:#f4f1e8; font-weight:600;">9</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb; background:#f4f1e8; font-weight:600;">중간고사 및 프로젝트 중간발표</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb; background:#f4f1e8;">1~8주차 범위</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">10</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">비지도학습: 군집화</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">K-means, 계층적 군집화, DBSCAN</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">11</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">차원 축소</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">PCA, SVD, t-SNE</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">12</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">신경망 기초와 역전파</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">퍼셉트론, MLP, 역전파, Adam</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">13</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">딥러닝 심화</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">배치정규화, 드롭아웃, 학습률 스케줄링</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">14</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">CNN과 이미지 처리</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">합성곱, 풀링, ResNet 개관</td></tr>
+      <tr><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">15</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">RNN과 자연어처리 기초</td><td style="padding:7px 10px; border-bottom:1px solid #e0dccb;">LSTM/GRU, 임베딩, Attention 개관</td></tr>
+      <tr><td style="padding:7px 10px; background:#f4f1e8; font-weight:600;">16</td><td style="padding:7px 10px; background:#f4f1e8; font-weight:600;">최종 프로젝트 발표 및 총정리</td><td style="padding:7px 10px; background:#f4f1e8;">발표, 로드맵 정리</td></tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-size:16pt; margin-bottom:14px; break-before:page;">5. 주차별 상세 교안</h2>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">1주차 · 머신러닝 개관 및 개발환경</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 머신러닝의 정의와 범주를 이해하고, 실습 환경을 구축한다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>AI, 머신러닝, 딥러닝의 관계와 역사적 흐름</li>
+      <li>지도학습·비지도학습·강화학습의 정의와 예시</li>
+      <li>머신러닝 파이프라인 개관: 데이터 수집 → 전처리 → 학습 → 평가 → 배포</li>
+      <li>Python, Jupyter/Colab, 주요 라이브러리(NumPy, Pandas, scikit-learn) 설치 및 실습</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> Colab 환경 설정, 간단한 데이터셋 불러오기 · <strong>참고</strong> Géron 1장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">2주차 · 데이터 처리 기초</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — Python 데이터 처리 도구를 활용해 데이터를 정제·탐색할 수 있다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>NumPy 배열 연산, 브로드캐스팅</li>
+      <li>Pandas DataFrame 조작: 필터링, 그룹화, 병합</li>
+      <li>결측치·이상치 처리, 범주형 변수 인코딩(원-핫, 레이블)</li>
+      <li>Matplotlib/Seaborn을 이용한 탐색적 데이터 분석(EDA)</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> 공개 데이터셋(예: Titanic) 전처리 및 시각화 · <strong>참고</strong> Géron 2장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">3주차 · 확률과 통계 기초</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 머신러닝에 필요한 확률·통계 개념을 복습하고 연결한다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>확률변수, 확률분포(정규, 베르누이, 이항)</li>
+      <li>기댓값과 분산, 공분산과 상관계수</li>
+      <li>베이즈 정리와 조건부 확률의 머신러닝 적용</li>
+      <li>최대우도추정(MLE)의 개념과 손실함수와의 연결</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> NumPy/SciPy로 분포 시뮬레이션 · <strong>참고</strong> Bishop 1~2장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">4주차 · 선형회귀</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 회귀 문제를 수식으로 정의하고 경사하강법으로 최적화할 수 있다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>단순/다중 선형회귀 모델과 가설함수</li>
+      <li>최소제곱법과 정규방정식(Normal Equation)</li>
+      <li>경사하강법(배치/확률적/미니배치)의 원리와 학습률</li>
+      <li>결정계수(R²), 다중공선성과 특성 스케일링</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> scikit-learn LinearRegression으로 주택가격 예측 · <strong>참고</strong> Géron 4장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">5주차 · 로지스틱 회귀와 분류</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 분류 문제의 확률적 접근을 이해하고 다중 클래스로 확장한다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>시그모이드 함수와 결정경계</li>
+      <li>교차엔트로피 손실함수와 최적화</li>
+      <li>다중 클래스 분류: One-vs-Rest, Softmax 회귀</li>
+      <li>클래스 불균형 문제와 대응 전략</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> scikit-learn LogisticRegression으로 이진/다중 분류 · <strong>참고</strong> Géron 4장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">6주차 · 모델 평가와 검증</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 올바른 지표와 절차로 모델 성능을 평가하고 과적합을 제어할 수 있다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>편향-분산 트레이드오프, 학습곡선 해석</li>
+      <li>K-겹 교차검증, 홀드아웃, 데이터 분할 전략</li>
+      <li>혼동행렬, 정밀도/재현율/F1-score, ROC-AUC</li>
+      <li>L1/L2 정규화(Lasso/Ridge)와 하이퍼파라미터 튜닝(GridSearch)</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> cross_val_score, GridSearchCV 실습 · <strong>참고</strong> Géron 3, 5장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">7주차 · KNN과 서포트벡터머신</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 거리 기반·마진 기반 분류기의 원리와 활용을 이해한다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>k-최근접이웃(KNN) 알고리즘과 거리 척도</li>
+      <li>SVM의 마진 최대화 개념과 서포트 벡터</li>
+      <li>커널 트릭(선형, RBF, 다항)과 비선형 분류</li>
+      <li>하이퍼파라미터(C, gamma)의 영향과 튜닝</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> scikit-learn SVC 커널 비교 실험 · <strong>참고</strong> Géron 5장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">8주차 · 의사결정나무와 앙상블 기법</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 트리 기반 모델과 앙상블 기법의 원리를 이해하고 적용한다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>결정트리의 분할 기준(지니 불순도, 엔트로피)</li>
+      <li>배깅(Bagging)과 랜덤포레스트</li>
+      <li>부스팅(AdaBoost, Gradient Boosting)과 XGBoost 개관</li>
+      <li>특성 중요도(Feature Importance) 해석</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> RandomForest·XGBoost 성능 비교 · <strong>참고</strong> Géron 6, 7장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px; background:#f4f1e8; padding:14px 16px; border-radius:2px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">9주차 · 중간고사 및 프로젝트 중간발표</h3>
+    <p style="margin:2px 0 0; color:#5c5f6c;">1~8주차 범위 이론 평가와 함께, 팀별로 프로젝트 주제와 데이터셋을 확정하고 초기 탐색 결과를 발표한다.</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">10주차 · 비지도학습: 군집화</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 레이블 없는 데이터에서 군집 구조를 찾는 방법을 이해한다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>K-means 알고리즘과 초기값 민감도, 엘보우 기법</li>
+      <li>계층적 군집화(응집형)와 덴드로그램 해석</li>
+      <li>밀도 기반 군집화(DBSCAN)와 이상치 탐지</li>
+      <li>군집 품질 평가: 실루엣 계수, 관성(Inertia)</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> scikit-learn K-means·DBSCAN 비교 · <strong>참고</strong> Géron 9장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">11주차 · 차원 축소</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 고차원 데이터를 저차원으로 축소하는 원리와 활용을 이해한다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>차원의 저주와 차원 축소의 필요성</li>
+      <li>주성분분석(PCA)의 수학적 원리와 분산 설명력</li>
+      <li>특이값분해(SVD)와 PCA의 관계</li>
+      <li>t-SNE를 이용한 고차원 데이터 시각화</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> PCA로 이미지/텍스트 데이터 압축·시각화 · <strong>참고</strong> Géron 8장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">12주차 · 신경망 기초와 역전파</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 인공신경망의 구조와 학습 원리(역전파)를 이해한다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>퍼셉트론에서 다층퍼셉트론(MLP)으로의 확장</li>
+      <li>활성화 함수(시그모이드, ReLU, tanh)의 역할과 비교</li>
+      <li>순전파와 역전파, 연쇄법칙(chain rule)</li>
+      <li>경사하강법 변형: SGD, Momentum, Adam</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> NumPy로 역전파 직접 구현, Keras Sequential 모델 · <strong>참고</strong> Géron 10장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">13주차 · 딥러닝 심화</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 신경망 학습을 안정화하고 일반화 성능을 높이는 기법을 익힌다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>가중치 초기화(Xavier, He) 전략</li>
+      <li>배치 정규화(Batch Normalization)의 원리</li>
+      <li>드롭아웃과 조기 종료(Early Stopping)를 통한 과적합 방지</li>
+      <li>학습률 스케줄링과 옵티마이저 비교</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> Keras로 정규화·드롭아웃 적용 비교 실험 · <strong>참고</strong> Géron 11장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">14주차 · CNN과 이미지 처리</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 합성곱 신경망의 구조와 이미지 처리 원리를 이해한다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>합성곱 연산(필터, 스트라이드, 패딩)의 원리</li>
+      <li>풀링 계층(Max/Average Pooling)의 역할</li>
+      <li>대표 아키텍처 개관: LeNet, VGG, ResNet</li>
+      <li>전이학습(Transfer Learning)의 개념과 활용</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> Keras CNN으로 이미지 분류(CIFAR-10/Fashion-MNIST) · <strong>참고</strong> Géron 14장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:22px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">15주차 · RNN과 자연어처리 기초</h3>
+    <p style="margin:2px 0 6px; color:#5c5f6c;"><strong>학습목표</strong> — 순차 데이터 처리 구조와 자연어처리의 기본 개념을 이해한다.</p>
+    <ul style="margin:0 0 6px; padding-left:22px;">
+      <li>순환신경망(RNN)의 구조와 기울기 소실 문제</li>
+      <li>LSTM과 GRU를 통한 장기 의존성 학습</li>
+      <li>단어 임베딩(Word2Vec, GloVe)의 개념</li>
+      <li>Attention 메커니즘과 Transformer 구조 개관</li>
+    </ul>
+    <p style="margin:0; font-size:10.5pt; color:#6b6f7d;"><strong>실습</strong> Keras LSTM으로 감성 분석(텍스트 분류) · <strong>참고</strong> Géron 15~16장</p>
+  </div>
+
+  <div class="week" style="margin-bottom:6px; background:#f4f1e8; padding:14px 16px; border-radius:2px;">
+    <h3 style="font-size:13pt; margin:0 0 4px;">16주차 · 최종 프로젝트 발표 및 총정리</h3>
+    <p style="margin:2px 0 0; color:#5c5f6c;">팀별 최종 프로젝트 결과를 발표하고, 한 학기 동안 다룬 알고리즘과 개념을 정리한다. 이후 심화 학습 방향(강화학습, 생성모델, MLOps 등)을 함께 소개한다.</p>
+  </div>
+
+  <h2 style="font-size:16pt; margin:24px 0 10px; break-before:page;">6. 강의 운영 정책</h2>
+  <ul style="margin:0 0 8px; padding-left:22px;">
+    <li>매 주차 실습 과제는 다음 주 수업 전까지 제출한다.</li>
+    <li>결석 3회 이상 시 학점에 불이익이 있을 수 있다.</li>
+    <li>팀 프로젝트는 3~4인으로 구성하며, 9주차에 주제를 확정한다.</li>
+    <li>모든 코드 과제는 재현 가능성을 위해 노트북 파일과 함께 제출한다.</li>
+  </ul>
+
+</div>
+</doc-page>
+
+</x-dc>
+</body>
+</html>

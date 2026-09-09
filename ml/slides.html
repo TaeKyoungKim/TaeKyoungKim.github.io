@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&display=swap');
+    :root {
+      --type-title: 64px; --type-subtitle: 42px; --type-body: 32px; --type-small: 26px; --type-micro: 24px;
+      --pad-top: 100px; --pad-bottom: 80px; --pad-x: 110px; --gap-title: 44px; --gap-item: 24px;
+      --navy: #1c1a3d; --indigo: #2d2a6e; --amber: #e8a33d; --cream: #faf8f3; --ink: #201c33; --muted: #6b6f7d; --line: #e0dccb;
+    }
+    body { margin: 0; font-family: 'Pretendard', -apple-system, sans-serif; }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+  </style>
+  <script src="./deck-stage.js"></script>
+</helmet>
+
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+
+<section data-label="표지" style="background:var(--navy); display:flex; flex-direction:column; justify-content:center; padding:0 var(--pad-x); color:#fff;">
+  <div class="mono" style="font-size:24px; letter-spacing:0.16em; color:var(--amber); font-weight:600; margin-bottom:28px;">COURSE ORIENTATION · 16 WEEKS</div>
+  <h1 style="font-size:96px; font-weight:700; margin:0 0 24px; letter-spacing:-0.01em;">머신러닝 개론</h1>
+  <div style="font-size:var(--type-subtitle); color:#c7c4e8; font-weight:400;">Introduction to Machine Learning</div>
+  <div style="margin-top:60px; display:flex; gap:48px; font-size:var(--type-small); color:#9491c4;">
+    <span>이론 3학점 + 실습</span><span>한 학기 · 16주</span><span>Python · scikit-learn · TensorFlow</span>
+  </div>
+</section>
+
+<section data-label="강의 소개" style="background:var(--cream); display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-top) var(--pad-x) var(--pad-bottom); color:var(--ink);">
+  <div class="mono" style="font-size:24px; color:var(--indigo); font-weight:600; letter-spacing:0.1em; margin-bottom:16px;">강의 소개</div>
+  <h2 style="font-size:var(--type-title); font-weight:700; margin:0 0 var(--gap-title); max-width:1500px;">이론과 실습을 함께, 알고리즘의 원리부터</h2>
+  <p style="font-size:var(--type-body); line-height:1.6; max-width:1400px; color:#3a3d4a; font-weight:400;">머신러닝의 핵심 알고리즘을 수학적으로 이해하고, Python으로 직접 구현하며 확인합니다. 지도학습과 비지도학습을 거쳐 신경망과 딥러닝의 기초까지, 한 학기 동안 단계적으로 쌓아 올립니다.</p>
+</section>
+
+<section data-label="학습 목표" style="background:#fff; display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-top) var(--pad-x) var(--pad-bottom); color:var(--ink);">
+  <div class="mono" style="font-size:24px; color:var(--indigo); font-weight:600; letter-spacing:0.1em; margin-bottom:16px;">학습 목표</div>
+  <h2 style="font-size:var(--type-subtitle); font-weight:700; margin:0 0 56px;">이 강의를 마치면, 학생은—</h2>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px 64px;">
+    <div style="display:flex; gap:24px;">
+      <div class="mono" style="font-size:36px; color:var(--amber); font-weight:600;">01</div>
+      <div style="font-size:var(--type-body); line-height:1.5;">지도·비지도학습 알고리즘의 수학적 원리를 설명하고 적용할 수 있다</div>
+    </div>
+    <div style="display:flex; gap:24px;">
+      <div class="mono" style="font-size:36px; color:var(--amber); font-weight:600;">02</div>
+      <div style="font-size:var(--type-body); line-height:1.5;">올바른 지표와 절차로 모델을 평가하고, 과적합을 진단·해결할 수 있다</div>
+    </div>
+    <div style="display:flex; gap:24px;">
+      <div class="mono" style="font-size:36px; color:var(--amber); font-weight:600;">03</div>
+      <div style="font-size:var(--type-body); line-height:1.5;">신경망의 순전파·역전파를 이해하고 CNN·RNN 구조를 설계할 수 있다</div>
+    </div>
+    <div style="display:flex; gap:24px;">
+      <div class="mono" style="font-size:36px; color:var(--amber); font-weight:600;">04</div>
+      <div style="font-size:var(--type-body); line-height:1.5;">전처리부터 평가까지, 전체 모델링 파이프라인을 직접 구현할 수 있다</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="선수지식과 도구" style="background:var(--cream); display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-top) var(--pad-x) var(--pad-bottom); color:var(--ink);">
+  <div class="mono" style="font-size:24px; color:var(--indigo); font-weight:600; letter-spacing:0.1em; margin-bottom:16px;">준비 사항</div>
+  <h2 style="font-size:var(--type-subtitle); font-weight:700; margin:0 0 56px;">선수 지식과 사용 도구</h2>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px;">
+    <div>
+      <div style="font-size:var(--type-small); font-weight:600; color:var(--indigo); margin-bottom:20px;">선수 지식</div>
+      <div style="font-size:var(--type-body); line-height:2; color:#3a3d4a;">
+        Python 기초 문법<br/>미적분학<br/>선형대수 (벡터·행렬)<br/>확률과 통계 개론
+      </div>
+    </div>
+    <div>
+      <div style="font-size:var(--type-small); font-weight:600; color:var(--indigo); margin-bottom:20px;">사용 도구</div>
+      <div style="display:flex; flex-wrap:wrap; gap:16px;">
+        <span class="mono" style="background:#fff; border:1.5px solid var(--line); padding:14px 24px; font-size:26px; border-radius:4px;">Python</span>
+        <span class="mono" style="background:#fff; border:1.5px solid var(--line); padding:14px 24px; font-size:26px; border-radius:4px;">NumPy</span>
+        <span class="mono" style="background:#fff; border:1.5px solid var(--line); padding:14px 24px; font-size:26px; border-radius:4px;">Pandas</span>
+        <span class="mono" style="background:#fff; border:1.5px solid var(--line); padding:14px 24px; font-size:26px; border-radius:4px;">scikit-learn</span>
+        <span class="mono" style="background:#fff; border:1.5px solid var(--line); padding:14px 24px; font-size:26px; border-radius:4px;">TensorFlow/Keras</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-label="평가 방법" style="background:#fff; display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-top) var(--pad-x) var(--pad-bottom); color:var(--ink);">
+  <div class="mono" style="font-size:24px; color:var(--indigo); font-weight:600; letter-spacing:0.1em; margin-bottom:16px;">성적 평가</div>
+  <h2 style="font-size:var(--type-subtitle); font-weight:700; margin:0 0 56px;">평가 방법 및 비중</h2>
+  <div style="display:flex; flex-direction:column; gap:28px;">
+    <div style="display:grid; grid-template-columns:340px 1fr 140px; align-items:center; gap:24px;">
+      <div style="font-size:var(--type-body); font-weight:500;">출석 및 참여</div>
+      <div style="background:#eee; border-radius:6px; overflow:hidden; height:28px;"><div style="width:10%; height:100%; background:var(--indigo);"></div></div>
+      <div class="mono" style="font-size:var(--type-small); text-align:right;">10%</div>
+    </div>
+    <div style="display:grid; grid-template-columns:340px 1fr 140px; align-items:center; gap:24px;">
+      <div style="font-size:var(--type-body); font-weight:500;">주간 실습 과제</div>
+      <div style="background:#eee; border-radius:6px; overflow:hidden; height:28px;"><div style="width:20%; height:100%; background:var(--indigo);"></div></div>
+      <div class="mono" style="font-size:var(--type-small); text-align:right;">20%</div>
+    </div>
+    <div style="display:grid; grid-template-columns:340px 1fr 140px; align-items:center; gap:24px;">
+      <div style="font-size:var(--type-body); font-weight:500;">중간고사 (9주차)</div>
+      <div style="background:#eee; border-radius:6px; overflow:hidden; height:28px;"><div style="width:20%; height:100%; background:var(--indigo);"></div></div>
+      <div class="mono" style="font-size:var(--type-small); text-align:right;">20%</div>
+    </div>
+    <div style="display:grid; grid-template-columns:340px 1fr 140px; align-items:center; gap:24px;">
+      <div style="font-size:var(--type-body); font-weight:500;">기말고사</div>
+      <div style="background:#eee; border-radius:6px; overflow:hidden; height:28px;"><div style="width:25%; height:100%; background:var(--indigo);"></div></div>
+      <div class="mono" style="font-size:var(--type-small); text-align:right;">25%</div>
+    </div>
+    <div style="display:grid; grid-template-columns:340px 1fr 140px; align-items:center; gap:24px;">
+      <div style="font-size:var(--type-body); font-weight:500;">팀 프로젝트 (16주차)</div>
+      <div style="background:#eee; border-radius:6px; overflow:hidden; height:28px;"><div style="width:25%; height:100%; background:var(--amber);"></div></div>
+      <div class="mono" style="font-size:var(--type-small); text-align:right;">25%</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="전체 로드맵" style="background:var(--navy); display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-top) var(--pad-x) var(--pad-bottom); color:#fff;">
+  <div class="mono" style="font-size:24px; color:var(--amber); font-weight:600; letter-spacing:0.1em; margin-bottom:16px;">전체 구성</div>
+  <h2 style="font-size:var(--type-subtitle); font-weight:700; margin:0 0 56px;">4개 모듈, 16주 로드맵</h2>
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:32px; flex:1;">
+    <div style="border:1.5px solid #423f6e; border-radius:6px; padding:32px 28px; display:flex; flex-direction:column;">
+      <div class="mono" style="font-size:24px; color:var(--amber);">M1 · 1–3주</div>
+      <div style="font-size:30px; font-weight:600; margin:16px 0 12px;">기초 다지기</div>
+      <div style="font-size:24px; color:#c7c4e8; line-height:1.6;">ML 개관, 데이터 처리, 확률·통계</div>
+    </div>
+    <div style="border:1.5px solid #423f6e; border-radius:6px; padding:32px 28px; display:flex; flex-direction:column;">
+      <div class="mono" style="font-size:24px; color:var(--amber);">M2 · 4–9주</div>
+      <div style="font-size:30px; font-weight:600; margin:16px 0 12px;">지도학습</div>
+      <div style="font-size:24px; color:#c7c4e8; line-height:1.6;">회귀, 분류, 모델 평가, 앙상블</div>
+    </div>
+    <div style="border:1.5px solid #423f6e; border-radius:6px; padding:32px 28px; display:flex; flex-direction:column;">
+      <div class="mono" style="font-size:24px; color:var(--amber);">M3 · 10–11주</div>
+      <div style="font-size:30px; font-weight:600; margin:16px 0 12px;">비지도학습</div>
+      <div style="font-size:24px; color:#c7c4e8; line-height:1.6;">군집화, 차원 축소</div>
+    </div>
+    <div style="border:1.5px solid #423f6e; border-radius:6px; padding:32px 28px; display:flex; flex-direction:column;">
+      <div class="mono" style="font-size:24px; color:var(--amber);">M4 · 12–16주</div>
+      <div style="font-size:30px; font-weight:600; margin:16px 0 12px;">딥러닝</div>
+      <div style="font-size:24px; color:#c7c4e8; line-height:1.6;">신경망, CNN, RNN, 프로젝트</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="M1 기초 다지기" style="background:var(--cream); display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-top) var(--pad-x) var(--pad-bottom); color:var(--ink);">
+  <div class="mono" style="font-size:24px; color:var(--indigo); font-weight:600; letter-spacing:0.1em; margin-bottom:16px;">MODULE 1 · 1–3주</div>
+  <h2 style="font-size:var(--type-subtitle); font-weight:700; margin:0 0 56px;">기초 다지기</h2>
+  <div style="display:flex; flex-direction:column; gap:0;">
+    <div style="display:flex; gap:40px; padding:24px 0; border-bottom:1px solid var(--line);">
+      <div class="mono" style="font-size:28px; color:var(--amber); width:80px;">1주</div>
+      <div style="font-size:var(--type-body); font-weight:500; width:520px;">머신러닝 개관 및 개발환경</div>
+      <div style="font-size:var(--type-small); color:var(--muted);">AI/ML/DL 구분, 지도·비지도·강화학습, 실습환경 구축</div>
+    </div>
+    <div style="display:flex; gap:40px; padding:24px 0; border-bottom:1px solid var(--line);">
+      <div class="mono" style="font-size:28px; color:var(--amber); width:80px;">2주</div>
+      <div style="font-size:var(--type-body); font-weight:500; width:520px;">데이터 처리 기초</div>
+      <div style="font-size:var(--type-small); color:var(--muted);">NumPy·Pandas, 전처리, 탐색적 데이터 분석(EDA)</div>
+    </div>
+    <div style="display:flex; gap:40px; padding:24px 0;">
+      <div class="mono" style="font-size:28px; color:var(--amber); width:80px;">3주</div>
+      <div style="font-size:var(--type-body); font-weight:500; width:520px;">확률과 통계 기초</div>
+      <div style="font-size:var(--type-small); color:var(--muted);">확률분포, 베이즈 정리, 최대우도추정</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="M2 지도학습" style="background:#fff; display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-top) var(--pad-x) var(--pad-bottom); color:var(--ink);">
+  <div class="mono" style="font-size:24px; color:var(--indigo); font-weight:600; letter-spacing:0.1em; margin-bottom:16px;">MODULE 2 · 4–9주</div>
+  <h2 style="font-size:var(--type-subtitle); font-weight:700; margin:0 0 40px;">지도학습</h2>
+  <div style="display:flex; flex-direction:column; gap:0;">
+    <div style="display:flex; gap:40px; padding:18px 0; border-bottom:1px solid var(--line);">
+      <div class="mono" style="font-size:26px; color:var(--amber); width:80px;">4주</div>
+      <div style="font-size:28px; font-weight:500; width:480px;">선형회귀</div>
+      <div style="font-size:24px; color:var(--muted);">최소제곱법, 경사하강법, 정규방정식</div>
+    </div>
+    <div style="display:flex; gap:40px; padding:18px 0; border-bottom:1px solid var(--line);">
+      <div class="mono" style="font-size:26px; color:var(--amber); width:80px;">5주</div>
+      <div style="font-size:28px; font-weight:500; width:480px;">로지스틱 회귀와 분류</div>
+      <div style="font-size:24px; color:var(--muted);">시그모이드, 교차엔트로피, softmax</div>
+    </div>
+    <div style="display:flex; gap:40px; padding:18px 0; border-bottom:1px solid var(--line);">
+      <div class="mono" style="font-size:26px; color:var(--amber); width:80px;">6주</div>
+      <div style="font-size:28px; font-weight:500; width:480px;">모델 평가와 검증</div>
+      <div style="font-size:24px; color:var(--muted);">교차검증, 정밀도/재현율, 정규화</div>
+    </div>
+    <div style="display:flex; gap:40px; padding:18px 0; border-bottom:1px solid var(--line);">
+      <div class="mono" style="font-size:26px; color:var(--amber); width:80px;">7주</div>
+      <div style="font-size:28px; font-weight:500; width:480px;">KNN과 SVM</div>
+      <div style="font-size:24px; color:var(--muted);">거리 기반 분류, 마진 최대화, 커널 트릭</div>
+    </div>
+    <div style="display:flex; gap:40px; padding:18px 0; border-bottom:1px solid var(--line);">
+      <div class="mono" style="font-size:26px; color:var(--amber); width:80px;">8주</div>
+      <div style="font-size:28px; font-weight:500; width:480px;">의사결정나무와 앙상블</div>
+      <div style="font-size:24px; color:var(--muted);">랜덤포레스트, 부스팅, XGBoost</div>
+    </div>
+    <div style="display:flex; gap:40px; padding:18px 0;">
+      <div class="mono" style="font-size:26px; color:var(--amber); width:80px;">9주</div>
+      <div style="font-size:28px; font-weight:500; width:480px;">중간고사 · 프로젝트 중간발표</div>
+      <div style="font-size:24px; color:var(--muted);">1~8주차 범위, 팀 프로젝트 주제 확정</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="M3 비지도학습" style="background:var(--cream); display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-top) var(--pad-x) var(--pad-bottom); color:var(--ink);">
+  <div class="mono" style="font-size:24px; color:var(--indigo); font-weight:600; letter-spacing:0.1em; margin-bottom:16px;">MODULE 3 · 10–11주</div>
+  <h2 style="font-size:var(--type-subtitle); font-weight:700; margin:0 0 56px;">비지도학습</h2>
+  <div style="display:flex; flex-direction:column; gap:0;">
+    <div style="display:flex; gap:40px; padding:24px 0; border-bottom:1px solid var(--line);">
+      <div class="mono" style="font-size:28px; color:var(--amber); width:100px;">10주</div>
+      <div style="font-size:var(--type-body); font-weight:500; width:480px;">군집화</div>
+      <div style="font-size:var(--type-small); color:var(--muted);">K-means, 계층적 군집화, DBSCAN, 실루엣 계수</div>
+    </div>
+    <div style="display:flex; gap:40px; padding:24px 0;">
+      <div class="mono" style="font-size:28px; color:var(--amber); width:100px;">11주</div>
+      <div style="font-size:var(--type-body); font-weight:500; width:480px;">차원 축소</div>
+      <div style="font-size:var(--type-small); color:var(--muted);">PCA, SVD, t-SNE, 차원의 저주</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="M4 딥러닝" style="background:#fff; display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-top) var(--pad-x) var(--pad-bottom); color:var(--ink);">
+  <div class="mono" style="font-size:24px; color:var(--indigo); font-weight:600; letter-spacing:0.1em; margin-bottom:16px;">MODULE 4 · 12–16주</div>
+  <h2 style="font-size:var(--type-subtitle); font-weight:700; margin:0 0 40px;">딥러닝</h2>
+  <div style="display:flex; flex-direction:column; gap:0;">
+    <div style="display:flex; gap:40px; padding:20px 0; border-bottom:1px solid var(--line);">
+      <div class="mono" style="font-size:26px; color:var(--amber); width:100px;">12주</div>
+      <div style="font-size:28px; font-weight:500; width:480px;">신경망 기초와 역전파</div>
+      <div style="font-size:24px; color:var(--muted);">퍼셉트론, MLP, 순전파·역전파, Adam</div>
+    </div>
+    <div style="display:flex; gap:40px; padding:20px 0; border-bottom:1px solid var(--line);">
+      <div class="mono" style="font-size:26px; color:var(--amber); width:100px;">13주</div>
+      <div style="font-size:28px; font-weight:500; width:480px;">딥러닝 심화</div>
+      <div style="font-size:24px; color:var(--muted);">배치정규화, 드롭아웃, 학습률 스케줄링</div>
+    </div>
+    <div style="display:flex; gap:40px; padding:20px 0; border-bottom:1px solid var(--line);">
+      <div class="mono" style="font-size:26px; color:var(--amber); width:100px;">14주</div>
+      <div style="font-size:28px; font-weight:500; width:480px;">CNN과 이미지 처리</div>
+      <div style="font-size:24px; color:var(--muted);">합성곱, 풀링, ResNet 개관, 전이학습</div>
+    </div>
+    <div style="display:flex; gap:40px; padding:20px 0; border-bottom:1px solid var(--line);">
+      <div class="mono" style="font-size:26px; color:var(--amber); width:100px;">15주</div>
+      <div style="font-size:28px; font-weight:500; width:480px;">RNN과 자연어처리 기초</div>
+      <div style="font-size:24px; color:var(--muted);">LSTM/GRU, 단어 임베딩, Attention 개관</div>
+    </div>
+    <div style="display:flex; gap:40px; padding:20px 0;">
+      <div class="mono" style="font-size:26px; color:var(--amber); width:100px;">16주</div>
+      <div style="font-size:28px; font-weight:500; width:480px;">최종 프로젝트 발표</div>
+      <div style="font-size:24px; color:var(--muted);">발표 및 강의 총정리, 심화 학습 로드맵 소개</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="프로젝트 안내" style="background:var(--navy); display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-top) var(--pad-x) var(--pad-bottom); color:#fff;">
+  <div class="mono" style="font-size:24px; color:var(--amber); font-weight:600; letter-spacing:0.1em; margin-bottom:16px;">팀 프로젝트</div>
+  <h2 style="font-size:var(--type-subtitle); font-weight:700; margin:0 0 56px;">실데이터로 완성하는 모델링 프로젝트</h2>
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:48px;">
+    <div>
+      <div style="font-size:30px; font-weight:600; margin-bottom:16px; color:var(--amber);">팀 구성</div>
+      <div style="font-size:var(--type-small); line-height:1.7; color:#c7c4e8;">3~4인 1팀, 9주차에 주제와 데이터셋 확정</div>
+    </div>
+    <div>
+      <div style="font-size:30px; font-weight:600; margin-bottom:16px; color:var(--amber);">진행 방식</div>
+      <div style="font-size:var(--type-small); line-height:1.7; color:#c7c4e8;">전처리 → 모델링 → 평가까지 전체 파이프라인 직접 구현</div>
+    </div>
+    <div>
+      <div style="font-size:30px; font-weight:600; margin-bottom:16px; color:var(--amber);">발표</div>
+      <div style="font-size:var(--type-small); line-height:1.7; color:#c7c4e8;">16주차, 팀별 10분 발표 및 코드 제출</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="운영 정책" style="background:var(--cream); display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-top) var(--pad-x) var(--pad-bottom); color:var(--ink);">
+  <div class="mono" style="font-size:24px; color:var(--indigo); font-weight:600; letter-spacing:0.1em; margin-bottom:16px;">운영 정책</div>
+  <h2 style="font-size:var(--type-subtitle); font-weight:700; margin:0 0 56px;">강의 운영 정책</h2>
+  <div style="display:flex; flex-direction:column; gap:32px; max-width:1400px;">
+    <div style="display:flex; gap:32px; align-items:baseline;"><div style="width:12px; height:12px; border-radius:50%; background:var(--amber); flex-shrink:0; margin-top:14px;"></div><div style="font-size:var(--type-body); line-height:1.5;">매 주차 실습 과제는 다음 수업 전까지 제출</div></div>
+    <div style="display:flex; gap:32px; align-items:baseline;"><div style="width:12px; height:12px; border-radius:50%; background:var(--amber); flex-shrink:0; margin-top:14px;"></div><div style="font-size:var(--type-body); line-height:1.5;">결석 3회 이상 시 학점에 불이익</div></div>
+    <div style="display:flex; gap:32px; align-items:baseline;"><div style="width:12px; height:12px; border-radius:50%; background:var(--amber); flex-shrink:0; margin-top:14px;"></div><div style="font-size:var(--type-body); line-height:1.5;">모든 코드 과제는 노트북 파일과 함께 제출 (재현 가능성 확보)</div></div>
+  </div>
+</section>
+
+<section data-label="마무리" style="background:var(--navy); display:flex; flex-direction:column; justify-content:center; align-items:center; padding:0 var(--pad-x); color:#fff; text-align:center;">
+  <div class="mono" style="font-size:24px; color:var(--amber); font-weight:600; letter-spacing:0.16em; margin-bottom:28px;">함께 시작합니다</div>
+  <h2 style="font-size:72px; font-weight:700; margin:0 0 24px;">Let's Build Machine Learning</h2>
+  <div style="font-size:var(--type-body); color:#c7c4e8;">질문과 문의는 언제든 환영합니다</div>
+</section>
+
+</x-import>
+
+</x-dc>
+</body>
+</html>
