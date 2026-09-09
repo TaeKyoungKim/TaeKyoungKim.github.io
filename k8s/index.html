@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>K8S · 300 쿠버네티스 기반 RAG & AI 에이전트 구축 교재 | 교재 랩</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;800;900&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <style>
+    :root {
+      --bg: #f6f4ee; --surface: #ffffff; --surface-raised: #ffffff;
+      --text: #15171e; --text-soft: #565b6b; --text-faint: #8c8f9c;
+      --border: #e6e2d5; --border-strong: #d3cdb9;
+      --cat-k8s: #1f7fb0; --accent: #1f7fb0; --accent-ink: #ffffff;
+      --ok: #22875a; --warn: #b9791f;
+      --shadow: 0 1px 2px rgba(21,23,30,.04), 0 16px 32px -20px rgba(21,23,30,.22);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0b0c10; --surface: #14161c; --surface-raised: #191c24;
+        --text: #f3f1e9; --text-soft: #a8acb9; --text-faint: #6c707e;
+        --border: #262a35; --border-strong: #343948;
+        --cat-k8s: #6cc0f5; --accent: #6cc0f5; --accent-ink: #072233;
+        --ok: #5fd08a; --warn: #f5b83d;
+        --shadow: 0 1px 2px rgba(0,0,0,.5), 0 20px 40px -20px rgba(0,0,0,.65);
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #0b0c10; --surface: #14161c; --surface-raised: #191c24;
+      --text: #f3f1e9; --text-soft: #a8acb9; --text-faint: #6c707e;
+      --border: #262a35; --border-strong: #343948;
+      --cat-k8s: #6cc0f5; --accent: #6cc0f5; --accent-ink: #072233;
+      --ok: #5fd08a; --warn: #f5b83d;
+      --shadow: 0 1px 2px rgba(0,0,0,.5), 0 20px 40px -20px rgba(0,0,0,.65);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "IBM Plex Sans KR", "Noto Sans KR", system-ui, sans-serif;
+      font-size: 15.5px; line-height: 1.75;
+    }
+    .mono { font-family: "JetBrains Mono", monospace; }
+    header.top-nav {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(14px); border-bottom: 1px solid var(--border);
+      padding: 12px 24px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .back-link {
+      font-family: "JetBrains Mono", monospace; font-size: 13px; font-weight: 700;
+      text-decoration: none; color: var(--accent); display: inline-flex; align-items: center; gap: 6px;
+    }
+    .nav-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .nav-tabs a {
+      font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 600;
+      color: var(--text-soft); text-decoration: none; padding: 5px 11px; border-radius: 6px;
+      transition: all .15s ease;
+    }
+    .nav-tabs a:hover { color: var(--text); background: color-mix(in srgb, var(--cat-k8s) 14%, transparent); }
+
+    .layout {
+      display: grid; grid-template-columns: 280px 1fr; max-width: 1400px;
+      margin: 0 auto; min-height: calc(100vh - 55px);
+    }
+    aside.sidebar {
+      position: sticky; top: 55px; height: calc(100vh - 55px); overflow-y: auto;
+      border-right: 1px solid var(--border); padding: 20px 16px; font-size: 13px;
+    }
+    .sidebar-group { margin-bottom: 24px; }
+    .sidebar-group h4 {
+      font-family: "Gothic A1", sans-serif; font-size: 12px; font-weight: 800;
+      text-transform: uppercase; color: var(--text-faint); margin: 0 0 10px 6px; letter-spacing: .08em;
+    }
+    .sidebar-link {
+      display: block; padding: 6px 10px; border-radius: 6px; text-decoration: none;
+      color: var(--text-soft); line-height: 1.4; transition: all .15s ease;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .sidebar-link:hover, .sidebar-link.active {
+      color: var(--text); background: color-mix(in srgb, var(--cat-k8s) 12%, transparent);
+      font-weight: 600;
+    }
+
+    main.content {
+      padding: 36px 48px 80px; max-width: 980px; overflow-wrap: break-word;
+    }
+
+    .hero {
+      margin-bottom: 48px; border-bottom: 1px solid var(--border); padding-bottom: 32px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: "JetBrains Mono", monospace; font-size: 11.5px; font-weight: 700;
+      color: var(--cat-k8s); background: color-mix(in srgb, var(--cat-k8s) 14%, transparent);
+      border: 1px solid color-mix(in srgb, var(--cat-k8s) 35%, transparent);
+      padding: 4px 12px; border-radius: 999px; margin-bottom: 16px;
+    }
+    h1 { font-family: "Gothic A1", sans-serif; font-size: clamp(26px, 3.5vw, 40px); font-weight: 900; margin: 0 0 14px; }
+    p.lead { font-size: 16px; color: var(--text-soft); margin: 0 0 28px; }
+
+    .part-section { margin-bottom: 56px; }
+    .part-header {
+      background: color-mix(in srgb, var(--cat-k8s) 10%, var(--surface));
+      border: 1px solid color-mix(in srgb, var(--cat-k8s) 30%, transparent);
+      border-left: 5px solid var(--cat-k8s); border-radius: 12px; padding: 20px 24px; margin-bottom: 24px;
+    }
+    .part-header h2 { font-size: 21px; font-weight: 800; margin: 0 0 8px; }
+    .part-header p { margin: 0; font-size: 14px; color: var(--text-soft); }
+
+    .chapter-card {
+      background: var(--surface-raised); border: 1px solid var(--border);
+      border-radius: 12px; padding: 22px 26px; margin-bottom: 20px; box-shadow: var(--shadow);
+    }
+    .chapter-top {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
+    }
+    .chapter-num {
+      font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 700;
+      color: var(--cat-k8s); background: color-mix(in srgb, var(--cat-k8s) 14%, transparent);
+      padding: 2px 10px; border-radius: 999px;
+    }
+    .chapter-title { font-size: 17.5px; font-weight: 800; margin: 0 0 10px; }
+    .chapter-goal {
+      font-size: 14px; color: var(--text); background: color-mix(in srgb, var(--cat-k8s) 6%, var(--surface));
+      padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--cat-k8s); margin-bottom: 12px;
+    }
+    .chapter-keywords {
+      font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--text-soft); margin-bottom: 8px;
+    }
+    .chapter-detail { font-size: 13.5px; color: var(--text-soft); margin: 0; }
+
+    pre {
+      background: #14161c; color: #f3f1e9; padding: 18px 20px; border-radius: 10px;
+      overflow-x: auto; font-family: "JetBrains Mono", monospace; font-size: 12.5px;
+      line-height: 1.6; border: 1px solid var(--border-strong); margin: 16px 0;
+    }
+    code { font-family: "JetBrains Mono", monospace; font-size: 13px; color: var(--cat-k8s); }
+    pre code { color: inherit; font-size: inherit; }
+
+    .table-responsive { overflow-x: auto; margin: 16px 0; }
+    .data-table {
+      width: 100%; border-collapse: collapse; font-size: 13.5px;
+      border: 1px solid var(--border); background: var(--surface);
+    }
+    .data-table th, .data-table td {
+      padding: 10px 14px; border: 1px solid var(--border); text-align: left;
+    }
+    .data-table th {
+      background: color-mix(in srgb, var(--cat-k8s) 12%, var(--surface)); font-weight: 700;
+    }
+
+    .btn-top {
+      display: inline-flex; align-items: center; gap: 4px; font-family: "JetBrains Mono", monospace;
+      font-size: 11.5px; font-weight: 600; color: var(--text-faint); text-decoration: none;
+      margin-top: 14px;
+    }
+    .btn-top:hover { color: var(--cat-k8s); }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar { display: none; }
+      main.content { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-nav">
+    <a href="../index.html" class="back-link">← 김태경 교재 랩 홈으로</a>
+    <div class="nav-tabs">
+      <a href="#part1">1부(인프라·벡터DB)</a>
+      <a href="#part2">2부(RAG·컨테이너)</a>
+      <a href="#part3">3부(Agentic AI)</a>
+      <a href="#part4">4부(Kafka·멀티에이전트)</a>
+      <a href="#part5">5부(운영·모니터링)</a>
+      <a href="#appendix">7대 부록</a>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-group">
+        <h4>1부. 인프라·벡터DB</h4>
+        <a class="sidebar-link" href="#ch1">01. 오리엔테이션 & 실습</a>
+        <a class="sidebar-link" href="#ch2">02. RAG 아키텍처 개요</a>
+        <a class="sidebar-link" href="#ch3">03. Pod, Node, Namespace</a>
+        <a class="sidebar-link" href="#ch4">04. Deployment, Service</a>
+        <a class="sidebar-link" href="#ch5">05. kubectl 실습환경</a>
+        <a class="sidebar-link" href="#ch6">06. 벡터DB (Chroma vs Qdrant)</a>
+        <a class="sidebar-link" href="#ch7">07. StatefulSet + PVC</a>
+        <a class="sidebar-link" href="#ch8">08. Day 1 정리 & Q&A</a>
+      </div>
+
+      <div class="sidebar-group">
+        <h4>2부. RAG 파이프라인</h4>
+        <a class="sidebar-link" href="#ch9">09. 문서 임베딩 설계</a>
+        <a class="sidebar-link" href="#ch10">10. 임베딩 모델 연동</a>
+        <a class="sidebar-link" href="#ch11">11. FastAPI RAG 구현</a>
+        <a class="sidebar-link" href="#ch12">12. Docker 멀티스테이지</a>
+        <a class="sidebar-link" href="#ch13">13. 이미지 클러스터 반입</a>
+        <a class="sidebar-link" href="#ch14">14. K8s 리소스 배포</a>
+        <a class="sidebar-link" href="#ch15">15. 서비스 노출 네트워킹</a>
+        <a class="sidebar-link" href="#ch16">16. curl 테스트 & 트러블슈팅</a>
+      </div>
+
+      <div class="sidebar-group">
+        <h4>3부. Agentic AI</h4>
+        <a class="sidebar-link" href="#ch17">17. Tool Calling 원리</a>
+        <a class="sidebar-link" href="#ch18">18. Planner-Executor 패턴</a>
+        <a class="sidebar-link" href="#ch19">19. LangGraph Agent 코딩</a>
+        <a class="sidebar-link" href="#ch20">20. RAG Tool 등록</a>
+        <a class="sidebar-link" href="#ch21">21. Redis 세션 관리</a>
+        <a class="sidebar-link" href="#ch22">22. Agent 파드 배포</a>
+        <a class="sidebar-link" href="#ch23">23. 서비스 간 통신 DNS</a>
+        <a class="sidebar-link" href="#ch24">24. 통합 테스트 디버깅</a>
+      </div>
+
+      <div class="sidebar-group">
+        <h4>4부. Kafka & 멀티에이전트</h4>
+        <a class="sidebar-link" href="#ch25">25. 메시지 브로커 개념</a>
+        <a class="sidebar-link" href="#ch26">26. Kafka Helm 배포</a>
+        <a class="sidebar-link" href="#ch27">27. Producer-Consumer</a>
+        <a class="sidebar-link" href="#ch28">28. 이벤트 자동 Ingest</a>
+        <a class="sidebar-link" href="#ch29">29. 멀티에이전트 역할분리</a>
+        <a class="sidebar-link" href="#ch30">30. 오케스트레이션 구현</a>
+        <a class="sidebar-link" href="#ch31">31. HPA 오토스케일링</a>
+        <a class="sidebar-link" href="#ch32">32. Day 4 통합 실습</a>
+      </div>
+
+      <div class="sidebar-group">
+        <h4>5부. 운영 & 모니터링</h4>
+        <a class="sidebar-link" href="#ch33">33. 전체 시스템 통합</a>
+        <a class="sidebar-link" href="#ch34">34. 리소스 및 Kustomize</a>
+        <a class="sidebar-link" href="#ch35">35. 로깅 모니터링 기초</a>
+        <a class="sidebar-link" href="#ch36">36. 장애 대응 & 프로브</a>
+        <a class="sidebar-link" href="#ch37">37. 부하 테스트 HPA 검증</a>
+        <a class="sidebar-link" href="#ch38">38. 최종 프로젝트 완성</a>
+        <a class="sidebar-link" href="#ch39">39. 데모 시연 준비</a>
+        <a class="sidebar-link" href="#ch40">40. 결과 발표 피드백</a>
+      </div>
+
+      <div class="sidebar-group">
+        <h4>7대 부록 레퍼런스</h4>
+        <a class="sidebar-link" href="#app-a">부록 A. kubectl 명령</a>
+        <a class="sidebar-link" href="#app-b">부록 B. YAML 필드 사전</a>
+        <a class="sidebar-link" href="#app-c">부록 C. 트러블슈팅 20선</a>
+        <a class="sidebar-link" href="#app-d">부록 D. 핵심 용어 사전</a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="hero">
+        <div class="hero-badge">K8S · 300 · 전 5개 부 · 40개 장 · 7대 부록 완결</div>
+        <h1>쿠버네티스 기반 스트리밍 RAG & AI 에이전트 구축</h1>
+        <p class="lead">
+          개인 PC(Minikube/Kind) 환경에서 재현 가능한 클라우드 네이티브 RAG 파이프라인과 자율 AI 에이전트 구축 종합 교재입니다.
+          기초 Pod/Deployment부터 StatefulSet 기반 벡터DB, FastAPI RAG API 컨테이너화, LangGraph 멀티에이전트,
+          Kafka 스트리밍 인제스트, 그리고 HPA 동적 오토스케일링까지 5일 40차시 전과정을 단계별로 마스터합니다.
+        </p>
+      </section>
+
+      <section class="part-section" id="part1">
+        <div class="part-header">
+          <span class="mono" style="font-size:12px; font-weight:700; color:var(--cat-k8s);">Day 1</span>
+          <h2>Part 1. 쿠버네티스 인프라 기초 & 벡터DB 배포 (제1장 ~ 제8장)</h2>
+          <p>클라우드 네이티브 환경의 핵심 아키텍처를 이해하고, Minikube/Kind 로컬 클러스터 위에 Pod, Deployment, Service 및 StatefulSet 기반 벡터DB(Chroma/Qdrant)를 직접 배포합니다.</p>
+        </div>
+    
+        <article class="chapter-card" id="ch1">
+          <div class="chapter-top">
+            <span class="chapter-num">제1장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 1</span>
+          </div>
+          <h3 class="chapter-title">오리엔테이션 & 실습환경 안내</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 과정의 전체 로드맵을 파악하고, Docker, kubectl, Minikube(또는 Kind) 사전 설치 환경을 검증한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Minikube, Kind, Docker Desktop, kubectl version, 리소스 요구사항</div>
+          <p class="chapter-detail">로컬 클러스터 구동 원리, VM 드라이버 vs Docker 드라이버 선택, 사전 진단 스크립트 실행 및 네트워크 포트 방화벽 확인.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch2">
+          <div class="chapter-top">
+            <span class="chapter-num">제2장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 1</span>
+          </div>
+          <h3 class="chapter-title">RAG 시스템 아키텍처 개요</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 전통적 LLM 호출의 한계를 검색증강생성(RAG)으로 극복하는 구조와 이를 운영하기 위한 인프라 계층을 이해한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> RAG 파이프라인, 임베딩 벡터, 코사인 유사도, 벡터DB, LLM 융합 아키텍처</div>
+          <p class="chapter-detail">문서 청킹(Chunking), 임베딩 생성, 벡터 인덱싱, 검색 후 프롬프트 결합(Context Injection), 생성 단계의 엔드투엔드 데이터 흐름.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch3">
+          <div class="chapter-top">
+            <span class="chapter-num">제3장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 1</span>
+          </div>
+          <h3 class="chapter-title">Kubernetes 핵심 구조 1: Pod, Node, Namespace</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 쿠버네티스의 기본 실행 단위인 Pod와 작업 노드(Node), 격리 공간인 Namespace의 관계를 설명할 수 있다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Pod, Container, Worker Node, Control Plane, Namespace, kube-system</div>
+          <p class="chapter-detail">Pod 내 컨테이너 간 localhost 통신 메커니즘, 네임스페이스 기반 리소스 격리, 첫 번째 테스트 Pod 생성 및 로그 조회.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch4">
+          <div class="chapter-top">
+            <span class="chapter-num">제4장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 1</span>
+          </div>
+          <h3 class="chapter-title">Kubernetes 핵심 구조 2: Deployment, Service, ConfigMap, Secret</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 무중단 배포를 보장하는 Deployment, 내부 로드밸런싱 Service, 환경설정 및 민감정보 분리 메커니즘을 익힌다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Deployment, ReplicaSet, Rollout, ClusterIP, NodePort, ConfigMap, Secret</div>
+          <p class="chapter-detail">선언적 매니페스트 작성법, Pod 장애 시 복구(Self-healing), base64 인코딩 Secret 주입, envFrom 환경변수 바인딩.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch5">
+          <div class="chapter-top">
+            <span class="chapter-num">제5장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 1</span>
+          </div>
+          <h3 class="chapter-title">kubectl 및 실습환경 구성</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> kubectl 핵심 CLI 명령어와 자동완성, 컨텍스트 전환, 디버깅 필수 옵션을 숙달한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> kubectl get/describe/logs/exec/port-forward, alias k=kubectl, dry-run</div>
+          <p class="chapter-detail">실무 필수 단축어 세팅, YAML 템플릿 생성(--dry-run=client -o yaml), Pod 내부 쉘 진입 및 네트워크 핑 테스트.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch6">
+          <div class="chapter-top">
+            <span class="chapter-num">제6장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 1</span>
+          </div>
+          <h3 class="chapter-title">벡터DB 개념 및 선택 (Chroma vs Qdrant)</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 임베딩 벡터 검색 엔진의 특징을 비교하고, 프로젝트 목적에 맞는 벡터DB 엔진을 선정한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> ChromaDB, Qdrant, Milvus, HNSW 인덱싱, 코사인 거리, 유클리디안 거리</div>
+          <p class="chapter-detail">경량 파일 기반 vs 분산 분할 구조 비교, 메타데이터 필터링 속도, 메모리 점유율, StatefulSet 볼륨 연동 적합성 평가.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch7">
+          <div class="chapter-top">
+            <span class="chapter-num">제7장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 1</span>
+          </div>
+          <h3 class="chapter-title">벡터DB StatefulSet + PVC 배포 실습</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 데이터 영속성을 보장하는 StatefulSet과 PersistentVolumeClaim(PVC)을 작성하여 벡터DB를 K8s에 배포한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> StatefulSet, PVC, PV, StorageClass, HostPath, 안정적인 네트워크 식별자</div>
+          <p class="chapter-detail">일반 Deployment와 StatefulSet의 차이, Pod 재시작 시에도 임베딩 데이터가 유지되는 영속 볼륨 마운트 검증.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch8">
+          <div class="chapter-top">
+            <span class="chapter-num">제8장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 1</span>
+          </div>
+          <h3 class="chapter-title">Day 1 정리 및 Q&A</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 1일차 구축한 벡터DB 인프라를 점검하고, 인프라 레이어와 향후 RAG 애플리케이션 연동점을 정리한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> ClusterIP Service DNS, 포트포워딩 테스트, 헬스체크 엔드포인트</div>
+          <p class="chapter-detail">로컬 클러스터 내부 DNS(chromadb-service.default.svc.cluster.local) 질의 테스트 및 1일차 인프라 무결성 검증.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        </section>
+      <section class="part-section" id="part2">
+        <div class="part-header">
+          <span class="mono" style="font-size:12px; font-weight:700; color:var(--cat-k8s);">Day 2</span>
+          <h2>Part 2. RAG 파이프라인 개발 & 컨테이너화 (제9장 ~ 제16장)</h2>
+          <p>문서 청킹과 임베딩 연동부터 FastAPI 기반 RAG 백엔드 API 개발, Dockerfile 멀티스테이지 빌드 및 K8s 서비스 배포까지 다룹니다.</p>
+        </div>
+    
+        <article class="chapter-card" id="ch9">
+          <div class="chapter-top">
+            <span class="chapter-num">제9장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 2</span>
+          </div>
+          <h3 class="chapter-title">문서 임베딩 파이프라인 설계</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 비정형 문서(PDF, TXT, MD)를 효과적으로 분할하고 검색 품질을 높이는 청킹 전략을 수립한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> RecursiveCharacterTextSplitter, 청크 크기(Chunk Size), 오버랩(Overlap), 메타데이터 태깅</div>
+          <p class="chapter-detail">의미 단위 분할 vs 고정 길이 분할, 검색 문맥 보존을 위한 10~20% 오버랩 설정, 출처(source, page) 메타데이터 보존.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch10">
+          <div class="chapter-top">
+            <span class="chapter-num">제10장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 2</span>
+          </div>
+          <h3 class="chapter-title">임베딩 모델 연동</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> OpenAI text-embedding-3, Gemini 또는 오픈소스 임베딩 모델을 파이썬 코드로 호출하고 벡터DB에 적재한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> text-embedding-3-small, BGE-m3, 임베딩 차원(Dimensions), 벡터 정규화</div>
+          <p class="chapter-detail">API 레이트 리밋(Rate Limit) 대응 배치 처리, 임베딩 캐싱, 벡터 공간 내 유사도 검증 코드 작성.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch11">
+          <div class="chapter-top">
+            <span class="chapter-num">제11장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 2</span>
+          </div>
+          <h3 class="chapter-title">FastAPI 기반 RAG API 구현</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 문서 수집(/ingest)과 질의응답(/query) 엔드포인트를 제공하는 비동기 REST API 서버를 구현한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> FastAPI, Pydantic, async/await, Swagger UI, 에러 핸들링</div>
+          <p class="chapter-detail">요청 DTO 유효성 검증, 벡터DB 질의 → 프롬프트 템플릿 주입 → LLM 스트리밍 응답 반환 구조.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch12">
+          <div class="chapter-top">
+            <span class="chapter-num">제12장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 2</span>
+          </div>
+          <h3 class="chapter-title">Dockerfile 작성 및 멀티스테이지 빌드</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 빌드 의존성과 런타임 환경을 분리하여 경량화되고 보안이 강화된 도커 이미지를 제작한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Multi-stage Build, python:3.11-slim, non-root user, .dockerignore</div>
+          <p class="chapter-detail">빌드 캐시 최적화, 이미지 크기를 1.2GB에서 180MB로 경량화하는 기법, 보안을 위한 비루트(appuser) 실행 설정.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch13">
+          <div class="chapter-top">
+            <span class="chapter-num">제13장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 2</span>
+          </div>
+          <h3 class="chapter-title">이미지 빌드 및 클러스터 반입</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 로컬에서 빌드한 컨테이너 이미지를 Minikube/Kind 클러스터 내부 레지스트리로 로드한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> docker build -t rag-api:v1, minikube image load, kind load docker-image</div>
+          <p class="chapter-detail">외부 도커 허브에 푸시하지 않고 로컬 노드에 직접 적재하는 방법, imagePullPolicy: IfNotPresent 설정 주의점.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch14">
+          <div class="chapter-top">
+            <span class="chapter-num">제14장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 2</span>
+          </div>
+          <h3 class="chapter-title">K8s Deployment/Service/ConfigMap 배포</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> RAG API 애플리케이션을 선언적 매니페스트로 클러스터에 배포하고 환경설정을 외부화한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Deployment YAML, envFrom configMapRef, secretKeyRef, replicas: 2</div>
+          <p class="chapter-detail">OPENAI_API_KEY는 Secret으로, VECTOR_DB_HOST는 ConfigMap으로 분리하여 Pod에 주입하는 배포 매니페스트 작성.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch15">
+          <div class="chapter-top">
+            <span class="chapter-num">제15장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 2</span>
+          </div>
+          <h3 class="chapter-title">서비스 노출과 네트워킹</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 클러스터 내부의 RAG API를 로컬 개발자 환경 또는 외부 클라이언트에서 접속할 수 있도록 서비스 경로를 연다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> NodePort, Ingress Controller, kubectl port-forward, Host Header 라우팅</div>
+          <p class="chapter-detail">NodePort 30080 바인딩, Nginx Ingress Controller를 통한 /api 경로 기반 라우팅, CORS 설정.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch16">
+          <div class="chapter-top">
+            <span class="chapter-num">제16장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 2</span>
+          </div>
+          <h3 class="chapter-title">curl/Postman 테스트 및 트러블슈팅</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 배포된 RAG API에 실제 문서를 색인하고 질의를 전송하며, 로그 추적으로 장애를 진단한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> curl -X POST /query, kubectl logs -f, kubectl describe pod, 500 에러 추적</div>
+          <p class="chapter-detail">CrashLoopBackOff, OOMKilled, 벡터DB 연결 타임아웃 등 실전 발생 빈도가 높은 5가지 장애 시나리오 해결.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        </section>
+      <section class="part-section" id="part3">
+        <div class="part-header">
+          <span class="mono" style="font-size:12px; font-weight:700; color:var(--cat-k8s);">Day 3</span>
+          <h2>Part 3. Agentic AI & 도구 연동 (제17장 ~ 제24장)</h2>
+          <p>단순 검색을 넘어 스스로 판단하고 도구를 호출하는 Agentic AI 구조, LangGraph 상태 관리 및 K8s 배포를 완성합니다.</p>
+        </div>
+    
+        <article class="chapter-card" id="ch17">
+          <div class="chapter-top">
+            <span class="chapter-num">제17장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 3</span>
+          </div>
+          <h3 class="chapter-title">Agentic AI 개념과 Tool Calling 원리</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> LLM이 사용자의 의도를 분석하여 외부 함수(API, DB, 웹 검색)를 자율 호출하는 메커니즘을 이해한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Function Calling, Tool Use, JSON Schema, ReAct (Reasoning + Acting)</div>
+          <p class="chapter-detail">단순 프롬프트 엔지니어링과 Tool Calling의 차이, LLM이 반환한 arguments를 실제 함수로 실행하고 결과를 되먹이는 루프.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch18">
+          <div class="chapter-top">
+            <span class="chapter-num">제18장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 3</span>
+          </div>
+          <h3 class="chapter-title">Planner-Executor-Reviewer 패턴</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 복잡한 질의를 하위 태스크로 쪼개고(Planner), 실행하며(Executor), 품질을 검증하는(Reviewer) 에이전트 구조를 설계한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Task Decomposition, Planning, Verification, Self-Correction</div>
+          <p class="chapter-detail">단일 에이전트의 환각 방지를 위한 3단계 역할 분담 패턴, 불만족스러운 검색 결과 시 검색어 재작성(Query Rewriting) 로직.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch19">
+          <div class="chapter-top">
+            <span class="chapter-num">제19장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 3</span>
+          </div>
+          <h3 class="chapter-title">LangGraph 기반 Agent 구현</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 상태 머신(State Machine) 기반으로 순환 루프와 조건부 분기를 처리하는 LangGraph 에이전트 워크플로우를 코딩한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> LangGraph, StateGraph, TypedDict State, Conditional Edges, END</div>
+          <p class="chapter-detail">에이전트의 대화 상태 정의, '검색 필요 여부' 판단 조건부 엣지, 그래프 컴파일 및 실행 추적.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch20">
+          <div class="chapter-top">
+            <span class="chapter-num">제20장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 3</span>
+          </div>
+          <h3 class="chapter-title">RAG API를 Tool로 등록하기</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> Part 2에서 배포한 K8s RAG API 서비스를 LangGraph 에이전트가 호출할 수 있는 도구(Tool)로 래핑한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> @tool 데코레이터, httpx 비동기 클라이언트, 도구 설명(Docstring), 클러스터 DNS</div>
+          <p class="chapter-detail">에이전트가 '사내 규정이나 문서 조회가 필요할 때' 자동으로 호출할 수 있도록 명확한 도구 설명 작성 및 HTTP 연동.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch21">
+          <div class="chapter-top">
+            <span class="chapter-num">제21장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 3</span>
+          </div>
+          <h3 class="chapter-title">세션/컨텍스트 상태 관리 (Redis)</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 사용자별 멀티턴 대화 히스토리와 에이전트 상태를 영속적으로 보존하기 위해 Redis 캐시를 K8s에 연동한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Redis Deployment, Session ID, TTL, Checkpointer, 대화 메모리(Memory)</div>
+          <p class="chapter-detail">K8s 내부 Redis 배포, 대화 턴 수 증가에 따른 토큰 절약용 이전 요약(Summarizer) 저장 기법.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch22">
+          <div class="chapter-top">
+            <span class="chapter-num">제22장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 3</span>
+          </div>
+          <h3 class="chapter-title">Agent 서비스 K8s 배포</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> LangGraph + Redis 기반의 종합 Agent 서버를 컨테이너화하여 K8s 클러스터에 배포한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Agent Deployment, resource requests/limits, ServiceAccount</div>
+          <p class="chapter-detail">CPU/메모리 상한선 설정, 환경변수 구성, 멀티 인스턴스 배포 및 무중단 롤링 업데이트.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch23">
+          <div class="chapter-top">
+            <span class="chapter-num">제23장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 3</span>
+          </div>
+          <h3 class="chapter-title">서비스 간 통신 구조 이해</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> Agent 파드에서 RAG API 파드, Redis 파드로 이어지는 쿠버네티스 내부 CoreDNS와 통신 경계를 파악한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> CoreDNS, Service FQDN, NetworkPolicy, iptables/IPVS</div>
+          <p class="chapter-detail">servicename.namespace.svc.cluster.local 이름 해석 원리, 파드 간 트래픽 흐름 패킷 추적.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch24">
+          <div class="chapter-top">
+            <span class="chapter-num">제24장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 3</span>
+          </div>
+          <h3 class="chapter-title">Day 3 통합 테스트 및 디버깅</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 질의 입력 → Agent 의도 분석 → RAG Tool 호출 → Redis 상태 갱신 → 최종 답변 생성 전과정을 검증한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> End-to-End Test, 분산 로그 추적, 에이전트 루프 탈출 조건</div>
+          <p class="chapter-detail">도구 호출 무한 루프 방지(Max Iterations), 비정상 입력 시 Fallback 대응, 통합 디버깅 로그 확인.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        </section>
+      <section class="part-section" id="part4">
+        <div class="part-header">
+          <span class="mono" style="font-size:12px; font-weight:700; color:var(--cat-k8s);">Day 4</span>
+          <h2>Part 4. 이벤트 기반 스트리밍 & 멀티에이전트 (제25장 ~ 제32장)</h2>
+          <p>메시지 브로커 Kafka 연동, 비동기 문서 색인 파이프라인, 역할 분리형 멀티에이전트 오케스트레이션과 HPA 자동 확장을 구축합니다.</p>
+        </div>
+    
+        <article class="chapter-card" id="ch25">
+          <div class="chapter-top">
+            <span class="chapter-num">제25장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 4</span>
+          </div>
+          <h3 class="chapter-title">메시지 브로커 개념</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 동기식 HTTP 통신의 병목을 해결하기 위한 비동기 메시지 큐와 이벤트 주도 아키텍처(EDA)를 이해한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Apache Kafka, Producer, Consumer, Topic, Partition, Offset, Event-driven</div>
+          <p class="chapter-detail">동기 API의 타임아웃 한계, 대량 문서 유입 시 버퍼링 효과, 메시지 유실 방지(Ack 정책).</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch26">
+          <div class="chapter-top">
+            <span class="chapter-num">제26장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 4</span>
+          </div>
+          <h3 class="chapter-title">Kafka K8s 배포 (Helm)</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 쿠버네티스 패키지 매니저인 Helm을 사용하여 클러스터에 분산 메시지 브로커 Kafka를 설치한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Helm CLI, bitnami/kafka 차트, values.yaml 커스터마이징, KRaft 모드</div>
+          <p class="chapter-detail">ZooKeeper 없는 최신 KRaft 모드 배포, 리소스 제약이 있는 로컬 환경을 위한 브로커 단일 노드 경량 설정.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch27">
+          <div class="chapter-top">
+            <span class="chapter-num">제27장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 4</span>
+          </div>
+          <h3 class="chapter-title">Producer-Consumer 구조 실습</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 파이썬 aiokafka 라이브러리를 이용해 이벤트를 발행하고 수신하는 기본 컴포넌트를 작성한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> aiokafka, AIOKafkaProducer, AIOKafkaConsumer, JSON 직렬화/역직렬화</div>
+          <p class="chapter-detail">토픽 생성, 이벤트 페이로드 설계(doc_id, content, timestamp), 컨슈머 그룹 오프셋 커밋.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch28">
+          <div class="chapter-top">
+            <span class="chapter-num">제28장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 4</span>
+          </div>
+          <h3 class="chapter-title">이벤트 트리거 기반 자동 Ingest</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 신규 문서가 카프카 토픽에 인입되면 백그라운드 Worker Pod가 자동으로 청킹 및 임베딩을 수행하도록 구현한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Worker Deployment, 비동기 파이프라인, 동시성 제어(Concurrency)</div>
+          <p class="chapter-detail">웹 업로드 엔드포인트는 즉시 202 Accepted 반환, 백그라운드 워커가 벡터DB 적재 완료 후 상태 알림.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch29">
+          <div class="chapter-top">
+            <span class="chapter-num">제29장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 4</span>
+          </div>
+          <h3 class="chapter-title">멀티 에이전트 역할 분리 설계</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 전문 영역별로 분리된 에이전트(검색 에이전트, 요약 에이전트, 사실 검증 에이전트)의 상호 협업 구조를 기획한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Multi-Agent System, Specialist Agent, Router Agent, Supervisor Pattern</div>
+          <p class="chapter-detail">단일 에이전트 프롬프트 비대화 방지, 역할 분담에 따른 정확도 향상 및 토큰 효율성 비교.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch30">
+          <div class="chapter-top">
+            <span class="chapter-num">제30장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 4</span>
+          </div>
+          <h3 class="chapter-title">Agent 오케스트레이션 구현</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> Supervisor 에이전트가 사용자 질문에 따라 적절한 전문 에이전트에게 업무를 위임하고 결과를 합성하도록 구현한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> LangGraph Supervisor, Send API, 병렬 브랜칭(Parallel Branching)</div>
+          <p class="chapter-detail">순차적 파이프라인 vs 병렬 다중 검색 합성, 각 전문 에이전트 간 메시지 규격 통일.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch31">
+          <div class="chapter-top">
+            <span class="chapter-num">제31장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 4</span>
+          </div>
+          <h3 class="chapter-title">오토스케일링 개요 (HPA)</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> CPU 및 메모리 부하에 따라 파드 개수를 1개에서 N개로 자동 증설/감축하는 HorizontalPodAutoscaler를 학습한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> HPA, metrics-server, CPU Utilization (%), scaleTargetRef, minReplicas/maxReplicas</div>
+          <p class="chapter-detail">metrics-server 설치 확인, 파드 리소스 요청(requests) 필수 지정 규칙, 스케일인/아웃 쿨다운 타임.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch32">
+          <div class="chapter-top">
+            <span class="chapter-num">제32장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 4</span>
+          </div>
+          <h3 class="chapter-title">Day 4 통합 실습</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 문서 업로드 이벤트 발행 → Kafka 스트리밍 → 자동 임베딩 → 멀티에이전트 질의응답 전 파이프라인을 통합 검증한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Event-Driven End-to-End, 시스템 지연시간(Latency) 측정, 데이터 일관성</div>
+          <p class="chapter-detail">대용량 텍스트 10건 연속 발행 후 워커 파드 처리 로그 실시간 확인, 에이전트 답변 일치도 평가.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        </section>
+      <section class="part-section" id="part5">
+        <div class="part-header">
+          <span class="mono" style="font-size:12px; font-weight:700; color:var(--cat-k8s);">Day 5</span>
+          <h2>Part 5. 프로덕션 운영, 모니터링 & 최종 프로젝트 (제33장 ~ 제40장)</h2>
+          <p>클러스터 전체 통합 배포, 프로브(Probe) 기반 헬스체크, HPA 부하 테스트 및 장애 대응, 최종 캡스톤 프로젝트 완성을 달성합니다.</p>
+        </div>
+    
+        <article class="chapter-card" id="ch33">
+          <div class="chapter-top">
+            <span class="chapter-num">제33장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 5</span>
+          </div>
+          <h3 class="chapter-title">전체 시스템 통합 배포</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 모든 마이크로서비스(RAG API, Agent, Kafka, Redis, VectorDB)를 하나의 네임스페이스에 선언적으로 통합 배포한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Namespace rag-system, Kustomize, kustomization.yaml, 의존성 시작 순서</div>
+          <p class="chapter-detail">InitContainers를 활용한 DB 준비 대기(wait-for-it), 통합 매니페스트 디렉토리 구조 표준화.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch34">
+          <div class="chapter-top">
+            <span class="chapter-num">제34장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 5</span>
+          </div>
+          <h3 class="chapter-title">리소스 정리 및 매니페스트 관리</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> GitOps 배포를 대비하여 YAML 파일의 중복을 제거하고 환경별(dev, stage, prod) 오버레이를 구성한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Kustomize Overlays, ConfigMapGenerator, SecretGenerator, labels 일관성</div>
+          <p class="chapter-detail">하드코딩 제거, 이미지 태그 버전 관리 전략, 네임스페이스 일괄 적용.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch35">
+          <div class="chapter-top">
+            <span class="chapter-num">제35장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 5</span>
+          </div>
+          <h3 class="chapter-title">로그 수집 및 모니터링 기초</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> kubectl logs 명령의 고급 필터링과 metrics-server를 통한 파드/노드 자원 사용 현황을 실시간 파악한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> kubectl top node/pod, --tail, -l app=rag-api, JSON 로그 포맷팅</div>
+          <p class="chapter-detail">표준 출력(stdout/stderr) 로깅 원칙, 다중 컨테이너 파드 로그 지정(-c), 성능 병목 지점 탐색.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch36">
+          <div class="chapter-top">
+            <span class="chapter-num">제36장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 5</span>
+          </div>
+          <h3 class="chapter-title">장애 대응 및 복구</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> Liveness Probe와 Readiness Probe를 설정하여 파드 데드락을 자동 복구하고 트래픽 유입을 제어한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> livenessProbe, readinessProbe, httpGet, initialDelaySeconds, periodSeconds</div>
+          <p class="chapter-detail">초기 모델 로딩 지연 시 트래픽 격리, 강제 프로세스 다운 시 쿠버네티스의 자동 재시작(Restart) 시연.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch37">
+          <div class="chapter-top">
+            <span class="chapter-num">제37장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 5</span>
+          </div>
+          <h3 class="chapter-title">부하 테스트 및 오토스케일링 검증</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 부하 발생 도구(wrk/hey)로 API 엔드포인트에 대량 요청을 발생시켜 HPA의 동적 파드 확장(Scale-out)을 검증한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> hey -n 5000 -c 50, watch kubectl get hpa, Scale-out 2 -> 5 파드</div>
+          <p class="chapter-detail">CPU 사용률이 임계치(60%)를 초과할 때 실시간으로 파드가 복제되고 트래픽이 분산되는 과정 확인.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch38">
+          <div class="chapter-top">
+            <span class="chapter-num">제38장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 5</span>
+          </div>
+          <h3 class="chapter-title">최종 프로젝트 구현 및 예외처리 보완</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 개별/팀별 요구사항에 맞는 도메인 특화 RAG 에이전트를 완성하고 에러 핸들링과 보안 가드레일을 보강한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> Input Guardrail, 에러 응답 표준화, Rate Limit, API 키 유효성 검증</div>
+          <p class="chapter-detail">악의적인 프롬프트 인젝션 방어, 외부 LLM 장애 시 폴백(Fallback) 메시지 출력 구현.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch39">
+          <div class="chapter-top">
+            <span class="chapter-num">제39장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 5</span>
+          </div>
+          <h3 class="chapter-title">최종 시연 준비</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 엔드투엔드 시연 시나리오를 작성하고, 장애 시뮬레이션 및 복구 데모 플로우를 점검한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> 데모 시나리오, 발표 슬라이드, 아키텍처 다이어그램, 롤백 테스트</div>
+          <p class="chapter-detail">신규 문서 업로드 → 이벤트 발행 → 에이전트 질문 → 정확한 근거 인용 답변 도출 시연 준비.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        
+        <article class="chapter-card" id="ch40">
+          <div class="chapter-top">
+            <span class="chapter-num">제40장</span>
+            <span class="mono" style="font-size:11.5px; color:var(--text-faint);">Day 5</span>
+          </div>
+          <h3 class="chapter-title">결과 발표 및 피드백</h3>
+          <div class="chapter-goal"><strong>학습 목표:</strong> 5일간 구축한 클라우드 네이티브 RAG 시스템의 성과를 발표하고 코드 리뷰와 종합 강평을 진행한다.</div>
+          <div class="chapter-keywords"><strong>핵심 키워드:</strong> 최종 평가, 아키텍처 리뷰, 배포 회고, 향후 고도화 로드맵</div>
+          <p class="chapter-detail">팀별 산출물 시연 평가, 클라우드(EKS/GKE) 이관 가이드, 지속적 지식 업데이트 체계 총평.</p>
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+        </section>
+      <section class="part-section" id="appendix">
+        <div class="part-header" style="border-left-color: var(--ok);">
+          <span class="mono" style="font-size:12px; font-weight:700; color:var(--ok);">APPENDICES</span>
+          <h2>실전 레퍼런스 & 7대 부록</h2>
+          <p>현장 실무에서 즉시 활용할 수 있는 kubectl 치트시트, YAML 매니페스트 사전, 장애 대응 트러블슈팅 가이드입니다.</p>
+        </div>
+
+        <article class="chapter-card" id="app-a">
+          <div class="chapter-top">
+            <span class="chapter-num" style="background:color-mix(in srgb, var(--ok) 14%, transparent); color:var(--ok);">부록 A</span>
+          </div>
+          <h3 class="chapter-title">kubectl 핵심 명령 레퍼런스</h3>
+          <p style="font-size:14px; color:var(--text-soft); margin-bottom:14px;">과정 전체 및 실무에서 매일 사용하는 kubectl 명령을 리소스 조회, 디버깅, 매니페스트 생성별로 분류 정리</p>
+          
+<h4>1. 리소스 상태 조회</h4>
+<pre><code class="language-bash"># 모든 네임스페이스의 주요 리소스 조회
+kubectl get pods,svc,deploy,sts -A -o wide
+
+# 라벨 셀렉터 기반 파드 필터링
+kubectl get pods -l app=rag-api -n rag-system
+
+# 노드 및 파드 리소스(CPU/MEM) 실시간 사용량 확인
+kubectl top nodes
+kubectl top pods -n rag-system --containers</code></pre>
+
+<h4>2. 파드 내부 디버깅 & 로그 분석</h4>
+<pre><code class="language-bash"># 파드 상세 상태 및 이벤트(Events) 확인 (CrashLoopBackOff 분석 필수)
+kubectl describe pod <pod-name> -n rag-system
+
+# 실시간 스트리밍 로그 및 이전 종료 컨테이너 로그 확인
+kubectl logs -f <pod-name> -c api-container
+kubectl logs <pod-name> --previous
+
+# 파드 내부 쉘 진입 및 환경변수 확인
+kubectl exec -it <pod-name> -- /bin/sh
+env | grep API_KEY</code></pre>
+
+<h4>3. 선언적 매니페스트 신속 생성 (--dry-run)</h4>
+<pre><code class="language-bash"># Deployment YAML 템플릿 즉시 추출
+kubectl create deployment rag-api --image=rag-api:v1 --replicas=2 --dry-run=client -o yaml > deployment.yaml
+
+# ClusterIP Service YAML 추출
+kubectl expose deployment rag-api --port=8000 --target-port=8000 --dry-run=client -o yaml > service.yaml</code></pre>
+
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="chapter-card" id="app-b">
+          <div class="chapter-top">
+            <span class="chapter-num" style="background:color-mix(in srgb, var(--ok) 14%, transparent); color:var(--ok);">부록 B</span>
+          </div>
+          <h3 class="chapter-title">주요 YAML 매니페스트 필드 레퍼런스</h3>
+          <p style="font-size:14px; color:var(--text-soft); margin-bottom:14px;">Deployment, Service, StatefulSet, PVC, HPA 작성 시 필수 및 권장 필드 상세 가이드</p>
+          
+<h4>1. RAG API Deployment 매니페스트 명세</h4>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-api
+  namespace: rag-system
+  labels:
+    app: rag-api
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: rag-api
+  template:
+    metadata:
+      labels:
+        app: rag-api
+    spec:
+      containers:
+      - name: api
+        image: rag-api:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "1000m"
+            memory: "1Gi"
+        envFrom:
+        - configMapRef:
+            name: rag-config
+        - secretRef:
+            name: rag-secret
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5</code></pre>
+
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="chapter-card" id="app-c">
+          <div class="chapter-top">
+            <span class="chapter-num" style="background:color-mix(in srgb, var(--ok) 14%, transparent); color:var(--ok);">부록 C</span>
+          </div>
+          <h3 class="chapter-title">실전 트러블슈팅 가이드 (Top 6 장애 대응)</h3>
+          <p style="font-size:14px; color:var(--text-soft); margin-bottom:14px;">K8s 실습 및 프로덕션 환경에서 가장 흔히 발생하는 파드 에러의 원인과 해결 절차</p>
+          
+<div class="table-responsive">
+<table class="data-table">
+  <tr><th>증상 / 에러</th><th>주요 원인</th><th>즉각 해결 조치</th></tr>
+  <tr>
+    <td><strong>CrashLoopBackOff</strong></td>
+    <td>애플리케이션 진입점 오류, 필수 환경변수(DB URL, API Key) 누락, 포트 충돌</td>
+    <td><code>kubectl logs &lt;pod&gt; --previous</code> 로 비정상 종료 스택트레이스 확인 후 ConfigMap/Secret 주입값 교정</td>
+  </tr>
+  <tr>
+    <td><strong>ImagePullBackOff</strong></td>
+    <td>도커 이미지 이름/태그 오타, 로컬 클러스터에 이미지 미로드, 인증 실패</td>
+    <td><code>minikube image load &lt;image&gt;</code> 또는 Kind load 재수행. <code>imagePullPolicy: IfNotPresent</code> 설정</td>
+  </tr>
+  <tr>
+    <td><strong>Pending</strong></td>
+    <td>노드 리소스(CPU/MEM) 부족, PVC 볼륨 바인딩 실패(StorageClass 부재)</td>
+    <td><code>kubectl describe pod</code>로 Events 확인. requests 값 하향 조정 또는 PVC/PV 스토리지 클래스 확인</td>
+  </tr>
+  <tr>
+    <td><strong>OOMKilled</strong></td>
+    <td>임베딩 모델 로드 시 파드 메모리가 <code>limits.memory</code> 초과</td>
+    <td>메모리 한도(limits) 상향(예: 512Mi &rarr; 1.5Gi) 및 대용량 배치 청크 크기 축소</td>
+  </tr>
+  <tr>
+    <td><strong>Service 502 / 503</strong></td>
+    <td>파드의 readinessProbe 실패로 엔드포인트(Endpoints)에 등록되지 않음</td>
+    <td><code>kubectl get endpoints &lt;svc&gt;</code> 확인. 파드가 완전히 부팅될 때까지 initialDelaySeconds 연장</td>
+  </tr>
+  <tr>
+    <td><strong>DNS Lookup Fail</strong></td>
+    <td>파드 간 통신 시 서비스 이름을 잘못 입력했거나 CoreDNS 장애</td>
+    <td><code>nslookup &lt;service&gt;.&lt;namespace&gt;.svc.cluster.local</code> 로 클러스터 내부 FQDN 도메인 질의 검증</td>
+  </tr>
+</table>
+</div>
+
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+        <article class="chapter-card" id="app-d">
+          <div class="chapter-top">
+            <span class="chapter-num" style="background:color-mix(in srgb, var(--ok) 14%, transparent); color:var(--ok);">부록 D</span>
+          </div>
+          <h3 class="chapter-title">클라우드 네이티브 RAG 핵심 용어 사전</h3>
+          <p style="font-size:14px; color:var(--text-soft); margin-bottom:14px;">쿠버네티스 인프라와 생성형 AI 엔지니어링의 융합 전문 용어 해설</p>
+          
+<ul>
+  <li><strong>StatefulSet</strong>: 파드마다 순차적인 인덱스와 고유한 볼륨(PVC)을 보장하는 컨트롤러로, 벡터DB·RDBMS처럼 영속 데이터가 필수인 시스템에 사용.</li>
+  <li><strong>HNSW (Hierarchical Navigable Small World)</strong>: 고차원 임베딩 벡터를 다층 그래프 구조로 인덱싱하여 빠른 근사 최근접 이웃(ANN) 검색을 수행하는 알고리즘.</li>
+  <li><strong>Context Injection</strong>: 벡터 검색으로 추출한 참조 문서 조각들을 LLM의 시스템/유저 프롬프트에 동적으로 삽입하여 환각을 억제하는 기법.</li>
+  <li><strong>Tool Calling (함수 호출)</strong>: LLM이 질의를 분석한 뒤 사전에 정의된 JSON 스키마에 따라 적절한 도구의 이름과 인자를 반환하는 인터페이스.</li>
+  <li><strong>HPA (Horizontal Pod Autoscaler)</strong>: 실시간 부하(CPU/Memory) 지표를 수집하여 Deployment의 복제본(Replicas) 개수를 탄력적으로 조정하는 자동화 컨트롤러.</li>
+</ul>
+
+          <a href="#" class="btn-top">↑ 맨 위로 이동</a>
+        </article>
+    
+      </section>
+    </main>
+  </div>
+</body>
+</html>
